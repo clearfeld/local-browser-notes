@@ -1,0 +1,20 @@
+{
+	"$schema": "./node_modules/rome/configuration_schema.json",
+	"files": {
+		"ignore": [
+			"./dist/**",
+			"./node_modules/**",
+			"./.git/**",
+			"./.turbo/**"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentSize": 4,
+		"indentStyle": "tab",
+		"lineWidth": 100
+	},
+	"linter": {
+		"enabled": false
+	}
+}

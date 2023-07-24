@@ -1,0 +1,62 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+
+	background-color: #131416;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+
+	text-align: center;
+
+	font-family:
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		Roboto,
+		Oxygen,
+		Ubuntu,
+		Cantarell,
+		"Fira Sans",
+		"Droid Sans",
+		"Helvetica Neue",
+		sans-serif;
+}
+
+.title {
+	margin: 0;
+	padding: 0;
+}
+
+.link {
+	color: #61dafb;
+}
+
+.logo {
+	animation: logo-spin infinite 20s linear;
+	height: 40vmin;
+}
+
+@keyframes logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.route-block {
+	background: #1b1c1e;
+	border-radius: 4px;
+	padding: 16px;
+	height: 180px;
+	display: grid;
+	align-content: center;
+}
