@@ -161,6 +161,7 @@
 	&toolbar {
 		display: flex;
 		position: fixed;
+		top: 0;
 		width: calc(100% - var(--sidebar-size));
 		transition: width var(--sidebar-transition-time) ease;
 		z-index: 1;

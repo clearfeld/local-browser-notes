@@ -299,8 +299,10 @@ body {
 }
 
 .App {
-	display: grid;
-	grid-template-columns: var(--sidebar-size) 1fr;
+	/* display: grid;
+	grid-template-columns: var(--sidebar-size) 1fr; */
+
+	display: flex;
 
 	background-color: var(--color-bg);
 	min-height: 100vh;

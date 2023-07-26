@@ -33,14 +33,7 @@ function App() {
 					</div>
 				}
 			>
-				<Route
-					index
-					element={
-						<div>
-
-						</div>
-					}
-				/>
+				<Route index element={<div></div>} />
 			</Route>,
 		),
 	);
@@ -49,7 +42,14 @@ function App() {
 		<div className="App">
 			<Sidebar />
 
-			<Editor />
+			<div
+				style={{
+					marginLeft: "var(--sidebar-size)",
+					width: "calc(100vw - var(--sidebar-size))"
+				}}
+			>
+				<Editor />
+			</div>
 			{/* <p>{import.meta.env.VITE_TEST}</p>
 			    <p>{process.env.VITE_TEST}</p> */}
 

@@ -1,5 +1,8 @@
 .sidebar__ {
     &wrapper {
+        position: fixed;
+        min-height: 100vh;
+        width: var(--sidebar-size);
         background: var(--sidebar-color-bg);
     }
 }
