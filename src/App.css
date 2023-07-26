@@ -1,20 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap');
+
+:root {
+	--sidebar-size: 14rem; /* 224px */
+	--sidebar-margin-left: 0rem;
+	/* NOTE: This is left at 0 on purpose the time is set to 0.3s
+       inside the navbar sidebar expand check this is done in order to prevent
+       the sidebar collapse animation on inital page check */
+	--sidebar-transition-time: 0s;
+
+	--cc-transition-speed: 0.2s;
+
+	--project-header-height: 5rem; /* 80px */
+
+	/* --oira-blue: #39a1d5; */
+	/* --oira-purple: #9146ff; */
+
+	/* --oira-error-red: #e63535; */
+	/* --oira-error-red-btn: #d9002f; */
+
+	/* --oira-success-green: #099c08; */
+
+	--color-global-blue-hover: #0066dd;
+
+	--color-global-gray-med: #a7a7a7;
+	--color-global-gray-med-hover: #828282;
+
+	--color-global-dark-gray: #5d5d5d;
+	--color-global-dark-gray-hover: #000000;
+
+	--color-global-white: #ffffff;
+
+	--color-global-error-red: #f93232;
+	--color-global-error-red-hover: #e41313;
+}
+
+:root, [data-theme="default"] {
+	--svg-invert: 0;
+
+	--svg-logo-brightness: 1;
+
+	--color-bg: #ffffff;
+	--color-bg-compliment: #f8f8f8;
+
+	/* Navbar colours start */
+	--navbar-color-bg: #ffffff;
+	--navbar-color-bg-hover: #f3f3f3;
+	/* Navbar colours end */
+
+	/* Sidebar colours start */
+	--sidebar-color-bg: #eaeaea;
+	--sidebar-color-bg-hover: #d1d1d1;
+
+	--sidebar-color-bg-inner: #dcdcdc;
+
+	--sidebar-color-active-bg: #e3ebf8;
+	/* Sidebar colours end */
+
+	/* #f8fafb; */
+
+	--color-bg-hover: #f3f3f3;
+
+	--color-text: #000000;
+	--color-text-sub: #353535;
+
+	--color-border: #e7e7e7;
+
+
+
+	--color-global-blue: #006699;
+
+	--color-global-highlight-blue: #006699;
+	--color-global-highlight-blue-hover: #0092db;
+
+	/* --color-bg: #f7f7f7; */
+	/* --color-bg2: #dddddd; */
+	/* --color-bg3: white; */
+
+	/* --color-white-black-bg: #fcfcfc; */
+
+	/* /\* --color-bg3: #f5f6f8; *\/ */
+
+
+
+	/* --color-text: #000000; */
+	/* --color-text-sub: #616161; */
+	/* --color-text-sub-sub: #414141; */
+
+	/* --color-link: #3387B4; */
+
+	/* --color-field-bg: gainsboro; */
+	/* --color-field-bg-hover: lightgray; */
+
+	/* --color-box-shadow: lightgray; */
+
+	/* --color-alternative-bg: #f0f0f0; */
+	/* --color-alternative-bg-hover: #d9d9d9; */
+
+	/* --color-sidebar-bg: #e8e8e8; */
+	/* --color-sidebar-active: #c6c6c6; */
+	/* --color-sidebar-hover: #a6a6a6; */
+	/* --color-sidebar-border-right: #d8d8d8; */
+
+	/* --color-primary: blue; */
+
+	/* /\* color contrasts *\/ */
+
+	/* /\* navbar *\/ */
+	/* --color-navbar-bg: #063878; */
+	/* --color-navbar-bottom: #063878; */
+	/* --color-navbar-hover: #041a37; */
+
+	/* /\* cell-color highlights? *\/ */
+	/* --color-cell-bg: #ffffff; */
+	/* --color-cell-bg-hover: #f1f1f1; */
+	/* --color-cell-bg-disabled: #e2e2e2; */
+	/* --color-header-bg: #fcfcfc; */
+	/* --color-box-shadow: #cdcdcd; */
+	/* --color-cell-focus: #44a7e4; */
+
+	/* /\* box-shadow: 1px 1px 5px #cdcdcd; *\/ */
+
+	/* /\* loader colours *\/ */
+	/* --color-spinner-bg: #0055f240; */
+	/* --color-spinner-fg: #0055f2; */
+
+	/* /\* button *\/ */
+	/* --color-btn-primary: #063878; */
+	/* --color-btn-primary-hover: #1164cd; */
+
+	/* /\* util *\/ */
+	/* --color-gentle-border: #d2d2d2; */
+	/* --color-util-list: #87a5ff; */
+
+	/* /\* input textarea and other generic border *\/ */
+	/* --color-generic-easy-border: #d2d2d2; */
+
+	/* /\* input *\/ */
+	/* --color-input-disabled: #e8e8e8; */
+
+	/* /\* scrollbar custom colors *\/ */
+	/* --color-scrollbar-track: #bdbdbd; */
+	/* --color-scrollbar-thumb: #5d5d5d; */
+	/* --color-scrollbar-thumb-hover: #393939; */
+
+	/* --color-menu-dangerous-option: #ffb0b0; */
+
+	/* /\* calendar *\/ */
+	/* --color-calendar-current-date-bg: #e2f5ff; */
+	/* --color-calendar-current-month-bg: white; */
+	/* --color-calendar-not-current-month-bg: #f7f7f7; */
+}
+
+[data-theme="Dark"] {
+	--svg-invert: 0.9;
+
+	--svg-logo-brightness: 1.5;
+
+	--color-bg: #201f1e;
+	--color-bg-compliment: #252525;
+
+	/* Navbar colours start */
+	/* --navbar-color-bg: #201f1e; */
+	--navbar-color-bg: #121212;
+	--navbar-color-bg-hover: #3b3a39;
+	/* Navbar colours end */
+
+	/* Sidebar colours start */
+	--sidebar-color-bg: #141414;
+    --sidebar-color-bg-hover: #535251;
+
+    --sidebar-color-bg-inner: #1b1b1b;
+
+    --sidebar-color-active-bg: #2e333b;
+	/* Sidebar colours end */
+
+    --color-bg-hover: #3b3a39;
+
+	--color-text: #f1ffff;
+	--color-text-sub: #949493;
+
+    --color-border: #383838;
+
+	--color-global-blue: #0091d9;
+
+
+	--color-global-highlight-blue: #00aaff;
+	--color-global-highlight-blue-hover: #7cd3ff;
+
+	/* --color-bg: #252422; /\* #242429; *\/ /\* #2c2c2c; *\/ */
+	/* --color-bg2: #333333; */
+	/* --color-bg3: #424242; */
+
+	/* --color-white-black-bg: #1c1c1c; */
+
+	/* --color-text: #e6e6e6; */
+	/* --color-text-sub: #BDB9BE; */
+	/* --color-text-sub-sub: #515053; */
+
+	/* --color-link: #3387B4; */
+
+	/* --color-field-bg: #0f0f0f; */
+	/* --color-field-bg-hover: #2f2f2f; */
+
+	/* --color-box-shadow: #0b0a0a; */
+
+	/* --color-alternative-bg: #00000036; */
+	/* --color-alternative-bg-hover: #00000082; */
+
+	/* --color-sidebar-bg: #2f2e2c; /\* #10141a; *\/ /\* #010b18; *\/ */
+	/* --color-sidebar-active: #1c1e20; */
+	/* --color-sidebar-hover: #606060; */
+	/* --color-sidebar-border-right: #050505; */
+
+	/* --color-primary: red; */
+
+	/* /\* color contrasts *\/ */
+
+	/* /\* navbar *\/ */
+	/* --color-navbar-bg: #2d1631; /\*  #201f1d;  #1b1c1c; *\/ */
+	/* --color-navbar-bottom: #343331; */
+	/* --color-navbar-hover: #8b359a; */
+
+	/* /\* cell-color highlights? *\/ */
+	/* --color-cell-bg: #202020;/\* #201f1d; *\/ /\* #18181b; *\/ */
+	/* --color-cell-bg-hover: #3d3d3d; */
+	/* --color-cell-bg-disabled: #2b2b2b; */
+	/* --color-header-bg: #201f1d; */
+	/* --color-box-shadow: #050505; */
+	/* --color-cell-focus: #44a7e4; */
+
+	/* /\* box-shadow: 1px 1px 5px #cdcdcd; *\/ */
+
+	/* --color-spinner-bg: #e853ea40; */
+	/* --color-spinner-fg: #9a03be; */
+
+	/* /\* button *\/ */
+	/* --color-btn-primary: #8d13a2; */
+	/* --color-btn-primary-hover: #ba4ecd; */
+
+	/* /\* util *\/ */
+	/* --color-gentle-border: #4d4d4d; */
+	/* --color-util-list: #3d6c65; */
+
+	/* /\* input textarea and other generic border *\/ */
+	/* --color-generic-easy-border: #757575; */
+
+	/* /\* input *\/ */
+	/* --color-input-disabled: #858585; */
+
+	/* /\* scrollbar custom colors *\/ */
+	/* --color-scrollbar-track: #454545; */
+	/* --color-scrollbar-thumb: #767676; */
+	/* --color-scrollbar-thumb-hover: #959494; */
+
+	/* --color-menu-dangerous-option: #9b0d0d; */
+
+	/* /\* calendar *\/ */
+	/* --color-calendar-current-date-bg: #2b3b43; */
+	/* --color-calendar-current-month-bg: #252422; */
+	/* --color-calendar-not-current-month-bg: #363636; */
+}
+
+/* svg special filter class probably should have a smarter solution than thi  */
+.svg-filter {
+    filter: invert(var(--svg-invert));
+}
+
 html,
 body {
 	margin: 0;
 	padding: 0;
 
-	background-color: #131416;
+	font-size: 16px;
+	width: 100% !important;
+	height: 100% !important;
+
+	background-color: var(--color-bg-compliment);
+
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans,
+	 Ubuntu, Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+	 "Segoe UI Symbol";
+
 	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
+	color: var(--color-text);
 
-	text-align: center;
-
-	font-family:
+	/* font-family:
 		-apple-system,
 		BlinkMacSystemFont,
 		"Segoe UI",
@@ -25,9 +295,18 @@ body {
 		"Fira Sans",
 		"Droid Sans",
 		"Helvetica Neue",
-		sans-serif;
+		sans-serif; */
 }
 
+.App {
+	display: grid;
+	grid-template-columns: var(--sidebar-size) 1fr;
+
+	background-color: var(--color-bg);
+	min-height: 100vh;
+}
+
+/*
 .title {
 	margin: 0;
 	padding: 0;
@@ -35,28 +314,4 @@ body {
 
 .link {
 	color: #61dafb;
-}
-
-.logo {
-	animation: logo-spin infinite 20s linear;
-	height: 40vmin;
-}
-
-@keyframes logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-
-	to {
-		transform: rotate(360deg);
-	}
-}
-
-.route-block {
-	background: #1b1c1e;
-	border-radius: 4px;
-	padding: 16px;
-	height: 180px;
-	display: grid;
-	align-content: center;
-}
+} */
