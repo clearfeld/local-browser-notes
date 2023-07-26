@@ -5,4 +5,60 @@
         width: var(--sidebar-size);
         background: var(--sidebar-color-bg);
     }
+
+    &title-main {
+        margin: 0;
+        padding: 0;
+        font-size: 1.125rem;
+        font-weight: bold;
+    }
+
+    &icon-btn {
+        cursor: pointer;
+        background-color: var(--sidebar-color-bg);
+        width: 1.75rem;
+        height: 1.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.25rem;
+
+        transition: background-color var(--cc-transition-speed) ease;
+
+        &:hover {
+            background-color: var(--sidebar-color-bg-hover);
+        }
+    }
+
+    &top-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 2.5rem;
+        padding-top: 0.5rem;
+        padding-left: 0.75rem;
+    }
+
+    &spacer {
+        min-height: calc(100vh - 4.5rem);
+    }
+
+    &divider {
+        margin: 0;
+        border: none;
+        border-top: 0.0625rem solid var(--color-text-sub);
+    }
+
+    &github-link {
+        cursor: pointer;
+
+        color: var(--color-text);
+        background-color: var(--sidebar-color-bg);
+        text-decoration: none;
+        padding: 0.5rem 0.5rem;
+
+        transition: background-color var(--cc-transition-speed) ease;
+
+        &:hover {
+            background-color: var(--sidebar-color-bg-hover);
+        }
+    }
 }
