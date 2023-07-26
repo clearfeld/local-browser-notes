@@ -1,0 +1,81 @@
+.lbn__core__l-editor__f-link-editor__ {
+    &link-editor {
+      position: absolute;
+      z-index: 100;
+      top: -10000px;
+      left: -10000px;
+      margin-top: -0.25rem;
+      max-width: 20rem;
+      width: 100%;
+      opacity: 0;
+      background-color: var(--color-bg);
+      box-shadow: 0px 0.25rem 0.5rem var(--color-border);
+      border-radius: 0.25rem;
+      transition: opacity 0.5s;
+    }
+
+    &link-editor &link-input {
+      display: block;
+      display: flex;
+      width: calc(100% - 1.5rem);
+      box-sizing: border-box;
+      margin: 0.5rem 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.25rem;
+      background-color: var(--color-bg-compliment);
+      font-size: 1rem;
+      color: var(--color-text);
+      border: 0.0625rem solid var(--color-global-blue);
+      outline: 0;
+      position: relative;
+      font-family: inherit;
+    }
+
+    &link-editor &link-edit {
+      position: absolute;
+      right: 0.5rem;
+      top: 0.75rem;
+      bottom: 0;
+      cursor: pointer;
+    }
+
+    &link-editor &link-input a {
+      color: var(--color-global-blue);
+      text-decoration: none;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-right: 2rem;
+      text-overflow: ellipsis;
+    }
+
+    &link-editor &link-input a:hover {
+      text-decoration: underline;
+    }
+
+    &link-editor .button {
+      width: 1.25rem;
+      height: 1.25rem;
+      display: inline-block;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      margin: 0 0.125rem;
+    }
+
+    &link-editor .button.hovered {
+      width: 1.25rem;
+      height: 1.25rem;
+      display: inline-block;
+      background-color: var(--color-text);
+    }
+
+    &link-editor .button i,
+    .actions i {
+      background-size: contain;
+      display: inline-block;
+      height: 1.25rem;
+      width: 1.25rem;
+      vertical-align: -0.25rem;
+    }
+  }

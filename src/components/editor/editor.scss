@@ -1,0 +1,130 @@
+.lbn__core__knowledge-base__article-new__
+{
+	&wrapper {
+		background-color: var(--color-bg);
+
+		// margin-top: -3rem;
+
+		min-height: calc(100vh - 3rem - 3.5rem - 0.125rem);
+
+		// min-width: 20rem; // 320
+		// max-width: 48rem; // 768
+
+		border-top: 0.0625rem solid var(--color-border);
+	}
+
+	&article-wrapper {
+		padding: 0.5rem 1rem;
+		width: calc(100% - 2rem);
+		// min-width: 320px;
+		max-width: 100%;
+		margin-top: 3rem;
+
+		background-color: var(--color-bg);
+	}
+
+	&article-wrapper-constrained-view {
+		margin: 0 auto;
+		transition: width var(--cc-transition-speed) ease,
+					max-width var(--cc-transition-speed) ease;
+		max-width: 100%;
+
+		&__active {
+			max-width: 45rem;
+			width: 100%;
+		}
+
+		&__full-width {
+			width: 100%;
+		}
+	}
+
+	&title-wrapper {
+		background: var(--color-bg);
+		padding: 1rem;
+	}
+
+	&title {
+		font-size: 1.25rem;
+		color: var(--color-global-blue);
+	}
+
+	&body-wrapper {
+		// padding: 1rem;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&input-label {
+		font-size: 1.25rem;
+		color: var(--color-text);
+	}
+
+	&input {
+		background-color: transparent;
+		color: var(--color-text);
+
+		width: 100%;
+		padding: 0;
+
+		border: none;
+		outline: none;
+
+		font-weight: bold;
+		font-size: 1.75rem;
+	}
+
+	&bottom-wrapper {
+		background: var(--color-bg-hover);
+		padding: 1rem;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	&btn {
+		border: none;
+		outline: none;
+		border-radius: 0.25rem;
+
+		padding: 0.625rem 1rem 0.5rem 1rem;
+
+		background: var(--color-global-blue);
+		color: white;
+
+		cursor: pointer;
+
+		height: 2.25rem;
+
+		&-create {
+			margin-right: 1rem;
+
+
+			&:focus {
+				background: var(--color-global-blue-hover);
+			}
+
+			&:hover {
+				background: var(--color-global-blue-hover);
+			}
+		}
+
+		&-clear {
+			background: var(--color-global-gray-med);
+
+
+			&:focus {
+				background: var(--color-global-gray-med-hover);
+			}
+
+			&:hover {
+				background: var(--color-global-gray-med-hover);
+			}
+		}
+
+		// margin: 0 1rem 1rem 1rem;
+	}
+
+	&error {
+		color: var(--color-global-error-red);
+	}
+}

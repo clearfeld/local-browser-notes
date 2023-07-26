@@ -74,6 +74,20 @@ module.exports = {
 
 		// NOTE(clearfeld): set to warnings to better work with Storybook
 		"@typescript-eslint/await-thenable": "warn",
-		"react/no-unescaped-entities": "warn"
+		"react/no-unescaped-entities": "warn",
+
+		// NOTE(clearfeld): TEMP remove these warnings and ensure theyre errors
+		"@typescript-eslint/no-unsafe-assignment": 1, // warning instead
+		"@typescript-eslint/ban-ts-comment": 1,
+		"@typescript-eslint/no-explicit-any": 1,
+		"@typescript-eslint/no-unsafe-return": 1,
+		"@typescript-eslint/restrict-plus-operands": 1,
+		"@typescript-eslint/no-unsafe-member-access": 1,
+		"@typescript-eslint/ban-types": 1,
+		"@typescript-eslint/no-unsafe-call": 1,
+		"@typescript-eslint/no-unsafe-argument": 1,
+		"@typescript-eslint/restrict-template-expressions": 1,
+		"jsx-a11y/click-events-have-key-events": 1,
+		"@typescript-eslint/no-empty-interface": 1,
 	},
 };

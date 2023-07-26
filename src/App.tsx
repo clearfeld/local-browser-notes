@@ -17,6 +17,7 @@ import { T_CountStateData, T_SetCountStateData, CountStateData } from "@store/Co
 import CheckboxWithLabel from "./CheckboxWithLabel";
 
 import Sidebar from "./components/sidebar/sidebar";
+import Editor from "./components/editor/editor";
 
 function App() {
 	const getCountState: T_CountStateData = useRecoilValue(CountStateData);
@@ -35,8 +36,8 @@ function App() {
 				<Route
 					index
 					element={
-						<div className="route-block">
-							<CheckboxWithLabel off={"Off"} on={"On"} />
+						<div>
+
 						</div>
 					}
 				/>
@@ -48,10 +49,11 @@ function App() {
 		<div className="App">
 			<Sidebar />
 
+			<Editor />
 			{/* <p>{import.meta.env.VITE_TEST}</p>
 			    <p>{process.env.VITE_TEST}</p> */}
 
-			<RouterProvider router={router} />
+			{/* <RouterProvider router={router} /> */}
 		</div>
 	);
 }
