@@ -54,13 +54,7 @@ function Editor() {
 					/>
 
 					{domReady && (
-						<div
-                            // TODO(clearfeld): fix doesn't encompass entire screen size visual delta
-							// style={{
-							// 	height: "calc(100vh - 8rem)",
-							// 	backgroundColor: "blue",
-							// }}
-						>
+						<div>
 							<CCLEditor
 								value={null}
 								PatchContent={null}
