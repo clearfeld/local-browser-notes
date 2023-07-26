@@ -37,12 +37,12 @@ function Editor() {
 					<div>
 						<input
 							className="lbn__core__knowledge-base__article-new__input"
-							id="article-name"
-							name="article-name"
+							id="note-name"
+							name="note-name"
 							type="text"
-							// value={articleName}
+							// value={noteName}
 							// onChange={UpdateProjectName}
-							placeholder="Article title"
+							placeholder="Note title"
 						/>
 					</div>
 
