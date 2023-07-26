@@ -25,7 +25,7 @@ export default defineConfig(({ command, mode }) => {
 
 			build: {
 				// Relative to the root
-				outDir: "../dist",
+				outDir: "../build",
 				emptyOutDir: true,
 				// rollupOptions: {
 				// },
@@ -82,7 +82,7 @@ export default defineConfig(({ command, mode }) => {
 
 			build: {
 				// Relative to the root
-				outDir: "../dist",
+				outDir: "../build",
 				emptyOutDir: true,
 				// https://rollupjs.org/configuration-options/
 				rollupOptions: {
