@@ -80,6 +80,8 @@ export default defineConfig(({ command, mode }) => {
 			root: "src",
 			mode: "production",
 
+			base: "/local-browser-notes", // require for gh-pages path
+
 			build: {
 				// Relative to the root
 				outDir: "../build",
