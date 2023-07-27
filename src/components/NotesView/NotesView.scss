@@ -1,0 +1,17 @@
+.notes-view__ {
+    &note-grid {
+        display: flex;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    &note-block__ {
+        &wrapper {
+            height: 8rem;
+            width: 14rem;
+            background-color: var(--color-bg-compliment);
+            border: 0.0625rem solid var(--color-border);
+            border-radius: 0.25rem;
+        }
+    }
+}

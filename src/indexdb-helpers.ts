@@ -42,9 +42,12 @@ export interface I_Note {
   key: string;
   value: {
     title: string;
+    folder_parent_id: string;
     summary: string;
     tags: string[];
     content: string;
+    created_date: string;
+    last_updated_date: string;
   };
 }
 
@@ -190,6 +193,15 @@ export async function lbn_idb__delete_folder(folder_id: number) {
 
 // Notes start
 
+export async function lbn_idb__get_notes(filter_id: number | null) {
+  if (window.LBN.idb_ref !== null) {
+    const notes = await window.LBN.idb_ref.getAll("notes");
+    return notes;
+  } else {
+    // TODO: logging / error reporting
+  }
+}
+
 export async function lbn_idb__save_note(note: any) {
   if (window.LBN.idb_ref !== null) {
     const tx = window.LBN.idb_ref.transaction("notes", "readwrite");
@@ -204,6 +216,19 @@ export async function lbn_idb__save_note(note: any) {
     // TODO: logging / error reporting
   }
 }
+
+export async function lbn_idb__delete_note(note_id: number) {
+    if (window.LBN.idb_ref !== null) {
+      const tx = window.LBN.idb_ref.transaction("notes", "readwrite");
+
+      // TODO: logging / error reporting
+      const res = await tx.store.delete(note_id);
+
+      return;
+    } else {
+      // TODO: logging / error reporting
+    }
+  }
 
 // Notes end
 
