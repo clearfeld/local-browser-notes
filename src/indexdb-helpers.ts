@@ -136,6 +136,8 @@ export async function lbn_idb_open() {
   return db;
 }
 
+// Folders start
+
 export async function lbn_idb__get_folders() {
   if (window.LBN.idb_ref !== null) {
     const folders = await window.LBN.idb_ref.getAll("folders");
@@ -146,6 +148,8 @@ export async function lbn_idb__get_folders() {
     // TODO: logging / error reporting
   }
 }
+
+// TODO(clearfeld): need update folder func for title change
 
 export async function lbn_idb__save_folder(folder_name: string) {
   if (window.LBN.idb_ref !== null) {
@@ -181,5 +185,26 @@ export async function lbn_idb__delete_folder(folder_id: number) {
     // TODO: logging / error reporting
   }
 }
+
+// Folders end
+
+// Notes start
+
+export async function lbn_idb__save_note(note: any) {
+  if (window.LBN.idb_ref !== null) {
+    const tx = window.LBN.idb_ref.transaction("notes", "readwrite");
+
+    // TODO: logging / error reporting
+    const res = await tx.store.put(note);
+
+    return {
+      id: res,
+    };
+  } else {
+    // TODO: logging / error reporting
+  }
+}
+
+// Notes end
 
 // TODO: create delete db helper function later

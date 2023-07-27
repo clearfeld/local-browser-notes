@@ -11,19 +11,20 @@ import {
 	Outlet,
 } from "react-router-dom";
 
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { T_CountStateData, T_SetCountStateData, CountStateData } from "@store/CountAtom";
+// import { useRecoilValue, useSetRecoilState } from "recoil";
+// import { T_CountStateData, T_SetCountStateData, CountStateData } from "@store/CountAtom";
 
-import CheckboxWithLabel from "./CheckboxWithLabel";
+// import CheckboxWithLabel from "./CheckboxWithLabel";
 
 import Sidebar from "./components/sidebar/sidebar";
 import Editor from "./components/editor/editor";
 
 import { lbn_idb_open } from "./indexdb-helpers";
+import NotesView from "./components/NotesView/NotesView";
 
 function App() {
-	const getCountState: T_CountStateData = useRecoilValue(CountStateData);
-	const setCountState: T_SetCountStateData = useSetRecoilState(CountStateData);
+	// const getCountState: T_CountStateData = useRecoilValue(CountStateData);
+	// const setCountState: T_SetCountStateData = useSetRecoilState(CountStateData);
 
 	const [loading, setLoading] = useState<boolean>(true);
 
@@ -37,7 +38,10 @@ function App() {
 					</div>
 				}
 			>
-				<Route index element={<div></div>} />
+				<Route index element={<Editor />} />
+				<Route path="/folder/:id" element={<NotesView />} />
+				<Route path="/new-note/:parent_id" element={<Editor />} />
+				<Route path="/note/:id" element={<Editor />} />
 			</Route>,
 		),
 	);
@@ -71,12 +75,11 @@ function App() {
 							width: "calc(100vw - var(--sidebar-size))",
 						}}
 					>
-						<Editor />
+						<RouterProvider router={router} />
 					</div>
-					{/* <p>{import.meta.env.VITE_TEST}</p>
-			    <p>{process.env.VITE_TEST}</p> */}
 
-					{/* <RouterProvider router={router} /> */}
+					{/* <p>{import.meta.env.VITE_TEST}</p>
+			    		<p>{process.env.VITE_TEST}</p> */}
 				</>
 			)}
 		</div>
