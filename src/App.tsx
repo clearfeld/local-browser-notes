@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 import "./App.css";
 
@@ -19,9 +19,13 @@ import CheckboxWithLabel from "./CheckboxWithLabel";
 import Sidebar from "./components/sidebar/sidebar";
 import Editor from "./components/editor/editor";
 
+import { lbn_idb_open } from "./indexdb-helpers";
+
 function App() {
 	const getCountState: T_CountStateData = useRecoilValue(CountStateData);
 	const setCountState: T_SetCountStateData = useSetRecoilState(CountStateData);
+
+	const [loading, setLoading] = useState<boolean>(true);
 
 	const router = createBrowserRouter(
 		createRoutesFromElements(
@@ -38,22 +42,43 @@ function App() {
 		),
 	);
 
+	useLayoutEffect(() => {
+		lbn_idb_open()
+			.then((db) => {
+				window.LBN.idb_ref = db;
+				console.log(db);
+				setLoading(false);
+			})
+			.catch((err) => {
+				console.error(err);
+				// setLoading(false);
+			});
+	}, []);
+
+	useEffect(() => {
+		console.log();
+	}, []);
+
 	return (
 		<div className="App">
-			<Sidebar />
+			{!loading && (
+				<>
+					<Sidebar />
 
-			<div
-				style={{
-					marginLeft: "var(--sidebar-size)",
-					width: "calc(100vw - var(--sidebar-size))"
-				}}
-			>
-				<Editor />
-			</div>
-			{/* <p>{import.meta.env.VITE_TEST}</p>
+					<div
+						style={{
+							marginLeft: "var(--sidebar-size)",
+							width: "calc(100vw - var(--sidebar-size))",
+						}}
+					>
+						<Editor />
+					</div>
+					{/* <p>{import.meta.env.VITE_TEST}</p>
 			    <p>{process.env.VITE_TEST}</p> */}
 
-			{/* <RouterProvider router={router} /> */}
+					{/* <RouterProvider router={router} /> */}
+				</>
+			)}
 		</div>
 	);
 }

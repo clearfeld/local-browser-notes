@@ -1,0 +1,185 @@
+import { openDB, deleteDB, DBSchema } from "idb";
+// import { v4 as uuidv4 } from "uuid";
+
+//
+
+declare global {
+  interface Window {
+    LBN: {
+      idb_ref: any | null;
+    };
+  }
+}
+window.LBN = { idb_ref: null };
+
+// export let idb_ref: any | null;
+
+interface I_NoteRef {
+  id: string;
+  title: string;
+  summary: string;
+  tags: string[];
+}
+
+export interface I_Folder {
+  key: string;
+  value: {
+    title: string;
+    parent_id: string | null;
+    note_ids: I_NoteRef[];
+  };
+}
+
+export interface I_Tag {
+  key: string;
+  value: {
+    title: string;
+    color: string;
+  };
+}
+
+export interface I_Note {
+  key: string;
+  value: {
+    title: string;
+    summary: string;
+    tags: string[];
+    content: string;
+  };
+}
+
+interface I_IDB_V1 extends DBSchema {
+  // meta: {}
+
+  // TODO(clearfeld): think about maybe create a scratch space thats the default none connected note for initial open
+
+  folders: {
+    key: string;
+    value: {
+      title: string;
+      parent_id: string | null;
+      note_ids: I_NoteRef[];
+      created_date: string;
+      last_updated_date: string;
+    };
+  };
+
+  tags: {
+    key: string;
+    value: {
+      title: string;
+      color: string;
+      created_date: string;
+      last_updated_date: string;
+    };
+  };
+
+  notes: {
+    key: string;
+    value: {
+      title: string;
+      folder_parent_id: string;
+      summary: string;
+      tags: string[];
+      content: string;
+      created_date: string;
+      last_updated_date: string;
+    };
+  };
+}
+
+export async function lbn_idb_open() {
+  const db = await openDB<I_IDB_V1>("lbn", 1.0, {
+    upgrade(db, oldVersion, newVersion, transaction, event) {
+      // …
+
+      if (oldVersion < 1.0) {
+        // Create a store of objects
+        const store_folders = db.createObjectStore("folders", {
+          // The 'id' property of the object will be the key.
+          keyPath: "id",
+          // If it isn't explicitly set, create a value by auto incrementing.
+          autoIncrement: true,
+        });
+
+        const store_tags = db.createObjectStore("tags", {
+          // The 'id' property of the object will be the key.
+          keyPath: "id",
+          // If it isn't explicitly set, create a value by auto incrementing.
+          autoIncrement: true,
+        });
+
+        const store_notes = db.createObjectStore("notes", {
+          // The 'id' property of the object will be the key.
+          keyPath: "id",
+          // If it isn't explicitly set, create a value by auto incrementing.
+          autoIncrement: true,
+        });
+
+        // Create an index on the 'date' property of the objects.
+        // store.createIndex("date", "date");
+      }
+    },
+
+    // blocked(currentVersion, blockedVersion, event) {
+    //   // …
+    // },
+    // blocking(currentVersion, blockedVersion, event) {
+    //   // …
+    // },
+
+    terminated() {
+      // …
+    },
+  });
+
+  return db;
+}
+
+export async function lbn_idb__get_folders() {
+  if (window.LBN.idb_ref !== null) {
+    const folders = await window.LBN.idb_ref.getAll("folders");
+    // console.log("Folders:- ", folders);
+    return folders;
+  } else {
+    console.error();
+    // TODO: logging / error reporting
+  }
+}
+
+export async function lbn_idb__save_folder(folder_name: string) {
+  if (window.LBN.idb_ref !== null) {
+    const tx = window.LBN.idb_ref.transaction("folders", "readwrite");
+
+    // TODO: logging / error reporting
+    const res = await tx.store.put({
+      title: folder_name,
+      parent_id: null,
+      note_ids: [],
+    });
+
+    return {
+      id: res,
+      title: folder_name,
+      parent_id: null,
+      note_ids: [],
+    };
+  } else {
+    // TODO: logging / error reporting
+  }
+}
+
+export async function lbn_idb__delete_folder(folder_id: number) {
+  if (window.LBN.idb_ref !== null) {
+    const tx = window.LBN.idb_ref.transaction("folders", "readwrite");
+
+    // TODO: logging / error reporting
+    const res = await tx.store.delete(folder_id);
+
+    return;
+  } else {
+    // TODO: logging / error reporting
+  }
+}
+
+// TODO: create delete db helper function later

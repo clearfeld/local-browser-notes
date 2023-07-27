@@ -32,7 +32,7 @@
 
     &top-wrapper {
         display: grid;
-        grid-template-columns: 1fr 2.5rem;
+        grid-template-columns: 1fr 2.5rem 2.5rem;
         padding-top: 0.5rem;
         padding-left: 0.75rem;
     }
@@ -59,6 +59,45 @@
 
         &:hover {
             background-color: var(--sidebar-color-bg-hover);
+        }
+    }
+
+    &folder-space__ {
+        &wrapper {
+            min-height: calc(100vh - 4.5rem);
+            height: calc(100vh - 4.5rem);
+            max-height: calc(100vh - 4.5rem);
+            overflow: auto;
+        }
+
+        &folder-btn {
+            display: flex;
+            align-items: center;
+
+            padding: 0.5rem 0.75rem;
+
+            cursor: pointer;
+            background-color: var(--sidebar-color-bg);
+            transition: background-color var(--cc-transition-speed) ease;
+            &:hover {
+                background-color: var(--sidebar-color-bg-hover);
+            }
+        }
+
+        &folder-title {
+            margin: 0;
+            padding: 0;
+            padding-left: 0.5rem;
+            color: var(--color-text);
+        }
+
+        &folder-input {
+            margin: 0;
+            padding: 0;
+            padding-left: 0.5rem;
+            color: var(--color-text);
+            border: none;
+            background: none;
         }
     }
 }
