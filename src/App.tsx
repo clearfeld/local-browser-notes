@@ -4,7 +4,7 @@ import "./App.css";
 
 import {
 	createRoutesFromElements,
-	createBrowserRouter,
+	createHashRouter,
 	RouterProvider,
 	Route,
 	Link,
@@ -28,14 +28,23 @@ function App() {
 
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const router = createBrowserRouter(
+	const router = createHashRouter(
 		createRoutesFromElements(
 			<Route
 				path="/"
 				element={
-					<div>
-						<Outlet />
-					</div>
+					<>
+						<Sidebar />
+
+						<div
+							style={{
+								marginLeft: "var(--sidebar-size)",
+								width: "calc(100vw - var(--sidebar-size))",
+							}}
+						>
+							<Outlet />
+						</div>
+					</>
 				}
 			>
 				<Route index element={<Editor />} />
@@ -67,17 +76,7 @@ function App() {
 		<div className="App">
 			{!loading && (
 				<>
-					<Sidebar />
-
-					<div
-						style={{
-							marginLeft: "var(--sidebar-size)",
-							width: "calc(100vw - var(--sidebar-size))",
-						}}
-					>
-						<RouterProvider router={router} />
-					</div>
-
+					<RouterProvider router={router} />
 					{/* <p>{import.meta.env.VITE_TEST}</p>
 			    		<p>{process.env.VITE_TEST}</p> */}
 				</>

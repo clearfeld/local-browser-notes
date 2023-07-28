@@ -4,11 +4,18 @@ import "./sidebar.scss";
 
 import Cookies from "js-cookie";
 
+import { Link } from "react-router-dom";
+
 import { ReactComponent as ThemeLightSVG } from "../editor/assets/theme-light.svg";
 import { ReactComponent as ThemeDarkSVG } from "../editor/assets/theme-dark.svg";
 import { ReactComponent as FolderSVG } from "../editor/assets/folder.svg";
 import { ReactComponent as PlusSVG } from "../editor/assets/plus.svg";
-import { lbn_idb__delete_folder, lbn_idb__get_folders, lbn_idb__save_folder } from "@src/indexdb-helpers";
+
+import {
+	lbn_idb__delete_folder,
+	lbn_idb__get_folders,
+	lbn_idb__save_folder,
+} from "@src/indexdb-helpers";
 
 interface I_Cookie_UserPreferences {
 	theme: "Dark" | "Light" | string;
@@ -202,9 +209,19 @@ function Sidebar() {
 
 				{folders.map((folder, fidx: number) => {
 					return (
+						<Link
+						key={fidx}
+						to={`folder/${folder.id}`}
+						>
+
 						<div
 							className="sidebar__folder-space__folder-btn"
-							key={fidx}
+
+							onClick={() => {
+								console.log();
+							}}
+							role="button"
+							tabIndex={0}
 							onContextMenu={(e) => {
 								e.preventDefault();
 
@@ -228,6 +245,8 @@ function Sidebar() {
 
 							<p className="sidebar__folder-space__folder-title text-no-overflow">{folder.title}</p>
 						</div>
+
+						</Link>
 					);
 				})}
 			</div>
