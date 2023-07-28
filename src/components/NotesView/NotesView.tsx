@@ -4,10 +4,7 @@ import "./NotesView.scss";
 
 import {
 	useParams,
-	RouterProvider,
-	Route,
 	Link,
-	// Outlet,
 } from "react-router-dom";
 
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -42,32 +39,36 @@ function NotesView() {
 
 	return (
 		<div>
-			<div
-                className="notes-view__note-grid"
-            >
+			<div className="notes-view__note-grid">
 				{notes.map((note: any, nidx: number) => {
 					return (
-						<div key={nidx}
-                        onContextMenu={(e) => {
-                            e.preventDefault();
+						<Link
+						key={nidx}
+						to={`${window.location.protocol}//${window.location.host}/#/note/${note.id}`}
+						relative="path"
+						>
+							<div
+								onContextMenu={(e) => {
+									e.preventDefault();
 
-                            console.log("Show cust context menu");
+									console.log("Show cust context menu");
 
-                            lbn_idb__delete_note(note.id)
-                                .then((res) => {
-                                    console.log(res);
-                                })
-                                .catch((err) => {
-                                    console.error("TODO: error logging", err);
-                                });
-                        }}
-                        >
-							<div className="notes-view__note-block__wrapper">
+									lbn_idb__delete_note(note.id)
+										.then((res) => {
+											console.log(res);
+										})
+										.catch((err) => {
+											console.error("TODO: error logging", err);
+										});
+								}}
+							>
+								<div className="notes-view__note-block__wrapper">
+									<div>{note.title}</div>
+								</div>
+
 								<div>{note.title}</div>
 							</div>
-
-							<div>{note.title}</div>
-						</div>
+						</Link>
 					);
 				})}
 			</div>

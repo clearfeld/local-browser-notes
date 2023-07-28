@@ -177,11 +177,18 @@ function Sidebar() {
 			{/* <hr className="sidebar__divider" /> */}
 
 			<div className="sidebar__folder-space__wrapper">
-				<div className="sidebar__folder-space__folder-btn">
-					<FolderSVG className="svg-filter" viewBox="0 0 24 24" height="1.25rem" width="1.25rem" />
+				<Link to={`folder/0`}>
+					<div className="sidebar__folder-space__folder-btn">
+						<FolderSVG
+							className="svg-filter"
+							viewBox="0 0 24 24"
+							height="1.25rem"
+							width="1.25rem"
+						/>
 
-					<p className="sidebar__folder-space__folder-title text-no-overflow">All Notes</p>
-				</div>
+						<p className="sidebar__folder-space__folder-title text-no-overflow">All Notes</p>
+					</div>
+				</Link>
 
 				{showCreateNewFolder && (
 					<div className="sidebar__folder-space__folder-btn">
@@ -209,43 +216,39 @@ function Sidebar() {
 
 				{folders.map((folder, fidx: number) => {
 					return (
-						<Link
-						key={fidx}
-						to={`folder/${folder.id}`}
-						>
+						<Link key={fidx} to={`folder/${folder.id}`}>
+							<div
+								className="sidebar__folder-space__folder-btn"
+								onClick={() => {
+									console.log();
+								}}
+								role="button"
+								tabIndex={0}
+								onContextMenu={(e) => {
+									e.preventDefault();
 
-						<div
-							className="sidebar__folder-space__folder-btn"
+									console.log("Show cust context menu");
 
-							onClick={() => {
-								console.log();
-							}}
-							role="button"
-							tabIndex={0}
-							onContextMenu={(e) => {
-								e.preventDefault();
+									lbn_idb__delete_folder(folder.id)
+										.then((res) => {
+											console.log(res);
+										})
+										.catch((err) => {
+											console.error("TODO: error logging", err);
+										});
+								}}
+							>
+								<FolderSVG
+									className="svg-filter"
+									viewBox="0 0 24 24"
+									height="1.25rem"
+									width="1.25rem"
+								/>
 
-								console.log("Show cust context menu");
-
-								lbn_idb__delete_folder(folder.id)
-									.then((res) => {
-										console.log(res);
-									})
-									.catch((err) => {
-										console.error("TODO: error logging", err);
-									});
-							}}
-						>
-							<FolderSVG
-								className="svg-filter"
-								viewBox="0 0 24 24"
-								height="1.25rem"
-								width="1.25rem"
-							/>
-
-							<p className="sidebar__folder-space__folder-title text-no-overflow">{folder.title}</p>
-						</div>
-
+								<p className="sidebar__folder-space__folder-title text-no-overflow">
+									{folder.title}
+								</p>
+							</div>
 						</Link>
 					);
 				})}
