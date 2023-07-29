@@ -1,17 +1,65 @@
 .notes-view__ {
-    &note-grid {
-        display: flex;
-        gap: 1.5rem;
-        padding: 1.5rem;
+  &note-grid {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  &note-block__ {
+    &wrapper {
+      height: 8rem;
+      width: 14rem;
+      background-color: var(--color-bg-compliment);
+      border: 0.0625rem solid var(--color-border);
+      border-radius: 0.25rem;
     }
 
-    &note-block__ {
-        &wrapper {
-            height: 8rem;
-            width: 14rem;
-            background-color: var(--color-bg-compliment);
-            border: 0.0625rem solid var(--color-border);
-            border-radius: 0.25rem;
-        }
+    &top-line {
+      display: grid;
+      grid-template-columns: 1fr 2rem;
+      color: var(--color-text);
+      padding: 0.5rem 0.75rem;
     }
+
+    &menu-btn {
+      height: 2rem;
+      width: 2rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: background-color var(--cc-transition-speed) ease;
+
+      &:hover {
+        background-color: var(--sidebar-color-bg);
+      }
+    }
+
+    &menu__ {
+      &wrapper {
+        background-color: var(--sidebar-color-bg);
+        padding: 0.5rem 0;
+        border-radius: 0.25rem;
+        margin-left: -9.5rem;
+        margin-top: 2.5rem;
+        height: 3.75rem;
+      }
+
+      &btn {
+        cursor: pointer;
+        transition: background-color var(--cc-transition-speed) ease;
+        padding: 0.25rem 0.5rem;
+
+        &:hover {
+          background-color: var(--sidebar-color-bg-hover);
+        }
+      }
+
+      &divider {
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-top: 0.0625rem solid var(--color-border);
+      }
+    }
+  }
 }

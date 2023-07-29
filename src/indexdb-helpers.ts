@@ -1,4 +1,6 @@
-import { openDB, deleteDB, DBSchema } from "idb";
+// import { openDB, deleteDB, DBSchema } from "idb";
+import { openDB, deleteDB, DBSchema } from 'idb/with-async-ittr';
+
 // import { v4 as uuidv4 } from "uuid";
 
 //
@@ -118,6 +120,10 @@ export async function lbn_idb_open() {
           // If it isn't explicitly set, create a value by auto incrementing.
           autoIncrement: true,
         });
+        // @ts-ignore
+        store_notes.createIndex("last_updated_date", "last_updated_date");
+        // @ts-ignore
+        store_notes.createIndex("folder_parent_id", "folder_parent_id");
 
         // Create an index on the 'date' property of the objects.
         // store.createIndex("date", "date");
@@ -195,8 +201,41 @@ export async function lbn_idb__delete_folder(folder_id: number) {
 
 export async function lbn_idb__get_notes(filter_id: number | null) {
   if (window.LBN.idb_ref !== null) {
-    const notes = await window.LBN.idb_ref.getAll("notes");
-    return notes;
+    if (filter_id === null) {
+      const notes = await window.LBN.idb_ref.getAll("notes");
+      return notes;
+    } else {
+      // const notes = await window.LBN.idb_ref.getAllFrom("notes");
+      // return notes;
+
+      const tx = window.LBN.idb_ref.transaction("notes", "readwrite");
+      const index = tx.store.index("folder_parent_id");
+
+      const notes = [];
+
+      console.log(filter_id, tx, index);
+      console.log(index.iterate("0"));//index.iterate(filter_id));
+
+      for await (const cursor of index.iterate(filter_id)) {
+        console.log(cursor.value);
+        notes.push(cursor.value);
+      }
+      // for await (const cursor of index.iterate(filter_id)) {
+      //   console.log(cursor.value);
+      //   notes.push(cursor.value);
+      // }
+
+      return notes;
+    }
+  } else {
+    // TODO: logging / error reporting
+  }
+}
+
+export async function lbn_idb__get_note(note_id: number | null) {
+  if (window.LBN.idb_ref !== null) {
+    const note = await window.LBN.idb_ref.get("notes", note_id);
+    return note;
   } else {
     // TODO: logging / error reporting
   }
@@ -218,17 +257,17 @@ export async function lbn_idb__save_note(note: any) {
 }
 
 export async function lbn_idb__delete_note(note_id: number) {
-    if (window.LBN.idb_ref !== null) {
-      const tx = window.LBN.idb_ref.transaction("notes", "readwrite");
+  if (window.LBN.idb_ref !== null) {
+    const tx = window.LBN.idb_ref.transaction("notes", "readwrite");
 
-      // TODO: logging / error reporting
-      const res = await tx.store.delete(note_id);
+    // TODO: logging / error reporting
+    const res = await tx.store.delete(note_id);
 
-      return;
-    } else {
-      // TODO: logging / error reporting
-    }
+    return;
+  } else {
+    // TODO: logging / error reporting
   }
+}
 
 // Notes end
 

@@ -4,13 +4,14 @@ import "./NotesView.scss";
 
 import {
 	useParams,
-	Link,
 } from "react-router-dom";
 
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { T_CountStateData, T_SetCountStateData, CountStateData } from "@store/CountAtom";
 
 import { lbn_idb__delete_note, lbn_idb__get_notes, lbn_idb_open } from "@src/indexdb-helpers";
+
+import Note from "@src/components/NotesView/Note";
 
 function NotesView() {
 	// const getCountState: T_CountStateData = useRecoilValue(CountStateData);
@@ -23,11 +24,12 @@ function NotesView() {
 	useEffect(() => {
 		console.log("a", params);
 		GetNotes();
-	}, []);
+	}, [params]);
 
 	function GetNotes() {
 		// TODO: if id 0 otherwise pass in the param
-		lbn_idb__get_notes(null)
+		// @ts-ignore
+		lbn_idb__get_notes(parseInt(params.id))
 			.then((res) => {
 				console.log(res);
 				setNotes(res);
@@ -40,35 +42,12 @@ function NotesView() {
 	return (
 		<div>
 			<div className="notes-view__note-grid">
-				{notes.map((note: any, nidx: number) => {
+				{notes.map((note: any, _nidx: number) => {
 					return (
-						<Link
-						key={nidx}
-						to={`${window.location.protocol}//${window.location.host}/#/note/${note.id}`}
-						relative="path"
-						>
-							<div
-								onContextMenu={(e) => {
-									e.preventDefault();
-
-									console.log("Show cust context menu");
-
-									lbn_idb__delete_note(note.id)
-										.then((res) => {
-											console.log(res);
-										})
-										.catch((err) => {
-											console.error("TODO: error logging", err);
-										});
-								}}
-							>
-								<div className="notes-view__note-block__wrapper">
-									<div>{note.title}</div>
-								</div>
-
-								<div>{note.title}</div>
-							</div>
-						</Link>
+						<Note
+							key={note.id}
+							note={note}
+						/>
 					);
 				})}
 			</div>

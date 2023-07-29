@@ -2,10 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 
 import "./editor.scss";
 
+import { useParams } from "react-router-dom";
+
 import CCLEditor from "./Lexical/Editor";
-import { lbn_idb__save_note } from "@src/indexdb-helpers";
+import { lbn_idb__get_note, lbn_idb__save_note } from "@src/indexdb-helpers";
 
 function Editor() {
+	const params = useParams();
+
 	const ccDraftRef = useRef(null);
 	const ccEditorToolbarLocationRef = useRef(null);
 
@@ -17,19 +21,50 @@ function Editor() {
 
 	const [noteName, setNoteName] = useState<string>("");
 
+	const [noteContent, setNoteContent] = useState<string | null>(null);
+
 	// TODO(clearfeld): important if new note route no id on start but after first save update
 	// if old note pull in useEffect the id and ensure its set before doing anything
 	const noteIDRef = useRef<number | null>(null);
 
 	useEffect(() => {
-		setDomReady(true);
-
 		document.addEventListener("keydown", SaveHijack);
+
+		if (!domReady) {
+			AttemptToFetchNote()
+				.then((res) => {
+					console.log(res);
+					setDomReady(true);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
 
 		return () => {
 			document.removeEventListener("keydown", SaveHijack);
 		};
-	}, [noteName]); // TODO: clean this up later
+	}, [noteName]);
+	//[noteName, noteContent]); // TODO: clean this up later
+
+	async function AttemptToFetchNote() {
+		if (params.id) {
+			const note_id = parseInt(params.id);
+			const note = await lbn_idb__get_note(note_id);
+
+			console.log(note);
+
+			noteIDRef.current = note.id;
+			setNoteName(note.title);
+			setNoteContent(note.content);
+
+			// return note;
+		}
+		// else {
+		//  TODO: have better checks for if params id exists or not and whether or not the note was actually fetched
+		// 	return null;
+		// }
+	}
 
 	function SaveHijack(e: any) {
 		if (e.ctrlKey && e.key === "s") {
@@ -45,16 +80,28 @@ function Editor() {
 
 				const note_content = ccDraftRef.current.GetEditorContent();
 
-				console.log(noteName);
+
+				console.log(noteName, params, noteIDRef.current);
+
 				// console.log("NOTEID - ", noteIDRef.current);
 
-				if (noteIDRef.current === null) {
+
+				// if(noteContent === null && noteIDRef) {
+				// 	return;
+				// }
+
+
+
+				if (noteIDRef.current === null && params.parent_id !== undefined) {
 					const nobj: any = {
 						// id: noteID,
 						title: noteName,
+						folder_parent_id: parseInt(params.parent_id),
 						summary: "", // TODO:
 						tags: [], // TODO:
 						content: note_content,
+						created_date: new Date().valueOf(),
+						last_updated_date: new Date().valueOf(),
 					};
 
 					lbn_idb__save_note(nobj)
@@ -69,9 +116,12 @@ function Editor() {
 					const nobj: any = {
 						id: noteIDRef.current,
 						title: noteName,
+						folder_parent_id: 0, // TODO: FIXME: should save note details abvove and re-use the needed bits --- params.parent_id,
 						summary: "", // TODO:
 						tags: [], // TODO:
 						content: note_content,
+						// created_date: new Date().valueOf(),
+						last_updated_date: new Date().valueOf(),
 					};
 
 					lbn_idb__save_note(nobj)
@@ -127,7 +177,7 @@ function Editor() {
 					{domReady && (
 						<div>
 							<CCLEditor
-								value={null}
+								value={noteContent}
 								PatchContent={null}
 								editable={true} // : boolean;
 								setEditable={null} // : Function | null;
