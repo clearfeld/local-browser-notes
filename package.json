@@ -35,10 +35,15 @@
     "t:build:webpack": "turbo run build:webpack"
   },
   "dependencies": {
+    "@lexical/clipboard": "^0.11.3",
     "@lexical/code": "^0.11.3",
+    "@lexical/dragon": "^0.11.3",
+    "@lexical/file": "^0.11.3",
+    "@lexical/hashtag": "^0.11.3",
     "@lexical/link": "^0.11.3",
     "@lexical/list": "^0.11.3",
     "@lexical/markdown": "^0.11.3",
+    "@lexical/offset": "^0.11.3",
     "@lexical/react": "^0.11.3",
     "@lexical/rich-text": "^0.11.3",
     "@lexical/selection": "^0.11.3",

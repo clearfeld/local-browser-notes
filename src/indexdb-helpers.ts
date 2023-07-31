@@ -1,5 +1,5 @@
 // import { openDB, deleteDB, DBSchema } from "idb";
-import { openDB, deleteDB, DBSchema } from 'idb/with-async-ittr';
+import { openDB, deleteDB, DBSchema } from "idb/with-async-ittr";
 
 // import { v4 as uuidv4 } from "uuid";
 
@@ -41,6 +41,17 @@ export interface I_Tag {
 }
 
 export interface I_Note {
+  id: string;
+  title: string;
+  folder_parent_id: string;
+  summary: string;
+  tags: string[];
+  content: string;
+  created_date: string;
+  last_updated_date: string;
+}
+
+export interface I_Note_DB {
   key: string;
   value: {
     title: string;
@@ -214,7 +225,7 @@ export async function lbn_idb__get_notes(filter_id: number | null) {
       const notes = [];
 
       console.log(filter_id, tx, index);
-      console.log(index.iterate("0"));//index.iterate(filter_id));
+      console.log(index.iterate("0")); //index.iterate(filter_id));
 
       for await (const cursor of index.iterate(filter_id)) {
         console.log(cursor.value);

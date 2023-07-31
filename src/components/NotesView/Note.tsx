@@ -7,25 +7,31 @@ import { Link } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { T_CountStateData, T_SetCountStateData, CountStateData } from "@store/CountAtom";
 
-import { lbn_idb__delete_note } from "@src/indexdb-helpers";
+import { I_Note, lbn_idb__delete_note } from "@src/indexdb-helpers";
 
 import { ReactComponent as VertMoreSVG } from "@src/components/editor/assets/more-fill.svg";
 
 interface I_NoteProps {
-	note: any;
+	note: I_Note;
+	DuplicateNote: (note: I_Note) => void;
+	DeleteNote: (note_id: number) => void;
 }
 
 interface I_NoteMenuProps {
-	note: any;
+	note: I_Note;
+	DuplicateNote: (note: I_Note) => void;
+	DeleteNote: (note_id: number) => void;
 }
 
 function NoteMenu(props: I_NoteMenuProps) {
 	function DuplicateNote(e: any): void {
-		console.log("Duplicate note");
+		props.DuplicateNote(props.note);
 	}
 
 	function DeleteNote(e: any): void {
 		console.log("Delete note");
+
+		props.DeleteNote(parseInt(props.note.id));
 
 		// lbn_idb__delete_note(props.note.id)
 		// 	.then((res) => {
@@ -126,7 +132,13 @@ function Note(props: I_NoteProps) {
 				</div>
 			</Link>
 
-			{showMenu && <NoteMenu note={props.note} />}
+			{showMenu && (
+				<NoteMenu
+					note={props.note}
+					DuplicateNote={props.DuplicateNote}
+					DeleteNote={props.DeleteNote}
+				/>
+			)}
 		</>
 	);
 }
