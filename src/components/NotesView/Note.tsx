@@ -29,17 +29,7 @@ function NoteMenu(props: I_NoteMenuProps) {
 	}
 
 	function DeleteNote(e: any): void {
-		console.log("Delete note");
-
 		props.DeleteNote(parseInt(props.note.id));
-
-		// lbn_idb__delete_note(props.note.id)
-		// 	.then((res) => {
-		// 		console.log(res);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.error("TODO: error logging", err);
-		// 	});
 	}
 
 	return (

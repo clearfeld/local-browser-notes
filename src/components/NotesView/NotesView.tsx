@@ -70,7 +70,27 @@ function NotesView() {
 	}
 
 	function DeleteNote(note_id: number): void {
-		console.log(note_id);
+		lbn_idb__delete_note(note_id)
+			.then((res) => {
+				console.log("Delete note - ", note_id);
+
+				const new_notes_state = [ ...notes ];
+				// console.log(new_notes_state);
+
+				for(let i = 0; i < notes.length; ++i) {
+					// @ts-ignore
+					if(new_notes_state[i].id === note_id) {
+						new_notes_state.splice(i, 1);
+					}
+				}
+
+				// console.log(new_notes_state);
+
+				setNotes(new_notes_state);
+			})
+			.catch((err) => {
+				console.error("TODO: error logging", err);
+			});
 	}
 
 	// TODO: should use virtualization for the list
