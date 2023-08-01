@@ -3,9 +3,9 @@ import React from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getRoot } from "lexical";
 
-interface I_ExternalUsagePluginProps {}
+// interface I_ExternalUsagePluginProps {}
 
-const ExternalUsagePlugin = React.forwardRef((props: I_ExternalUsagePluginProps, ref: any) => {
+const ExternalUsagePlugin = React.forwardRef((props, ref: any) => {
 	const [editor] = useLexicalComposerContext();
 
 	React.useImperativeHandle(ref, () => ({
