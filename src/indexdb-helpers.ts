@@ -18,6 +18,7 @@ window.LBN = { idb_ref: null };
 
 // export let idb_ref: any | null;
 
+// TODO: probably should use this instead of fetching the notes in full from the notes indexeddb space
 interface I_NoteRef {
   id: string;
   title: string;

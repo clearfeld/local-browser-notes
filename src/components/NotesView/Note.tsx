@@ -21,6 +21,8 @@ interface I_NoteMenuProps {
 	note: I_Note;
 	DuplicateNote: (note: I_Note) => void;
 	DeleteNote: (note_id: number) => void;
+
+	CloseMenu: () => void;
 }
 
 interface I_LastUpdatedDateProps {
@@ -29,11 +31,21 @@ interface I_LastUpdatedDateProps {
 
 function NoteMenu(props: I_NoteMenuProps) {
 	function DuplicateNote(e: any): void {
+		e.preventDefault();
+		e.stopPropagation();
+
 		props.DuplicateNote(props.note);
+
+		props.CloseMenu();
 	}
 
 	function DeleteNote(e: any): void {
+		e.preventDefault();
+		e.stopPropagation();
+
 		props.DeleteNote(parseInt(props.note.id));
+
+		props.CloseMenu();
 	}
 
 	return (
@@ -71,17 +83,17 @@ function LastUpdatedDate(props: I_LastUpdatedDateProps) {
 	function ConstructTimeString(): string {
 		let meridiam = "AM";
 		let hours = d.getHours();
-		if(hours > 12) {
+		if (hours > 12) {
 			hours -= 12;
 			meridiam = "PM";
 		}
-		if(hours === 0) {
+		if (hours === 0) {
 			hours = 12;
 		}
 
 		const minutes = d.getMinutes();
 		let minutes_str = minutes.toString();
-		if(minutes < 10) {
+		if (minutes < 10) {
 			minutes_str = "0" + minutes.toString();
 		}
 
@@ -90,9 +102,7 @@ function LastUpdatedDate(props: I_LastUpdatedDateProps) {
 
 	return (
 		<div>
-			<p
-				className="notes-view__note-block__last-update-text"
-			>
+			<p className="notes-view__note-block__last-update-text">
 				{ConstructTimeString()} - {d.getDate()}/{d.getMonth()}/{d.getFullYear()}
 			</p>
 		</div>
@@ -118,8 +128,12 @@ function Note(props: I_NoteProps) {
 	function handleClickOutside(event: any) {
 		// @ts-ignore
 		if (blockRef.current && !blockRef.current.contains(event.target)) {
-			setShowMenu(false);
+			CloseMenu();
 		}
+	}
+
+	function CloseMenu(): void {
+		setShowMenu(false);
 	}
 
 	function ToggleMenu(e: any): void {
@@ -160,15 +174,17 @@ function Note(props: I_NoteProps) {
 					{/* <div>{props.note.created_date}</div> */}
 					<LastUpdatedDate date={props.note.last_updated_date} />
 				</div>
-			</Link>
 
-			{showMenu && (
-				<NoteMenu
-					note={props.note}
-					DuplicateNote={props.DuplicateNote}
-					DeleteNote={props.DeleteNote}
-				/>
-			)}
+				{showMenu && (
+					<NoteMenu
+						note={props.note}
+						DuplicateNote={props.DuplicateNote}
+						DeleteNote={props.DeleteNote}
+
+						CloseMenu={CloseMenu}
+					/>
+				)}
+			</Link>
 		</>
 	);
 }
