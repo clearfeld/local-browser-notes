@@ -50,8 +50,8 @@ function Editor() {
 	//[noteName, noteContent]); // TODO: clean this up later
 
 	async function AttemptToFetchNote() {
-		if (params.id) {
-			const note_id = parseInt(params.id);
+		if (params.note_id) {
+			const note_id = parseInt(params.note_id);
 			const note = await lbn_idb__get_note(note_id);
 
 			console.log("Note - ", note);

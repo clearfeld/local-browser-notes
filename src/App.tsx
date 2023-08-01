@@ -53,7 +53,7 @@ function App() {
 				<Route index element={<NotesView />} />
 				<Route path="/folder/:id" element={<NotesView />} />
 				<Route path="/new-note/:parent_id" element={<Editor />} />
-				<Route path="/note/:id" element={<Editor />} />
+				<Route path="/note/:note_id" element={<Editor />} />
 			</Route>,
 		),
 	);

@@ -249,9 +249,8 @@ function Sidebar() {
 				<Link to={`folder/0`} className="sidebar__folder-space__folder-link">
 					<div
 						className={
-							(params.id == "0" || params.id === undefined
-								? "sidebar__folder-space__folder-active"
-								: "") + " sidebar__folder-space__folder-btn"
+							(params.id == "0" ? "sidebar__folder-space__folder-active" : "") +
+							" sidebar__folder-space__folder-btn"
 						}
 					>
 						<FolderSVG
