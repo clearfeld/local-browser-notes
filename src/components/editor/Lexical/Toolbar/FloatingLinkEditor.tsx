@@ -36,12 +36,12 @@ function positionEditorElement(editor: any, rect: any) {
 		editor.style.left = "-1000px";
 	} else {
 		editor.style.opacity = "1";
-		editor.style.top = `${
-			(((rect.top as number) + rect.height) as number) + window.pageYOffset + 10
-		}px`;
-		editor.style.left = `${
-			rect.left + window.pageXOffset - editor.offsetWidth / 2 + rect.width / 2
-		}px`;
+
+		const top_pos = parseInt(rect.top) + parseInt(rect.height) + window.scrollY + 10;
+		editor.style.top = `${top_pos.toString()}px`;
+
+		const left_pos = parseInt(rect.left) + window.scrollX - editor.offsetWidth / 2 + rect.width / 2;
+		editor.style.left = `${left_pos.toString()}px`;
 	}
 }
 

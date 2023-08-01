@@ -374,7 +374,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 				<div
 					className={
 						`${CLASSNAME_PREFIX}__editor-container ` +
-						(props.editable && `${CLASSNAME_PREFIX}__editor-container-border `)
+						(props.editable ? `${CLASSNAME_PREFIX}__editor-container-border ` : "")
 					}
 				>
 					<ExternalUsagePlugin ref={editorRef} />

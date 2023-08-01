@@ -79,13 +79,13 @@ function LastUpdatedDate(props: I_LastUpdatedDateProps) {
 			hours = 12;
 		}
 
-		let minutes = d.getMinutes();
+		const minutes = d.getMinutes();
+		let minutes_str = minutes.toString();
 		if(minutes < 10) {
-			// @ts-ignore
-			minutes = "0" + minutes;
+			minutes_str = "0" + minutes.toString();
 		}
 
-		return `${hours}:${minutes} ${meridiam}`;
+		return `${hours}:${minutes_str} ${meridiam}`;
 	}
 
 	return (

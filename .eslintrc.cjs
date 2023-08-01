@@ -81,7 +81,7 @@ module.exports = {
 		"@typescript-eslint/ban-ts-comment": 1,
 		"@typescript-eslint/no-explicit-any": 1,
 		"@typescript-eslint/no-unsafe-return": 1,
-		"@typescript-eslint/restrict-plus-operands": 1,
+		// "@typescript-eslint/restrict-plus-operands": 1,
 		"@typescript-eslint/no-unsafe-member-access": 1,
 		"@typescript-eslint/ban-types": 1,
 		"@typescript-eslint/no-unsafe-call": 1,

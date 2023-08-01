@@ -195,7 +195,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "paragraph" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "paragraph" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={formatParagraph}
 			>
@@ -213,7 +213,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "h1" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "h1" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={() => FormatHeading("h1")}
 			>
@@ -232,7 +232,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "h2" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "h2" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={() => FormatHeading("h2")}
 			>
@@ -251,7 +251,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "h3" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "h3" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={() => FormatHeading("h3")}
 			>
@@ -270,7 +270,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "h4" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "h4" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={() => FormatHeading("h4")}
 			>
@@ -289,7 +289,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "h5" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "h5" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={() => FormatHeading("h5")}
 			>
@@ -308,7 +308,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "h6" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "h6" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={() => FormatHeading("h6")}
 			>
@@ -327,7 +327,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "bullet" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "bullet" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={formatBulletList}
 			>
@@ -346,7 +346,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "number" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "number" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={formatNumberedList}
 			>
@@ -365,7 +365,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "check" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "check" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={formatCheckList}
 			>
@@ -384,7 +384,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "quote" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "quote" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={formatQuote}
 			>
@@ -403,7 +403,7 @@ function BlockOptionsDropdownList({
 			<button
 				className={
 					`${CLASSNAME_PREFIX}__item ` +
-					(blockType === "code" && `${CLASSNAME_PREFIX}__active`)
+					(blockType === "code" ? `${CLASSNAME_PREFIX}__active` : "")
 				}
 				onClick={formatCode}
 			>
