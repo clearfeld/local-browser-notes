@@ -20,6 +20,7 @@ function getElementNodesInSelection(selection: any) {
   }
 
   return new Set(
+    // @ts-ignore
     nodesInSelection.map((n: any) => ($isElementNode(n) ? n : n.getParentOrThrow()))
   );
 }

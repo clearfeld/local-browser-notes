@@ -169,15 +169,17 @@ export async function lbn_idb_open() {
 
 // Folders start
 
-export async function lbn_idb__get_folders() {
+export async function lbn_idb__get_folders(): Promise<I_Folder[]> {
   if (window.LBN.idb_ref !== null) {
-    const folders = await window.LBN.idb_ref.getAll("folders");
+    const folders: I_Folder[] = await window.LBN.idb_ref.getAll("folders");
     // console.log("Folders:- ", folders);
     return folders;
   } else {
     console.error();
     // TODO: logging / error reporting
   }
+
+  return [];
 }
 
 // TODO(clearfeld): need update folder func for title change
@@ -221,10 +223,10 @@ export async function lbn_idb__delete_folder(folder_id: number) {
 
 // Notes start
 
-export async function lbn_idb__get_notes(filter_id: number | null) {
+export async function lbn_idb__get_notes(filter_id: number | null): Promise<I_Note[] | undefined> {
   if (window.LBN.idb_ref !== null) {
     if (filter_id === null) {
-      const notes = await window.LBN.idb_ref.getAll("notes");
+      const notes: I_Note[] = await window.LBN.idb_ref.getAll("notes");
       return notes;
     } else {
       // const notes = await window.LBN.idb_ref.getAllFrom("notes");
@@ -233,7 +235,7 @@ export async function lbn_idb__get_notes(filter_id: number | null) {
       const tx = window.LBN.idb_ref.transaction("notes", "readwrite");
       const index = tx.store.index("folder_parent_id");
 
-      const notes = [];
+      const notes: I_Note[] = [];
 
       console.log(filter_id, tx, index);
       console.log(index.iterate("0")); //index.iterate(filter_id));
@@ -254,9 +256,9 @@ export async function lbn_idb__get_notes(filter_id: number | null) {
   }
 }
 
-export async function lbn_idb__get_note(note_id: number | null) {
+export async function lbn_idb__get_note(note_id: number | null): Promise<I_Note | undefined> {
   if (window.LBN.idb_ref !== null) {
-    const note = await window.LBN.idb_ref.get("notes", note_id);
+    const note: I_Note | undefined = await window.LBN.idb_ref.get("notes", note_id);
     return note;
   } else {
     // TODO: logging / error reporting

@@ -348,7 +348,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 
 	function ParseEditorStateIfExists() {
 		if(props.value !== null) {
-			return props.value;
+			return props.value as string;
 			//   try {
 			//      //JSON.parse(props.value);
 			//   } catch (error) {

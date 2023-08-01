@@ -49,8 +49,8 @@ function Sidebar() {
 			});
 	}, []);
 
-	async function GetFolders() {
-		const folders = await lbn_idb__get_folders();
+	async function GetFolders(): Promise<I_Folder[]> {
+		const folders: I_Folder[] = await lbn_idb__get_folders();
 		return folders;
 	}
 

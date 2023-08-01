@@ -56,12 +56,13 @@ function Editor() {
 
 			console.log("Note - ", note);
 
+			if (note) {
+				noteIDRef.current = parseInt(note.id);
+				setNoteName(note.title);
+				setNoteContent(note.content);
 
-			noteIDRef.current = note.id;
-			setNoteName(note.title);
-			setNoteContent(note.content);
-
-			setNote(note);
+				setNote(note);
+			}
 
 			// return note;
 		}
@@ -85,25 +86,22 @@ function Editor() {
 
 				const note_content = ccDraftRef.current.GetEditorContent();
 
-
 				console.log(noteName, params, noteIDRef.current);
 
 				// console.log("NOTEID - ", noteIDRef.current);
-
 
 				// if(noteContent === null && noteIDRef) {
 				// 	return;
 				// }
 
+				// 				console.log(noteIDRef.current, params.parent_id);
 
-// 				console.log(noteIDRef.current, params.parent_id);
-
-// 				if(note === null) {
-// 					console.log("NOTE - ", note);
-// 				} else {
-// 					console.log("NOTE - ", note);
-// 				}
-// return
+				// 				if(note === null) {
+				// 					console.log("NOTE - ", note);
+				// 				} else {
+				// 					console.log("NOTE - ", note);
+				// 				}
+				// return
 
 				if (noteIDRef.current === null && params.parent_id !== undefined) {
 					const nobj: any = {

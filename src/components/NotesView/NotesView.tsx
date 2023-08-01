@@ -27,7 +27,7 @@ function NotesView() {
 	const params = useParams();
 	const navigate = useNavigate();
 
-	const [notes, setNotes] = useState([]);
+	const [notes, setNotes] = useState<I_Note[]>([]);
 
 	useEffect(() => {
 		console.log("a", params);
@@ -47,7 +47,7 @@ function NotesView() {
 		lbn_idb__get_notes(folder_id)
 			.then((res) => {
 				console.log(res);
-				setNotes(res);
+				setNotes(res as I_Note[]);
 			})
 			.catch((err) => {
 				console.error(err);
