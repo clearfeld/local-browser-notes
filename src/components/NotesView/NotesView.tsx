@@ -29,6 +29,8 @@ function NotesView() {
 
 	const [notes, setNotes] = useState<I_Note[]>([]);
 
+	const [noteFetchAttemptCompleted, setBoteFetchAttemptCompleted] = useState<boolean>(false);
+
 	useEffect(() => {
 		console.log("a", params);
 		GetNotes();
@@ -48,6 +50,7 @@ function NotesView() {
 			.then((res) => {
 				console.log(res);
 				setNotes(res as I_Note[]);
+				setBoteFetchAttemptCompleted(true);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -132,25 +135,29 @@ function NotesView() {
 				</div>
 			</div>
 
-			{notes.length > 0 ? (
-				<div className="notes-view__note-grid">
-					{notes.map((note: I_Note, _nidx: number) => {
-						return (
-							<Note
-								key={note.id}
-								note={note}
-								DuplicateNote={DuplicateNote}
-								DeleteNote={DeleteNote}
-							/>
-						);
-					})}
-				</div>
-			) : (
-				<div className="notes-view__empty-folder">
-					<FolderSVG className="svg-filter" viewBox="0 0 24 24" height="2rem" width="2rem" />
+			{noteFetchAttemptCompleted && (
+				<>
+					{notes.length > 0 ? (
+						<div className="notes-view__note-grid">
+							{notes.map((note: I_Note, _nidx: number) => {
+								return (
+									<Note
+										key={note.id}
+										note={note}
+										DuplicateNote={DuplicateNote}
+										DeleteNote={DeleteNote}
+									/>
+								);
+							})}
+						</div>
+					) : (
+						<div className="notes-view__empty-folder">
+							<FolderSVG className="svg-filter" viewBox="0 0 24 24" height="2rem" width="2rem" />
 
-					<p>Empty folder - Add a note</p>
-				</div>
+							<p>Empty folder - Add a note</p>
+						</div>
+					)}
+				</>
 			)}
 		</div>
 	);
