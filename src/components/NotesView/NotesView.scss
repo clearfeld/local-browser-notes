@@ -25,6 +25,13 @@
     }
   }
 
+  &empty-folder {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    align-items: center;
+  }
+
   &note-grid {
     display: flex;
     gap: 1.5rem;

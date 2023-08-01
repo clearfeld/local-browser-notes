@@ -8,7 +8,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { T_CountStateData, T_SetCountStateData, CountStateData } from "@store/CountAtom";
 
 import { ReactComponent as NewNoteSVG } from "@src/components/editor/assets/file-add-line.svg";
-// import { ReactComponent as ArrowClockwiseSVG } from "../assets/ArrowClockwise.svg";
+import { ReactComponent as FolderSVG } from "@src/components/editor/assets/folder.svg";
 
 import {
 	I_Note,
@@ -113,23 +113,36 @@ function NotesView() {
 		<div>
 			<div className="notes-view__toolbar__wrapper">
 				<div
-				onClick={NewNote}
-				role="button"
-				tabIndex={0}
-				title="New Note"
-				className="notes-view__toolbar__btn"
+					onClick={NewNote}
+					role="button"
+					tabIndex={0}
+					title="New Note"
+					className="notes-view__toolbar__btn"
 				>
 					<NewNoteSVG className="svg-filter" viewBox="0 0 24 24" height="1rem" width="1rem" />
 				</div>
 			</div>
 
-			<div className="notes-view__note-grid">
-				{notes.map((note: I_Note, _nidx: number) => {
-					return (
-						<Note key={note.id} note={note} DuplicateNote={DuplicateNote} DeleteNote={DeleteNote} />
-					);
-				})}
-			</div>
+			{notes.length > 0 ? (
+				<div className="notes-view__note-grid">
+					{notes.map((note: I_Note, _nidx: number) => {
+						return (
+							<Note
+								key={note.id}
+								note={note}
+								DuplicateNote={DuplicateNote}
+								DeleteNote={DeleteNote}
+							/>
+						);
+					})}
+				</div>
+			) : (
+				<div className="notes-view__empty-folder">
+					<FolderSVG className="svg-filter" viewBox="0 0 24 24" height="2rem" width="2rem" />
+
+					<p>Empty folder - Add a note</p>
+				</div>
+			)}
 		</div>
 	);
 }
