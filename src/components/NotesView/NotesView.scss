@@ -78,6 +78,14 @@
       }
     }
 
+    &last-update-text {
+      text-align: center;
+      color: var(--color-text-sub);
+      margin: 0;
+      padding: 0;
+      padding-top: 0.5rem;
+    }
+
     &menu__ {
       &wrapper {
         background-color: var(--sidebar-color-bg);

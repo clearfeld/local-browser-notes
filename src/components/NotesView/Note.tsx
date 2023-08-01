@@ -23,6 +23,10 @@ interface I_NoteMenuProps {
 	DeleteNote: (note_id: number) => void;
 }
 
+interface I_LastUpdatedDateProps {
+	date: string;
+}
+
 function NoteMenu(props: I_NoteMenuProps) {
 	function DuplicateNote(e: any): void {
 		props.DuplicateNote(props.note);
@@ -57,6 +61,40 @@ function NoteMenu(props: I_NoteMenuProps) {
 			>
 				Delete Note
 			</div>
+		</div>
+	);
+}
+
+function LastUpdatedDate(props: I_LastUpdatedDateProps) {
+	const d = new Date(props.date);
+
+	function ConstructTimeString(): string {
+		let meridiam = "AM";
+		let hours = d.getHours();
+		if(hours > 12) {
+			hours -= 12;
+			meridiam = "PM";
+		}
+		if(hours === 0) {
+			hours = 12;
+		}
+
+		let minutes = d.getMinutes();
+		if(minutes < 10) {
+			// @ts-ignore
+			minutes = "0" + minutes;
+		}
+
+		return `${hours}:${minutes} ${meridiam}`;
+	}
+
+	return (
+		<div>
+			<p
+				className="notes-view__note-block__last-update-text"
+			>
+				{ConstructTimeString()} - {d.getDate()}/{d.getMonth()}/{d.getFullYear()}
+			</p>
 		</div>
 	);
 }
@@ -119,8 +157,8 @@ function Note(props: I_NoteProps) {
 						</div>
 					</div>
 
-					{/* <div>{props.note.created_date}</div>
-					<div>{props.note.last_updated_date}</div> */}
+					{/* <div>{props.note.created_date}</div> */}
+					<LastUpdatedDate date={props.note.last_updated_date} />
 				</div>
 			</Link>
 
