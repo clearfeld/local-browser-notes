@@ -36,7 +36,7 @@ function NotesView() {
 
 	function GetNotes(): void {
 		let folder_id = null;
-		if(params.id === "0" || params.id === undefined) {
+		if (params.id === "0" || params.id === undefined) {
 			// console.log();
 			// TODO: if id 0 otherwise pass in the param
 		} else {
@@ -111,7 +111,9 @@ function NotesView() {
 	}
 
 	function NewNote(e: any): void {
-		navigate(`/new-note/${params.id}`);
+		if (params.id !== undefined) {
+			navigate(`/new-note/${params.id}`);
+		}
 	}
 
 	// TODO: should use virtualization for the list

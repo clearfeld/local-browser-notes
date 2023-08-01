@@ -86,7 +86,6 @@ module.exports = {
 		"@typescript-eslint/ban-types": 1,
 		"@typescript-eslint/no-unsafe-call": 1,
 		"@typescript-eslint/no-unsafe-argument": 1,
-		"@typescript-eslint/restrict-template-expressions": 1,
 		"jsx-a11y/click-events-have-key-events": 1,
 		"@typescript-eslint/no-empty-interface": 1,
 	},

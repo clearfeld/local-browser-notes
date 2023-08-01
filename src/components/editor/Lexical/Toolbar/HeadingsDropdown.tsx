@@ -80,9 +80,9 @@ function BlockOptionsDropdownList({
 		if(toolbar !== null && dropDown !== null) {
 			const { top, left } = toolbar.getBoundingClientRect();
 			// @ts-ignore
-			dropDown.style.top = `${top + 40}px`;
+			dropDown.style.top = `${top as number + 40}px`;
 			// @ts-ignore
-			dropDown.style.left = `${left}px`;
+			dropDown.style.left = `${left as number}px`;
 		}
 	}, [dropDownRef, toolbarRef]);
 

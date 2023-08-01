@@ -12,6 +12,7 @@ import { ReactComponent as FolderSVG } from "../editor/assets/folder.svg";
 import { ReactComponent as PlusSVG } from "../editor/assets/plus.svg";
 
 import {
+	I_Folder,
 	lbn_idb__delete_folder,
 	lbn_idb__get_folders,
 	lbn_idb__save_folder,
@@ -198,7 +199,7 @@ function Sidebar() {
 					</div>
 				</Link>
 
-				{folders.map((folder, fidx: number) => {
+				{folders.map((folder: I_Folder, fidx: number) => {
 					return (
 						<Link
 							key={fidx}
@@ -220,7 +221,7 @@ function Sidebar() {
 
 									console.log("Show cust context menu");
 
-									lbn_idb__delete_folder(folder.id)
+									lbn_idb__delete_folder(parseInt(folder.id))
 										.then((res) => {
 											console.log(res);
 										})

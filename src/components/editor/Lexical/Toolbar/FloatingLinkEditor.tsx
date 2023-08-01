@@ -1,16 +1,11 @@
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import "./FloatingLinkEditor.scss";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { mergeRegister } from "@lexical/utils";
 import { $isAtNodeEnd } from "@lexical/selection";
-import {
-	SELECTION_CHANGE_COMMAND,
-	$getSelection,
-	$isRangeSelection,
-} from "lexical";
+import { SELECTION_CHANGE_COMMAND, $getSelection, $isRangeSelection } from "lexical";
 
 import { ReactComponent as EditSVG } from "../../assets/Edit.svg";
 
@@ -23,11 +18,11 @@ function getSelectedNode(selection: any) {
 	const focus = selection.focus;
 	const anchorNode = selection.anchor.getNode();
 	const focusNode = selection.focus.getNode();
-	if(anchorNode === focusNode) {
+	if (anchorNode === focusNode) {
 		return anchorNode;
 	}
 	const isBackward = selection.isBackward();
-	if(isBackward) {
+	if (isBackward) {
 		return $isAtNodeEnd(focus) ? anchorNode : focusNode;
 	} else {
 		return $isAtNodeEnd(anchor) ? focusNode : anchorNode;
@@ -35,13 +30,15 @@ function getSelectedNode(selection: any) {
 }
 
 function positionEditorElement(editor: any, rect: any) {
-	if(rect === null) {
+	if (rect === null) {
 		editor.style.opacity = "0";
 		editor.style.top = "-1000px";
 		editor.style.left = "-1000px";
 	} else {
 		editor.style.opacity = "1";
-		editor.style.top = `${rect.top + rect.height + window.pageYOffset + 10}px`;
+		editor.style.top = `${
+			(((rect.top as number) + rect.height) as number) + window.pageYOffset + 10
+		}px`;
 		editor.style.left = `${
 			rect.left + window.pageXOffset - editor.offsetWidth / 2 + rect.width / 2
 		}px`;
@@ -58,12 +55,12 @@ function FloatingLinkEditor({ editor }: any) {
 
 	const updateLinkEditor = useCallback(() => {
 		const selection = $getSelection();
-		if($isRangeSelection(selection)) {
+		if ($isRangeSelection(selection)) {
 			const node = getSelectedNode(selection);
 			const parent = node.getParent();
-			if($isLinkNode(parent)) {
+			if ($isLinkNode(parent)) {
 				setLinkUrl(parent.getURL());
-			} else if($isLinkNode(node)) {
+			} else if ($isLinkNode(node)) {
 				setLinkUrl(node.getURL());
 			} else {
 				setLinkUrl("");
@@ -73,12 +70,12 @@ function FloatingLinkEditor({ editor }: any) {
 		const nativeSelection = window.getSelection();
 		const activeElement = document.activeElement;
 
-		if(editorElem === null) {
+		if (editorElem === null) {
 			return;
 		}
 
 		const rootElement = editor.getRootElement();
-		if(
+		if (
 			selection !== null &&
 			nativeSelection &&
 			!nativeSelection.isCollapsed &&
@@ -87,9 +84,9 @@ function FloatingLinkEditor({ editor }: any) {
 		) {
 			const domRange = nativeSelection.getRangeAt(0);
 			let rect;
-			if(nativeSelection.anchorNode === rootElement) {
+			if (nativeSelection.anchorNode === rootElement) {
 				let inner = rootElement;
-				while(inner.firstElementChild != null) {
+				while (inner.firstElementChild != null) {
 					inner = inner.firstElementChild;
 				}
 				rect = inner.getBoundingClientRect();
@@ -97,13 +94,13 @@ function FloatingLinkEditor({ editor }: any) {
 				rect = domRange.getBoundingClientRect();
 			}
 
-			if(!mouseDownRef.current) {
+			if (!mouseDownRef.current) {
 				positionEditorElement(editorElem, rect);
 			}
 
 			// @ts-ignore
 			setLastSelection(selection);
-		} else if(!activeElement || activeElement.className !== "link-input") {
+		} else if (!activeElement || activeElement.className !== "link-input") {
 			positionEditorElement(editorElem, null);
 			setLastSelection(null);
 			setEditMode(false);
@@ -139,16 +136,13 @@ function FloatingLinkEditor({ editor }: any) {
 	}, [editor, updateLinkEditor]);
 
 	useEffect(() => {
-		if(isEditMode && inputRef.current) {
+		if (isEditMode && inputRef.current) {
 			inputRef.current.focus();
 		}
 	}, [isEditMode]);
 
 	return (
-		<div
-			ref={editorRef}
-			className={`${CLASSNAME_PREFIX}__link-editor`}
-		>
+		<div ref={editorRef} className={`${CLASSNAME_PREFIX}__link-editor`}>
 			{isEditMode ? (
 				<input
 					ref={inputRef}
@@ -158,15 +152,15 @@ function FloatingLinkEditor({ editor }: any) {
 						setLinkUrl(event.target.value);
 					}}
 					onKeyDown={(event) => {
-						if(event.key === "Enter") {
+						if (event.key === "Enter") {
 							event.preventDefault();
-							if(lastSelection !== null) {
-								if(linkUrl !== "") {
+							if (lastSelection !== null) {
+								if (linkUrl !== "") {
 									editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkUrl);
 								}
 								setEditMode(false);
 							}
-						} else if(event.key === "Escape") {
+						} else if (event.key === "Escape") {
 							event.preventDefault();
 							setEditMode(false);
 						}
@@ -175,11 +169,7 @@ function FloatingLinkEditor({ editor }: any) {
 			) : (
 				<>
 					<div className={`${CLASSNAME_PREFIX}__link-input`}>
-						<a
-							href={linkUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+						<a href={linkUrl} target="_blank" rel="noopener noreferrer">
 							{linkUrl}
 						</a>
 

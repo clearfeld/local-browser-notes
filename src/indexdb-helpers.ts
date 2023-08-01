@@ -24,11 +24,22 @@ interface I_NoteRef {
 }
 
 export interface I_Folder {
+  id: string;
+  title: string;
+  parent_id: string | null;
+  note_ids: I_NoteRef[];
+  created_date: string;
+  last_updated_date: string;
+}
+
+export interface I_Folder_DB {
   key: string;
   value: {
     title: string;
     parent_id: string | null;
     note_ids: I_NoteRef[];
+    created_date: string;
+    last_updated_date: string;
   };
 }
 
