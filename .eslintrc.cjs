@@ -77,8 +77,8 @@ module.exports = {
 		"react/no-unescaped-entities": "warn",
 
 		// NOTE(clearfeld): TEMP remove these warnings and ensure theyre errors
-		"@typescript-eslint/no-unsafe-assignment": 1, // warning instead
 		"@typescript-eslint/ban-ts-comment": 1,
+		"@typescript-eslint/no-unsafe-assignment": 1, // warning instead
 		"@typescript-eslint/no-explicit-any": 1,
 		"@typescript-eslint/no-unsafe-return": 1,
 		"@typescript-eslint/no-unsafe-member-access": 1,
@@ -86,6 +86,5 @@ module.exports = {
 		"@typescript-eslint/no-unsafe-call": 1,
 		"@typescript-eslint/no-unsafe-argument": 1,
 		"jsx-a11y/click-events-have-key-events": 1,
-		// "@typescript-eslint/no-empty-interface": 1,
 	},
 };

@@ -1,5 +1,3 @@
-import React from "react";
-
 /**
  * https://github.com/facebook/lexical/blob/main/packages/lexical-playground/src/plugins/ToolbarPlugin/index.tsx
  *
@@ -7,8 +5,8 @@ import React from "react";
  *
  */
 
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
 	CAN_REDO_COMMAND,
 	CAN_UNDO_COMMAND,

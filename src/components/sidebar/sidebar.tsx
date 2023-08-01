@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, KeyboardEvent } from "react";
 
 import "./sidebar.scss";
 
@@ -24,7 +24,7 @@ interface I_Cookie_UserPreferences {
 
 function Sidebar() {
 	const user_preferences_cookie = "lbn__user_preferences";
-	const domain_str = ".temp-domain.io";
+	// const domain_str = ".temp-domain.io";
 
 	const params = useParams();
 
@@ -45,7 +45,7 @@ function Sidebar() {
 				setFolders(res);
 			})
 			.catch((err) => {
-				console.error("TODO: logging");
+				console.error("TODO: logging - ", err);
 			});
 	}, []);
 
@@ -110,7 +110,7 @@ function Sidebar() {
 		}
 	}
 
-	async function SaveFolder(e: any) {
+	async function SaveFolder(e: KeyboardEvent<HTMLInputElement>) {
 		if (e.key === "Enter") {
 			// console.log("Enter");
 
@@ -124,7 +124,7 @@ function Sidebar() {
 			setFolderName("");
 			setShowCreateNewFolder(false);
 
-			const new_state = [...folders];
+			const new_state = [ ...folders ];
 			new_state.push(folder);
 			setFolders(new_state);
 		}
@@ -262,7 +262,7 @@ function Sidebar() {
 							}}
 							onKeyDown={(e) => {
 								SaveFolder(e).catch((err) => {
-									console.log();
+									console.log("TODO: logging - ", err);
 								});
 							}}
 						/>

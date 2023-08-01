@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, SyntheticEvent } from "react";
 
 import "./editor.scss";
 
@@ -13,7 +13,7 @@ function Editor() {
 	const ccDraftRef = useRef(null);
 	const ccEditorToolbarLocationRef = useRef(null);
 
-	const toolbarRef = useRef<HTMLDivElement>(null);
+	// const toolbarRef = useRef<HTMLDivElement>(null);
 
 	const [domReady, setDomReady] = useState(false);
 
@@ -72,7 +72,7 @@ function Editor() {
 		// }
 	}
 
-	function SaveHijack(e: any) {
+	function SaveHijack(e: KeyboardEvent) {
 		if (e.ctrlKey && e.key === "s") {
 			// Prevent the Save dialog to open
 			e.preventDefault();
