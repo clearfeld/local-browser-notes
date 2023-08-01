@@ -69,7 +69,7 @@ function Settings() {
 
 				<div>
 					<p className="lbn__modals__settings__text">
-						WARNING: Once site data is deleted, recovery is not possible.
+						WARNING: Once site data is deleted, recovery is not possible. This includes all notes, and all folders.
 					</p>
 
 					<br />

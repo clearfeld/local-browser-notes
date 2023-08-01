@@ -23,6 +23,7 @@ import { ReactComponent as ThemeDarkSVG } from "../editor/assets/theme-dark.svg"
 import { ReactComponent as FolderSVG } from "../editor/assets/folder.svg";
 import { ReactComponent as PlusSVG } from "../editor/assets/plus.svg";
 import { ReactComponent as SettingsSVG } from "../editor/assets/Settings.svg";
+import { ReactComponent as GithubSVG } from "../editor/assets/github-fill.svg";
 
 import {
 	I_Folder,
@@ -152,30 +153,18 @@ function Sidebar() {
 
 				<div
 					className="sidebar__icon-btn"
-					onClick={(e: any) => {
-						e.preventDefault();
-						e.stopPropagation();
-
+					onClick={() => {
 						// TODO: autofocus input
-						// setShowCreateNewFolder(true);
-						setModalState({
-							showModal: true,
-							modalString: E_MODALS_NAME.SETTINGS,
-						});
+						setShowCreateNewFolder(true);
 					}}
 					onKeyDown={() => {
-						// setShowCreateNewFolder(true);
+						setShowCreateNewFolder(true);
 					}}
 					role="button"
 					tabIndex={0}
 					title="Create folder"
 				>
-					<SettingsSVG
-						className="svg-filter"
-						viewBox="0 0 426.667 426.667"
-						height="1.25rem"
-						width="1.25rem"
-					/>
+					<PlusSVG className="svg-filter" viewBox="0 0 24 24" height="1.25rem" width="1.25rem" />
 				</div>
 
 				<div
@@ -205,18 +194,30 @@ function Sidebar() {
 
 				<div
 					className="sidebar__icon-btn"
-					onClick={() => {
+					onClick={(e: any) => {
+						e.preventDefault();
+						e.stopPropagation();
+
 						// TODO: autofocus input
-						setShowCreateNewFolder(true);
+						// setShowCreateNewFolder(true);
+						setModalState({
+							showModal: true,
+							modalString: E_MODALS_NAME.SETTINGS,
+						});
 					}}
 					onKeyDown={() => {
-						setShowCreateNewFolder(true);
+						// setShowCreateNewFolder(true);
 					}}
 					role="button"
 					tabIndex={0}
 					title="Create folder"
 				>
-					<PlusSVG className="svg-filter" viewBox="0 0 24 24" height="1.25rem" width="1.25rem" />
+					<SettingsSVG
+						className="svg-filter"
+						viewBox="0 0 426.667 426.667"
+						height="1.25rem"
+						width="1.25rem"
+					/>
 				</div>
 
 				{/* <div
@@ -243,7 +244,7 @@ function Sidebar() {
 				</div> */}
 			</div>
 
-			{/* <hr className="sidebar__divider" /> */}
+			<hr className="sidebar__divider" />
 
 			<div className="sidebar__folder-space__wrapper">
 				<Link to={`folder/0`} className="sidebar__folder-space__folder-link">
@@ -341,8 +342,10 @@ function Sidebar() {
 
 			<hr className="sidebar__divider" />
 
-			<a href="https://github.com/clearfeld/local-browser-notes">
-				<div className="sidebar__github-link">Github</div>
+			<a className="sidebar__github-link" href="https://github.com/clearfeld/local-browser-notes">
+				<GithubSVG className="svg-filter" viewBox="0 0 24 24" width="1.25rem" height="1.25rem" />
+
+				<div className="sidebar__github-text">Github</div>
 			</a>
 		</div>
 	);

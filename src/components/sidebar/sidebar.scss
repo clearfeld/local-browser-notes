@@ -1,121 +1,122 @@
 .sidebar__ {
+  &wrapper {
+    position: fixed;
+    min-height: 100vh;
+    width: var(--sidebar-size);
+    background: var(--sidebar-color-bg);
+  }
+
+  &title-main {
+    margin: 0;
+    padding: 0;
+    font-size: 1.125rem;
+    font-weight: bold;
+  }
+
+  &icon-btn {
+    cursor: pointer;
+    background-color: var(--sidebar-color-bg);
+    width: 1.75rem;
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+
+    transition: background-color var(--cc-transition-speed) ease;
+
+    &:hover {
+      background-color: var(--sidebar-color-bg-hover);
+    }
+  }
+
+  &top-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2rem 2rem 2rem;
+    padding: 0.5rem 0.5rem;
+  }
+
+  &divider {
+    margin: 0;
+    border: none;
+    border-top: 0.0625rem solid var(--sidebar-color-bg-hover);
+  }
+
+  &folder-space__ {
     &wrapper {
-        position: fixed;
-        min-height: 100vh;
-        width: var(--sidebar-size);
-        background: var(--sidebar-color-bg);
+      min-height: calc(100vh - 5.25rem);
+      height: calc(100vh - 5.25rem);
+      max-height: calc(100vh - 5.25rem);
+      overflow: auto;
     }
 
-    &title-main {
-        margin: 0;
-        padding: 0;
-        font-size: 1.125rem;
-        font-weight: bold;
+    &folder-active {
+      cursor: pointer;
+      background-color: var(--color-bg-compliment) !important;
+      transition: background-color var(--cc-transition-speed) ease;
+      &:hover {
+        background-color: var(--color-bg-hover) !important;
+      }
+
+      // background-color: var(--color-bg-hover) !important;
     }
 
-    &icon-btn {
-        cursor: pointer;
-        background-color: var(--sidebar-color-bg);
-        width: 1.75rem;
-        height: 1.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0.25rem;
-
-        transition: background-color var(--cc-transition-speed) ease;
-
-        &:hover {
-            background-color: var(--sidebar-color-bg-hover);
-        }
+    &folder-link {
+      text-decoration: none;
+      color: var(--color-text);
     }
 
-    &top-wrapper {
-        display: grid;
-        grid-template-columns: 1fr 2.5rem 2.5rem 2.5rem;
-        padding-top: 0.5rem;
-        padding-left: 0.75rem;
+    &folder-btn {
+      display: flex;
+      align-items: center;
+
+      padding: 0.5rem 0.75rem;
+
+      cursor: pointer;
+      background-color: var(--sidebar-color-bg);
+      transition: background-color var(--cc-transition-speed) ease;
+      &:hover {
+        background-color: var(--sidebar-color-bg-hover);
+      }
     }
 
-    &spacer {
-        min-height: calc(100vh - 4.5rem);
+    &folder-title {
+      margin: 0;
+      padding: 0;
+      padding-left: 0.5rem;
+      color: var(--color-text);
+      width: 11rem;
     }
 
-    &divider {
-        margin: 0;
-        border: none;
-        border-top: 0.0625rem solid var(--color-text-sub);
+    &folder-input {
+      margin: 0;
+      padding: 0;
+      padding-left: 0.5rem;
+      color: var(--color-text);
+      border: none;
+      background: none;
     }
+  }
 
-    &github-link {
-        cursor: pointer;
+  &github-link {
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    text-decoration: none;
+    width: calc(100% - 1rem);
 
-        color: var(--color-text);
-        background-color: var(--sidebar-color-bg);
-        text-decoration: none;
-        padding: 0.5rem 0.5rem;
+    cursor: pointer;
+    background-color: var(--sidebar-color-bg);
+    transition: background-color var(--cc-transition-speed) ease;
 
-        transition: background-color var(--cc-transition-speed) ease;
-
-        &:hover {
-            background-color: var(--sidebar-color-bg-hover);
-        }
+    &:hover {
+      background-color: var(--sidebar-color-bg-hover);
     }
+  }
 
-    &folder-space__ {
-        &wrapper {
-            min-height: calc(100vh - 4.5rem);
-            height: calc(100vh - 4.5rem);
-            max-height: calc(100vh - 4.5rem);
-            overflow: auto;
-        }
-
-        &folder-active {
-
-            cursor: pointer;
-            background-color: var(--color-bg-compliment) !important;
-            transition: background-color var(--cc-transition-speed) ease;
-            &:hover {
-                background-color: var(--color-bg-hover) !important;
-            }
-
-            // background-color: var(--color-bg-hover) !important;
-        }
-
-        &folder-link {
-            text-decoration: none;
-            color: var(--color-text);
-        }
-
-        &folder-btn {
-            display: flex;
-            align-items: center;
-
-            padding: 0.5rem 0.75rem;
-
-            cursor: pointer;
-            background-color: var(--sidebar-color-bg);
-            transition: background-color var(--cc-transition-speed) ease;
-            &:hover {
-                background-color: var(--sidebar-color-bg-hover);
-            }
-        }
-
-        &folder-title {
-            margin: 0;
-            padding: 0;
-            padding-left: 0.5rem;
-            color: var(--color-text);
-            width: 11rem;
-        }
-
-        &folder-input {
-            margin: 0;
-            padding: 0;
-            padding-left: 0.5rem;
-            color: var(--color-text);
-            border: none;
-            background: none;
-        }
-    }
+  &github-text {
+    color: var(--color-text);
+    text-decoration: none;
+    padding: 0.5rem 0.5rem;
+  }
 }
