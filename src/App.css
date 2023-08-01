@@ -308,7 +308,6 @@ body {
 	min-height: 100vh;
 }
 
-
 .text-no-overflow {
     white-space: nowrap;
     text-overflow: ellipsis;

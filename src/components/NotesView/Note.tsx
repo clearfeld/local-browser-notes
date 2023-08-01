@@ -96,6 +96,7 @@ function Note(props: I_NoteProps) {
 				to={`${window.location.protocol}//${window.location.host}/note/${props.note.id}`}
 				// relative="path"
 				ref={blockRef}
+				className="notes-view__note-block__link"
 			>
 				<div>
 					<div className="notes-view__note-block__wrapper">
@@ -118,7 +119,8 @@ function Note(props: I_NoteProps) {
 						</div>
 					</div>
 
-					{/* <div>{props.note.title}</div> */}
+					{/* <div>{props.note.created_date}</div>
+					<div>{props.note.last_updated_date}</div> */}
 				</div>
 			</Link>
 

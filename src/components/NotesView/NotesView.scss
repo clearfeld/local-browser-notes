@@ -1,4 +1,30 @@
 .notes-view__ {
+  &toolbar__ {
+    &wrapper {
+      border-bottom: 1px solid var(--color-border);
+      height: 2rem;
+      padding: 0.5rem 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    &btn {
+      cursor: pointer;
+      // background-color: var(--sidebar-color-bg);
+      width: 1.75rem;
+      height: 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.25rem;
+      transition: background-color var(--cc-transition-speed) ease;
+
+      &:hover {
+        background-color: var(--color-bg-hover);
+      }
+    }
+  }
+
   &note-grid {
     display: flex;
     gap: 1.5rem;
@@ -13,6 +39,17 @@
       background-color: var(--color-bg-compliment);
       border: 0.0625rem solid var(--color-border);
       border-radius: 0.25rem;
+
+      transition: background-color var(--cc-transition-speed) ease;
+
+      &:hover {
+        background-color: var(--color-bg-hover);
+      }
+    }
+
+    &link {
+      text-decoration: none;
+      color: var(--color-text);
     }
 
     &top-line {

@@ -177,7 +177,7 @@ function Sidebar() {
 			{/* <hr className="sidebar__divider" /> */}
 
 			<div className="sidebar__folder-space__wrapper">
-				<Link to={`folder/0`}>
+				<Link to={`folder/0`} className="sidebar__folder-space__folder-link">
 					<div className="sidebar__folder-space__folder-btn">
 						<FolderSVG
 							className="svg-filter"
@@ -190,33 +190,13 @@ function Sidebar() {
 					</div>
 				</Link>
 
-				{showCreateNewFolder && (
-					<div className="sidebar__folder-space__folder-btn">
-						<FolderSVG
-							className="svg-filter"
-							viewBox="0 0 24 24"
-							height="1.25rem"
-							width="1.25rem"
-						/>
-
-						<input
-							className="sidebar__folder-space__folder-input"
-							value={folderName}
-							onChange={(e) => {
-								setFolderName(e.target.value);
-							}}
-							onKeyDown={(e) => {
-								SaveFolder(e).catch((err) => {
-									console.log();
-								});
-							}}
-						/>
-					</div>
-				)}
-
 				{folders.map((folder, fidx: number) => {
 					return (
-						<Link key={fidx} to={`folder/${folder.id}`}>
+						<Link
+							key={fidx}
+							to={`folder/${folder.id}`}
+							className="sidebar__folder-space__folder-link"
+						>
 							<div
 								className="sidebar__folder-space__folder-btn"
 								onClick={() => {
@@ -252,6 +232,30 @@ function Sidebar() {
 						</Link>
 					);
 				})}
+
+				{showCreateNewFolder && (
+					<div className="sidebar__folder-space__folder-btn">
+						<FolderSVG
+							className="svg-filter"
+							viewBox="0 0 24 24"
+							height="1.25rem"
+							width="1.25rem"
+						/>
+
+						<input
+							className="sidebar__folder-space__folder-input"
+							value={folderName}
+							onChange={(e) => {
+								setFolderName(e.target.value);
+							}}
+							onKeyDown={(e) => {
+								SaveFolder(e).catch((err) => {
+									console.log();
+								});
+							}}
+						/>
+					</div>
+				)}
 			</div>
 
 			<hr className="sidebar__divider" />

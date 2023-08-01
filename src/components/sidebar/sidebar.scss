@@ -70,6 +70,11 @@
             overflow: auto;
         }
 
+        &folder-link {
+            text-decoration: none;
+            color: var(--color-text);
+        }
+
         &folder-btn {
             display: flex;
             align-items: center;

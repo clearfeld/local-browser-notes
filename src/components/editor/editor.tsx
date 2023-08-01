@@ -21,6 +21,8 @@ function Editor() {
 
 	const [noteName, setNoteName] = useState<string>("");
 
+	const [note, setNote] = useState<any>(null);
+
 	const [noteContent, setNoteContent] = useState<string | null>(null);
 
 	// TODO(clearfeld): important if new note route no id on start but after first save update
@@ -52,11 +54,14 @@ function Editor() {
 			const note_id = parseInt(params.id);
 			const note = await lbn_idb__get_note(note_id);
 
-			console.log(note);
+			console.log("Note - ", note);
+
 
 			noteIDRef.current = note.id;
 			setNoteName(note.title);
 			setNoteContent(note.content);
+
+			setNote(note);
 
 			// return note;
 		}
@@ -91,6 +96,14 @@ function Editor() {
 				// }
 
 
+// 				console.log(noteIDRef.current, params.parent_id);
+
+// 				if(note === null) {
+// 					console.log("NOTE - ", note);
+// 				} else {
+// 					console.log("NOTE - ", note);
+// 				}
+// return
 
 				if (noteIDRef.current === null && params.parent_id !== undefined) {
 					const nobj: any = {
@@ -116,11 +129,11 @@ function Editor() {
 					const nobj: any = {
 						id: noteIDRef.current,
 						title: noteName,
-						folder_parent_id: 0, // TODO: FIXME: should save note details abvove and re-use the needed bits --- params.parent_id,
+						folder_parent_id: note.folder_parent_id, // TODO: FIXME: should save note details abvove and re-use the needed bits --- params.parent_id,
 						summary: "", // TODO:
 						tags: [], // TODO:
 						content: note_content,
-						// created_date: new Date().valueOf(),
+						created_date: note.created_date,
 						last_updated_date: new Date().valueOf(),
 					};
 
