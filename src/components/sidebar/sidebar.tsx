@@ -2,6 +2,18 @@ import React, { useEffect, useState, KeyboardEvent } from "react";
 
 import "./sidebar.scss";
 
+import {
+	// useRecoilValue,
+	useSetRecoilState,
+} from "recoil";
+
+import {
+	// T_ModalStateData,
+	T_SetModalStateData,
+	ModalStateData,
+	E_MODALS_NAME,
+} from "../../store/ModalStateAtom";
+
 import Cookies from "js-cookie";
 
 import { Link, useParams } from "react-router-dom";
@@ -10,6 +22,7 @@ import { ReactComponent as ThemeLightSVG } from "../editor/assets/theme-light.sv
 import { ReactComponent as ThemeDarkSVG } from "../editor/assets/theme-dark.svg";
 import { ReactComponent as FolderSVG } from "../editor/assets/folder.svg";
 import { ReactComponent as PlusSVG } from "../editor/assets/plus.svg";
+import { ReactComponent as SettingsSVG } from "../editor/assets/Settings.svg";
 
 import {
 	I_Folder,
@@ -23,6 +36,8 @@ interface I_Cookie_UserPreferences {
 }
 
 function Sidebar() {
+	const setModalState: T_SetModalStateData = useSetRecoilState(ModalStateData);
+
 	const user_preferences_cookie = "lbn__user_preferences";
 	// const domain_str = ".temp-domain.io";
 
@@ -124,7 +139,7 @@ function Sidebar() {
 			setFolderName("");
 			setShowCreateNewFolder(false);
 
-			const new_state = [ ...folders ];
+			const new_state = [...folders];
 			new_state.push(folder);
 			setFolders(new_state);
 		}
@@ -134,6 +149,34 @@ function Sidebar() {
 		<div className="sidebar__wrapper">
 			<div className="sidebar__top-wrapper">
 				<p className="sidebar__title-main">LB Notes</p>
+
+				<div
+					className="sidebar__icon-btn"
+					onClick={(e: any) => {
+						e.preventDefault();
+						e.stopPropagation();
+
+						// TODO: autofocus input
+						// setShowCreateNewFolder(true);
+						setModalState({
+							showModal: true,
+							modalString: E_MODALS_NAME.SETTINGS,
+						});
+					}}
+					onKeyDown={() => {
+						// setShowCreateNewFolder(true);
+					}}
+					role="button"
+					tabIndex={0}
+					title="Create folder"
+				>
+					<SettingsSVG
+						className="svg-filter"
+						viewBox="0 0 426.667 426.667"
+						height="1.25rem"
+						width="1.25rem"
+					/>
+				</div>
 
 				<div
 					className="sidebar__icon-btn"
@@ -175,6 +218,29 @@ function Sidebar() {
 				>
 					<PlusSVG className="svg-filter" viewBox="0 0 24 24" height="1.25rem" width="1.25rem" />
 				</div>
+
+				{/* <div
+					className="sidebar__icon-btn"
+					onClick={(e: any) => {
+						e.preventDefault();
+						e.stopPropagation();
+
+						// TODO: autofocus input
+						// setShowCreateNewFolder(true);
+						setModalState({
+							showModal: true,
+							modalString: E_MODALS_NAME.ABOUT,
+						});
+					}}
+					onKeyDown={() => {
+						// setShowCreateNewFolder(true);
+					}}
+					role="button"
+					tabIndex={0}
+					title="Create folder"
+				>
+					<PlusSVG className="svg-filter" viewBox="0 0 24 24" height="1.25rem" width="1.25rem" />
+				</div> */}
 			</div>
 
 			{/* <hr className="sidebar__divider" /> */}
@@ -221,6 +287,7 @@ function Sidebar() {
 
 									console.log("Show cust context menu");
 
+									// TODO(clearfeld): delete folder should ask to delete notes under it
 									lbn_idb__delete_folder(parseInt(folder.id))
 										.then((res) => {
 											console.log(res);

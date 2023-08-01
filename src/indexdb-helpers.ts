@@ -3,6 +3,8 @@ import { openDB, deleteDB, DBSchema } from "idb/with-async-ittr";
 
 // import { v4 as uuidv4 } from "uuid";
 
+const idb_name = "lbn";
+
 //
 
 declare global {
@@ -116,7 +118,7 @@ interface I_IDB_V1 extends DBSchema {
 }
 
 export async function lbn_idb_open() {
-  const db = await openDB<I_IDB_V1>("lbn", 1.0, {
+  const db = await openDB<I_IDB_V1>(idb_name, 1.0, {
     upgrade(db, oldVersion, newVersion, transaction, event) {
       // …
 
@@ -165,6 +167,16 @@ export async function lbn_idb_open() {
   });
 
   return db;
+}
+
+export async function lbn_idb_delete() {
+  const x = await deleteDB(idb_name, {
+    // blocked() {
+    //   console.log("Error: delete db blocked");
+    // },
+  });
+
+  return x;
 }
 
 // Folders start

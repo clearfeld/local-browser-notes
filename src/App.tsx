@@ -21,6 +21,7 @@ import Editor from "./components/editor/editor";
 
 import { lbn_idb_open } from "./indexdb-helpers";
 import NotesView from "./components/NotesView/NotesView";
+import ModalEntryPoint from "./components/modals/ModalEntryPoint";
 
 function App() {
 	// const getCountState: T_CountStateData = useRecoilValue(CountStateData);
@@ -34,6 +35,8 @@ function App() {
 				path="/"
 				element={
 					<>
+						<ModalEntryPoint />
+
 						<Sidebar />
 
 						<div
