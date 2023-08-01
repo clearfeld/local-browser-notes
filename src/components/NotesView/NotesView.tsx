@@ -35,9 +35,16 @@ function NotesView() {
 	}, [params]);
 
 	function GetNotes(): void {
-		// TODO: if id 0 otherwise pass in the param
+		let folder_id = null;
+		if(params.id === "0" || params.id === undefined) {
+			// console.log();
+			// TODO: if id 0 otherwise pass in the param
+		} else {
+			folder_id = parseInt(params.id);
+		}
+
 		// @ts-ignore
-		lbn_idb__get_notes(parseInt(params.id))
+		lbn_idb__get_notes(folder_id)
 			.then((res) => {
 				console.log(res);
 				setNotes(res);
