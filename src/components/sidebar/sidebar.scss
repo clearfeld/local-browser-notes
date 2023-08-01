@@ -70,6 +70,18 @@
             overflow: auto;
         }
 
+        &folder-active {
+
+            cursor: pointer;
+            background-color: var(--color-bg-compliment) !important;
+            transition: background-color var(--cc-transition-speed) ease;
+            &:hover {
+                background-color: var(--color-bg-hover) !important;
+            }
+
+            // background-color: var(--color-bg-hover) !important;
+        }
+
         &folder-link {
             text-decoration: none;
             color: var(--color-text);

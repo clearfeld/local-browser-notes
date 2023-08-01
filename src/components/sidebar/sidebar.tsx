@@ -4,7 +4,7 @@ import "./sidebar.scss";
 
 import Cookies from "js-cookie";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { ReactComponent as ThemeLightSVG } from "../editor/assets/theme-light.svg";
 import { ReactComponent as ThemeDarkSVG } from "../editor/assets/theme-dark.svg";
@@ -24,6 +24,8 @@ interface I_Cookie_UserPreferences {
 function Sidebar() {
 	const user_preferences_cookie = "lbn__user_preferences";
 	const domain_str = ".temp-domain.io";
+
+	const params = useParams();
 
 	const [theme, setTheme] = useState<"DARK" | "LIGHT">("LIGHT");
 
@@ -178,7 +180,13 @@ function Sidebar() {
 
 			<div className="sidebar__folder-space__wrapper">
 				<Link to={`folder/0`} className="sidebar__folder-space__folder-link">
-					<div className="sidebar__folder-space__folder-btn">
+					<div
+						className={
+							(params.id == "0" || params.id === undefined
+								? "sidebar__folder-space__folder-active"
+								: "") + " sidebar__folder-space__folder-btn"
+						}
+					>
 						<FolderSVG
 							className="svg-filter"
 							viewBox="0 0 24 24"
@@ -195,10 +203,13 @@ function Sidebar() {
 						<Link
 							key={fidx}
 							to={`folder/${folder.id}`}
-							className="sidebar__folder-space__folder-link"
+							className={"sidebar__folder-space__folder-link"}
 						>
 							<div
-								className="sidebar__folder-space__folder-btn"
+								className={
+									(params.id == folder.id ? "sidebar__folder-space__folder-active" : "") +
+									" sidebar__folder-space__folder-btn"
+								}
 								onClick={() => {
 									console.log();
 								}}
