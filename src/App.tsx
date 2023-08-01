@@ -7,7 +7,7 @@ import {
 	createHashRouter,
 	RouterProvider,
 	Route,
-	Link,
+	// Link,
 	Outlet,
 } from "react-router-dom";
 
