@@ -290,6 +290,9 @@ function Sidebar() {
 									lbn_idb__delete_folder(parseInt(folder.id))
 										.then((res) => {
 											console.log(res);
+
+											window.location.href = `${window.location.protocol}//${window.location.host}/#/folder/0`;
+											window.location.reload();
 										})
 										.catch((err) => {
 											console.error("TODO: error logging", err);

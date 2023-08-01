@@ -220,8 +220,14 @@ export async function lbn_idb__save_folder(folder_name: string) {
 
 export async function lbn_idb__delete_folder(folder_id: number) {
   if (window.LBN.idb_ref !== null) {
-    const tx = window.LBN.idb_ref.transaction("folders", "readwrite");
+    const tx_n = window.LBN.idb_ref.transaction("notes", "readwrite");
+    // TODO: logging / error reporting
+    const index = await tx_n.store.index("folder_parent_id");
+    for await (const cursor of index.iterate(folder_id)) {
+      cursor.delete();
+    }
 
+    const tx = window.LBN.idb_ref.transaction("folders", "readwrite");
     // TODO: logging / error reporting
     const res = await tx.store.delete(folder_id);
 
