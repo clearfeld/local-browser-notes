@@ -90,6 +90,9 @@
       padding: 0.5rem;
       cursor: pointer;
       vertical-align: middle;
+      min-width: 9rem;
+      display: grid;
+      grid-template-columns: 1fr 1rem;
 
       &:hover:not([disabled]) {
         background-color: var(--color-bg-hover);
@@ -99,6 +102,7 @@
     &text-main {
       color: var(--color-text);
       margin-right: 0.75rem;
+      text-align: initial;
     }
 
     &text {
