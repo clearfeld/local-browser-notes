@@ -116,6 +116,8 @@ function NotesView() {
 	function NewNote(e: any): void {
 		if (params.id !== undefined) {
 			navigate(`/new-note/${params.id}`);
+		} else {
+			navigate(`/new-note/0`);
 		}
 	}
 
