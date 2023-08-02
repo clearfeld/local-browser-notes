@@ -1,4 +1,4 @@
-import React, { useEffect, useState, KeyboardEvent } from "react";
+import React, { useEffect, useState, KeyboardEvent, forwardRef, useRef } from "react";
 
 import "./sidebar.scss";
 
@@ -52,6 +52,8 @@ function Sidebar() {
 	const user_preferences_cookie = "lbn__user_preferences";
 	// const domain_str = ".temp-domain.io";
 
+	const newFolderDivRef = useRef<HTMLDivElement>(null);
+
 	const params = useParams();
 
 	const [theme, setTheme] = useState<"DARK" | "LIGHT">("LIGHT");
@@ -71,6 +73,20 @@ function Sidebar() {
 				console.error("TODO: logging - ", err);
 			});
 	}, []);
+
+	useEffect(() => {
+		document.addEventListener("click", handleClickOutside, false);
+
+		return () => {
+			document.removeEventListener("click", handleClickOutside, false);
+		};
+	}, []);
+
+	function handleClickOutside(event: any): void {
+		if (newFolderDivRef.current && !newFolderDivRef.current.contains(event.target)) {
+			setShowCreateNewFolder(false);
+		}
+	}
 
 	async function GetFolders(): Promise<I_Folder[]> {
 		const folders: I_Folder[] = await lbn_idb__get_folders();
@@ -133,19 +149,15 @@ function Sidebar() {
 		}
 	}
 
-	async function SaveFolder(e: KeyboardEvent<HTMLInputElement>) {
-		if (e.key === "Enter") {
-			// console.log("Enter");
-
-			// clear foldername
-			// add to idb
-			// re render list of folders
-
-			// const x =
-			const folder = await lbn_idb__save_folder(folderName);
-
-			setFolderName("");
+	async function SaveFolder(e: KeyboardEvent<HTMLInputElement>): Promise<void> {
+		if (e.key === "Escape") {
 			setShowCreateNewFolder(false);
+			setFolderName("");
+		} else if (e.key === "Enter") {
+			setShowCreateNewFolder(false);
+			setFolderName("");
+
+			const folder = await lbn_idb__save_folder(folderName);
 
 			const new_state = [...getFoldersState];
 			// @ts-ignore
@@ -161,8 +173,9 @@ function Sidebar() {
 
 				<div
 					className="sidebar__icon-btn"
-					onClick={() => {
-						// TODO: autofocus input
+					onClick={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
 						setShowCreateNewFolder(true);
 					}}
 					onKeyDown={() => {
@@ -323,29 +336,35 @@ function Sidebar() {
 					);
 				})}
 
-				{showCreateNewFolder && (
-					<div className="sidebar__folder-space__folder-btn">
-						<FolderSVG
-							className="svg-filter"
-							viewBox="0 0 24 24"
-							height="1.25rem"
-							width="1.25rem"
-						/>
+				<div
+				ref={newFolderDivRef}
+				>
+					{showCreateNewFolder && (
+						<div className="sidebar__folder-space__folder-btn">
+							<FolderSVG
+								className="svg-filter"
+								viewBox="0 0 24 24"
+								height="1.25rem"
+								width="1.25rem"
+							/>
 
-						<input
-							className="sidebar__folder-space__folder-input"
-							value={folderName}
-							onChange={(e) => {
-								setFolderName(e.target.value);
-							}}
-							onKeyDown={(e) => {
-								SaveFolder(e).catch((err) => {
-									console.log("TODO: logging - ", err);
-								});
-							}}
-						/>
-					</div>
-				)}
+							<input
+								// @ts-ignore
+								autoFocus={true}
+								className="sidebar__folder-space__folder-input"
+								value={folderName}
+								onChange={(e) => {
+									setFolderName(e.target.value);
+								}}
+								onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+									SaveFolder(e).catch((err) => {
+										console.log("TODO: logging - ", err);
+									});
+								}}
+							/>
+						</div>
+					)}
+				</div>
 			</div>
 
 			<hr className="sidebar__divider" />

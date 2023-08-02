@@ -86,5 +86,6 @@ module.exports = {
 		"@typescript-eslint/no-unsafe-call": 1,
 		"@typescript-eslint/no-unsafe-argument": 1,
 		"jsx-a11y/click-events-have-key-events": 1,
+		"jsx-a11y/no-autofocus": 1,
 	},
 };

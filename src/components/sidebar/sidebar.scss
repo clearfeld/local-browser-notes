@@ -89,12 +89,17 @@
     }
 
     &folder-input {
+      border: 0.125rem solid var(--color-global-blue);
+      border-radius: 0.25rem;
+      left: 2.5rem;
+      position: absolute;
+      background-color: var(--color-bg);
+      outline: none;
+      height: 1.5rem;
       margin: 0;
       padding: 0;
-      padding-left: 0.5rem;
+      padding-left: 0.25rem;
       color: var(--color-text);
-      border: none;
-      background: none;
     }
   }
 
