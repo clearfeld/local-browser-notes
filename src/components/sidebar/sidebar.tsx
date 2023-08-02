@@ -3,6 +3,7 @@ import React, { useEffect, useState, KeyboardEvent } from "react";
 import "./sidebar.scss";
 
 import {
+	useRecoilValue,
 	// useRecoilValue,
 	useSetRecoilState,
 } from "recoil";
@@ -13,6 +14,12 @@ import {
 	ModalStateData,
 	E_MODALS_NAME,
 } from "../../store/ModalStateAtom";
+
+import {
+	// I_Folder []
+	T_SetFoldersStateData,
+	FoldersStateData,
+} from "../../store/FoldersAtom";
 
 import Cookies from "js-cookie";
 
@@ -39,6 +46,9 @@ interface I_Cookie_UserPreferences {
 function Sidebar() {
 	const setModalState: T_SetModalStateData = useSetRecoilState(ModalStateData);
 
+	const getFoldersState: I_Folder[] = useRecoilValue(FoldersStateData);
+	const setFoldersState: T_SetFoldersStateData = useSetRecoilState(FoldersStateData);
+
 	const user_preferences_cookie = "lbn__user_preferences";
 	// const domain_str = ".temp-domain.io";
 
@@ -49,16 +59,13 @@ function Sidebar() {
 	const [showCreateNewFolder, setShowCreateNewFolder] = useState<boolean>(false);
 	const [folderName, setFolderName] = useState<string>("");
 
-	// TODO: move this to recoil global state
-	const [folders, setFolders] = useState<any[]>([]);
-
 	useEffect(() => {
 		EnablePreferredTheme();
 
 		GetFolders()
 			.then((res) => {
 				// console.log(res);
-				setFolders(res);
+				setFoldersState(res);
 			})
 			.catch((err) => {
 				console.error("TODO: logging - ", err);
@@ -140,9 +147,10 @@ function Sidebar() {
 			setFolderName("");
 			setShowCreateNewFolder(false);
 
-			const new_state = [...folders];
+			const new_state = [...getFoldersState];
+			// @ts-ignore
 			new_state.push(folder);
-			setFolders(new_state);
+			setFoldersState(new_state);
 		}
 	}
 
@@ -265,7 +273,7 @@ function Sidebar() {
 					</div>
 				</Link>
 
-				{folders.map((folder: I_Folder, fidx: number) => {
+				{getFoldersState.map((folder: I_Folder, fidx: number) => {
 					return (
 						<Link
 							key={fidx}
