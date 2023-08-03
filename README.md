@@ -45,13 +45,13 @@ NOTE: Under development not fully usable.
   - [ ] search / filter
   - [ ] pull from note context
 - [ ] settings
-  - [ ] auto save
   - [ ] font selection
   - [ ] theme preference - persist
   - [X] delete indexeddb instance (all data - notes folders tags etc...)
   - [ ] remember last opened folder and/or note
 - [ ] extras
   - [X] light and dark themes
+  - [X] auto save
   - [ ] keyboard shortcuts modal
   - [ ] about modal
   - [ ] global command palette (search support)

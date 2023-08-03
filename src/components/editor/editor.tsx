@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, SyntheticEvent } from "react";
 
 import "./editor.scss";
 
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import CCLEditor from "./Lexical/Editor";
 import { I_Note, lbn_idb__get_note, lbn_idb__save_note } from "@src/indexdb-helpers";
@@ -31,13 +31,15 @@ function Editor() {
 
 	const noteRef = useRef<I_Note | null>(null);
 
+	const location = useLocation();
+
 	useEffect(() => {
 		document.addEventListener("keydown", SaveHijack);
 
 		if (!domReady) {
 			AttemptToFetchNote()
 				.then((res) => {
-					console.log(res);
+					// console.log(res);
 					setDomReady(true);
 				})
 				.catch((err) => {
@@ -51,12 +53,63 @@ function Editor() {
 	}, [noteName]);
 	//[noteName, noteContent]); // TODO: clean this up later
 
+	useEffect(() => {
+		let cur_href: any = null;
+		if (cur_href === null) {
+			cur_href = window.location.href;
+		}
+
+		const cur_ccdf = ccDraftRef.current;
+
+		// console.log(cur_href, window.location.href);
+
+		// @ts-ignore
+		// console.log(cur_ccdf, cur_ccdf?.GetEditorContent());
+
+		window.addEventListener("beforeunload", AttemptAutoSave);
+
+		return () => {
+			// console.log("CLEAN - ", cur_href, window.location.href);
+
+			window.removeEventListener("beforeunload", AttemptAutoSave);
+
+			// AttemptAutoSave();
+			if (cur_href !== window.location.href) {
+				// TODO: leave for more navigation leave testing combos
+				// // @ts-ignore
+				// console.log("AAAAAAAAAAAAAA", cur_ccdf?.GetEditorContent());
+				// // eslint-disable-next-line no-debugger
+				// debugger;
+
+				// @ts-ignore
+				if (cur_ccdf?.GetEditorContent() !== "null") {
+					AutoSaveProcess(cur_ccdf);
+				}
+			}
+		};
+	}, [window.location.href, ccDraftRef.current, noteName, domReady]);
+
+	function AttemptAutoSave() {
+		// console.log("Attempt AutoSave");
+
+		// TODO: leave for more navigation leave testing combos
+		// // @ts-ignore
+		// console.log("AAAAAAAAAAAAAA", ccDraftRef.current.GetEditorContent());
+		// // eslint-disable-next-line no-debugger
+		// debugger;
+
+		// @ts-ignore
+		if (ccDraftRef.current.GetEditorContent() !== "null") {
+			AutoSaveProcess(ccDraftRef.current);
+		}
+	}
+
 	async function AttemptToFetchNote() {
 		if (params.note_id) {
 			const note_id = parseInt(params.note_id);
 			const note = await lbn_idb__get_note(note_id);
 
-			console.log("Note - ", note);
+			// console.log("Note - ", note);
 
 			if (note) {
 				noteIDRef.current = parseInt(note.id);
@@ -73,6 +126,83 @@ function Editor() {
 		//  TODO: have better checks for if params id exists or not and whether or not the note was actually fetched
 		// 	return null;
 		// }
+	}
+
+	function AutoSaveProcess(cur_ccdf: any): void {
+		// console.log("Here", cur_ccdf);
+
+		if (cur_ccdf) {
+
+			// @ts-ignore
+			const note_content = cur_ccdf.GetEditorContent();
+			// @ts-ignore
+			const note_summary = cur_ccdf.GetSummaryContentOfState();
+
+			// console.log(noteName, params, noteIDRef.current);
+
+			if (noteIDRef.current === null && params.parent_id !== undefined) {
+				const nobj: any = {
+					// id: noteID,
+					title: noteName === "" ? "Untitled" : noteName,
+					folder_parent_id: parseInt(params.parent_id),
+					summary: note_summary,
+					tags: [], // TODO:
+					content: note_content,
+					created_date: new Date().valueOf(),
+					last_updated_date: new Date().valueOf(),
+				};
+
+				// console.log(nobj);
+				// return;
+
+				lbn_idb__save_note(nobj)
+					.then((res: any) => {
+						// console.log(res);
+						noteIDRef.current = res.id;
+
+						if (params.parent_id) {
+							noteRef.current = {
+								id: res.id,
+								title: noteName === "" ? "Untitled" : noteName,
+								folder_parent_id: params.parent_id.toString(),
+								summary: note_summary,
+								tags: [], // TODO:
+								content: note_content,
+								created_date: new Date().valueOf(),
+								last_updated_date: new Date().valueOf(),
+							};
+						}
+					})
+					.catch((err) => {
+						console.error(err);
+					});
+			} else {
+				if (noteRef.current) {
+					const nobj: any = {
+						id: noteIDRef.current,
+						title: noteName,
+						folder_parent_id: noteRef.current.folder_parent_id,
+						summary: note_summary,
+						tags: [], // TODO:
+						content: note_content,
+						created_date: note.created_date,
+						last_updated_date: new Date().valueOf(),
+					};
+
+					// console.log("ELSE - ", nobj);
+					// return;
+
+					lbn_idb__save_note(nobj)
+						.then((res: any) => {
+							// console.log(res);
+							// setNoteID(res.id);
+						})
+						.catch((err) => {
+							console.error(err);
+						});
+				}
+			}
+		}
 	}
 
 	function SaveHijack(e: KeyboardEvent) {
@@ -212,8 +342,7 @@ function Editor() {
 					/>
 
 					{domReady && (
-						<div
-						>
+						<div>
 							<CCLEditor
 								value={noteContent}
 								PatchContent={null}

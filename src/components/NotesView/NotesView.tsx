@@ -32,7 +32,6 @@ function NotesView() {
 	const [noteFetchAttemptCompleted, setBoteFetchAttemptCompleted] = useState<boolean>(false);
 
 	useEffect(() => {
-		console.log("a", params);
 		GetNotes();
 	}, [params]);
 
@@ -48,7 +47,7 @@ function NotesView() {
 		// @ts-ignore
 		lbn_idb__get_notes(folder_id)
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				setNotes(res as I_Note[]);
 				setBoteFetchAttemptCompleted(true);
 			})

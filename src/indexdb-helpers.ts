@@ -301,11 +301,11 @@ export async function lbn_idb__get_notes(
 
       const notes: I_Note[] = [];
 
-      console.log(filter_id, tx, index);
-      console.log(index.iterate("0")); //index.iterate(filter_id));
+      // console.log(filter_id, tx, index);
+      // console.log(index.iterate("0")); //index.iterate(filter_id));
 
       for await (const cursor of index.iterate(filter_id)) {
-        console.log(cursor.value);
+        // console.log(cursor.value);
         notes.push(cursor.value);
       }
       // for await (const cursor of index.iterate(filter_id)) {
