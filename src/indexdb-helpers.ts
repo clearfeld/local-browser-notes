@@ -26,6 +26,11 @@ interface I_NoteRef {
   tags: string[];
 }
 
+export interface I_FolderOrder {
+  id: string;
+  id_order: string[];
+}
+
 export interface I_Folder {
   id: string;
   title: string;
@@ -83,6 +88,13 @@ interface I_IDB_V1 extends DBSchema {
 
   // TODO(clearfeld): think about maybe create a scratch space thats the default none connected note for initial open
 
+  folder_order: {
+    key: string;
+    value: {
+      id_order: string[];
+    };
+  },
+
   folders: {
     key: string;
     value: {
@@ -119,11 +131,11 @@ interface I_IDB_V1 extends DBSchema {
 }
 
 export async function lbn_idb_open() {
-  const db = await openDB<I_IDB_V1>(idb_name, 1.0, {
+  const db = await openDB<I_IDB_V1>(idb_name, 2, {
     upgrade(db, oldVersion, newVersion, transaction, event) {
       // …
 
-      if (oldVersion < 1.0) {
+      if (oldVersion < 1) {
         // Create a store of objects
         const store_folders = db.createObjectStore("folders", {
           // The 'id' property of the object will be the key.
@@ -152,6 +164,15 @@ export async function lbn_idb_open() {
 
         // Create an index on the 'date' property of the objects.
         // store.createIndex("date", "date");
+      }
+
+      if (oldVersion < 2) {
+        const store_folder_order = db.createObjectStore("folder_order", {
+          // The 'id' property of the object will be the key.
+          keyPath: "id",
+          // If it isn't explicitly set, create a value by auto incrementing.
+          autoIncrement: false,
+        });
       }
     },
 
