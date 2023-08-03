@@ -1,6 +1,8 @@
 # LB Notes
 
-NOTE: Under development not fully usable.
+Local Browser (LB) Notes - is a fully client side notes app, where all data (ex. notes and folders) are stored locally on your browser (indexeddb). NOTE: Be careful with any notes stored, since anything that might clear your browser data might lead to data lose.
+
+[Use it here - https://clearfeld.github.io/local-browser-notes/#/folder/0](https://clearfeld.github.io/local-browser-notes/#/folder/0)
 
 ## Features
 - [ ] folders
