@@ -1,4 +1,4 @@
-import React, { useEffect, useState, KeyboardEvent, forwardRef, useRef } from "react";
+import React, { useEffect, useState, KeyboardEvent, useRef } from "react";
 
 import "./sidebar.scss";
 
@@ -32,11 +32,14 @@ import { ReactComponent as PlusSVG } from "../editor/assets/plus.svg";
 import { ReactComponent as SettingsSVG } from "../editor/assets/Settings.svg";
 import { ReactComponent as GithubSVG } from "../editor/assets/github-fill.svg";
 
+import Folder from "./folder";
+
 import {
 	I_Folder,
 	lbn_idb__delete_folder,
 	lbn_idb__get_folders,
 	lbn_idb__save_folder,
+	lbn_idb__update_folder,
 } from "@src/indexdb-helpers";
 
 interface I_Cookie_UserPreferences {
@@ -166,6 +169,37 @@ function Sidebar() {
 		}
 	}
 
+	// async function UpdateFolderTitle(folder_arg: I_Folder, title_arg: string): Promise<void> {
+	async function UpdateFolderTitle(folder_arg: I_Folder, title_arg: string): Promise<void> {
+		console.log(folder_arg, title_arg);
+
+		const new_state = [...getFoldersState];
+		console.log(new_state);
+
+		let fobj: I_Folder;
+
+		for (let i = 0; i < new_state.length; ++i) {
+			if (new_state[i].id === folder_arg.id) {
+				fobj = { ...new_state[i] };
+				fobj.title = title_arg;
+				new_state[i] = { ...fobj };
+
+				const folder_res = await lbn_idb__update_folder(fobj);
+				if (folder_res === undefined) {
+					// TODO: report error - probably should have an error modal
+				}
+
+				break;
+			}
+		}
+
+		console.log(new_state);
+
+		// // @ts-ignore
+		// new_state.push(folder);
+		// setFoldersState(new_state);
+	}
+
 	return (
 		<div className="sidebar__wrapper">
 			<div className="sidebar__top-wrapper">
@@ -287,58 +321,10 @@ function Sidebar() {
 				</Link>
 
 				{getFoldersState.map((folder: I_Folder, fidx: number) => {
-					return (
-						<Link
-							key={fidx}
-							to={`folder/${folder.id}`}
-							className={"sidebar__folder-space__folder-link"}
-						>
-							<div
-								className={
-									(params.id == folder.id ? "sidebar__folder-space__folder-active" : "") +
-									" sidebar__folder-space__folder-btn"
-								}
-								onClick={() => {
-									console.log();
-								}}
-								role="button"
-								tabIndex={0}
-								onContextMenu={(e) => {
-									e.preventDefault();
-
-									console.log("Show cust context menu");
-
-									// TODO(clearfeld): delete folder should ask to delete notes under it
-									lbn_idb__delete_folder(parseInt(folder.id))
-										.then((res) => {
-											console.log(res);
-
-											window.location.href = `${window.location.protocol}//${window.location.host}/#/folder/0`;
-											window.location.reload();
-										})
-										.catch((err) => {
-											console.error("TODO: error logging", err);
-										});
-								}}
-							>
-								<FolderSVG
-									className="svg-filter"
-									viewBox="0 0 24 24"
-									height="1.25rem"
-									width="1.25rem"
-								/>
-
-								<p className="sidebar__folder-space__folder-title text-no-overflow">
-									{folder.title}
-								</p>
-							</div>
-						</Link>
-					);
+					return <Folder key={fidx} folder={folder} UpdateFolderTitle={UpdateFolderTitle} />;
 				})}
 
-				<div
-				ref={newFolderDivRef}
-				>
+				<div ref={newFolderDivRef}>
 					{showCreateNewFolder && (
 						<div className="sidebar__folder-space__folder-btn">
 							<FolderSVG

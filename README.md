@@ -8,7 +8,7 @@ NOTE: Under development not fully usable.
   - [X] parent folders
   - [ ] child folders
   - [X] delete folder + underlying notes
-  - [ ] rename folder
+  - [X] rename folder
   - [ ] re-order folders
   - [ ] virtulaization
 - [ ] notes

@@ -195,7 +195,22 @@ export async function lbn_idb__get_folders(): Promise<I_Folder[]> {
   return [];
 }
 
-// TODO(clearfeld): need update folder func for title change
+export async function lbn_idb__update_folder(folder_arg: I_Folder): Promise<I_Folder | undefined> {
+  if (window.LBN.idb_ref !== null) {
+    const tx = window.LBN.idb_ref.transaction("folders", "readwrite");
+
+    // TODO: logging / error reporting
+    const res = await tx.store.put(folder_arg);
+
+    return folder_arg;
+  } else {
+    // TODO: logging / error reporting
+
+    return undefined;
+  }
+
+  return undefined;
+}
 
 export async function lbn_idb__save_folder(folder_name: string) {
   if (window.LBN.idb_ref !== null) {
