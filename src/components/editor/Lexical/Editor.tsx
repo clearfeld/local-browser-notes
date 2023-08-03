@@ -236,6 +236,7 @@ const editorConfigReadingMode = {
 
 interface CCLEditorProps {
 	value: any | null;
+	SetModRefTrue: Function | null;
 	PatchContent: Function | null;
 
 	editable: boolean;
@@ -412,6 +413,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 									expanded={props.expanded}
 									ExpandToggle={props.ExpandToggle}
 									affirmateAction={props.affirmateAction}
+									SetModRefTrue={props.SetModRefTrue}
 								/>,
 
 								// toolbarRef.current,

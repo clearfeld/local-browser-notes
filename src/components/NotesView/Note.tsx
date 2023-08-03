@@ -181,6 +181,7 @@ function Note(props: I_NoteProps) {
 						>
 							<CCLEditor
 								value={props.note.summary}
+								SetModRefTrue={null}
 								PatchContent={null}
 								editable={false} // : boolean;
 								setEditable={null} // : Function | null;

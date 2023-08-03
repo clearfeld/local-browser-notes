@@ -31,6 +31,8 @@ function Editor() {
 
 	const noteRef = useRef<I_Note | null>(null);
 
+	const modRef = useRef<boolean>(false);
+
 	const location = useLocation();
 
 	useEffect(() => {
@@ -54,12 +56,30 @@ function Editor() {
 	//[noteName, noteContent]); // TODO: clean this up later
 
 	useEffect(() => {
+		const interval = setInterval(() => {
+			if (modRef.current) {
+				// console.log("Attempt interval auto save");
+				AttemptAutoSave();
+			} else {
+				// console.log("No mod changes");
+			}
+		}, 1000 * 15); // run every 30 seconds
+		return () => clearInterval(interval);
+	}, []);
+
+	function SetModRefTrue(): void {
+		modRef.current = true;
+	}
+
+	useEffect(() => {
 		let cur_href: any = null;
 		if (cur_href === null) {
 			cur_href = window.location.href;
 		}
 
 		const cur_ccdf = ccDraftRef.current;
+
+		modRef.current = true;
 
 		// console.log(cur_href, window.location.href);
 
@@ -132,6 +152,7 @@ function Editor() {
 		// console.log("Here", cur_ccdf);
 
 		if (cur_ccdf) {
+			modRef.current = false;
 
 			// @ts-ignore
 			const note_content = cur_ccdf.GetEditorContent();
@@ -185,7 +206,7 @@ function Editor() {
 						summary: note_summary,
 						tags: [], // TODO:
 						content: note_content,
-						created_date: note.created_date,
+						created_date: noteRef.current.created_date,
 						last_updated_date: new Date().valueOf(),
 					};
 
@@ -213,6 +234,8 @@ function Editor() {
 		// 	}
 		// }
 		if (e.ctrlKey && e.key === "s") {
+			modRef.current = false;
+
 			// Prevent the Save dialog to open
 			e.preventDefault();
 			// Place your code here
@@ -286,7 +309,7 @@ function Editor() {
 							summary: note_summary,
 							tags: [], // TODO:
 							content: note_content,
-							created_date: note.created_date,
+							created_date: noteRef.current.created_date,
 							last_updated_date: new Date().valueOf(),
 						};
 
@@ -345,6 +368,7 @@ function Editor() {
 						<div>
 							<CCLEditor
 								value={noteContent}
+								SetModRefTrue={SetModRefTrue}
 								PatchContent={null}
 								editable={true} // : boolean;
 								setEditable={null} // : Function | null;

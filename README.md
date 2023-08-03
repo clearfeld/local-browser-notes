@@ -52,6 +52,7 @@ NOTE: Under development not fully usable.
 - [ ] extras
   - [X] light and dark themes
   - [X] auto save
+  - [-] ctrl + s save with some kind of notifcation popup
   - [ ] keyboard shortcuts modal
   - [ ] about modal
   - [ ] global command palette (search support)

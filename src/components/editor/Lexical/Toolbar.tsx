@@ -22,19 +22,11 @@ import {
 	RangeSelection,
 } from "lexical";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
-import {
-	$isParentElementRTL,
-	$wrapNodes,
-	$isAtNodeEnd,
-} from "@lexical/selection";
+import { $isParentElementRTL, $wrapNodes, $isAtNodeEnd } from "@lexical/selection";
 import { $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
 import { $isListNode, ListNode } from "@lexical/list";
 import { createPortal } from "react-dom";
-import {
-	$createHeadingNode,
-	$createQuoteNode,
-	$isHeadingNode,
-} from "@lexical/rich-text";
+import { $createHeadingNode, $createQuoteNode, $isHeadingNode } from "@lexical/rich-text";
 import {
 	$createCodeNode,
 	$isCodeNode,
@@ -86,20 +78,10 @@ function Divider() {
 
 function Select({ onChange, className, options, value }: any) {
 	return (
-		<select
-			className={className}
-			onChange={onChange}
-			value={value}
-		>
-			<option
-				hidden={true}
-				value=""
-			/>
+		<select className={className} onChange={onChange} value={value}>
+			<option hidden={true} value="" />
 			{options.map((option: any) => (
-				<option
-					key={option}
-					value={option}
-				>
+				<option key={option} value={option}>
 					{option}
 				</option>
 			))}
@@ -112,11 +94,11 @@ function getSelectedNode(selection: any) {
 	const focus = selection.focus;
 	const anchorNode = selection.anchor.getNode();
 	const focusNode = selection.focus.getNode();
-	if(anchorNode === focusNode) {
+	if (anchorNode === focusNode) {
 		return anchorNode;
 	}
 	const isBackward = selection.isBackward();
-	if(isBackward) {
+	if (isBackward) {
 		return $isAtNodeEnd(focus) ? anchorNode : focusNode;
 	} else {
 		return $isAtNodeEnd(anchor) ? focusNode : anchorNode;
@@ -128,6 +110,8 @@ interface I_ToolbarPluginProps {
 	ExpandToggle?: (state: boolean) => void;
 
 	affirmateAction: () => void;
+
+	SetModRefTrue: Function | null;
 }
 
 function ToolbarPlugin(props: I_ToolbarPluginProps) {
@@ -149,32 +133,23 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 
 	const updateToolbar = useCallback(() => {
 		const selection = $getSelection();
-		if($isRangeSelection(selection)) {
+		if ($isRangeSelection(selection)) {
 			const anchorNode = selection.anchor.getNode();
 			const element =
-				anchorNode.getKey() === "root"
-					? anchorNode
-					: anchorNode.getTopLevelElementOrThrow();
+				anchorNode.getKey() === "root" ? anchorNode : anchorNode.getTopLevelElementOrThrow();
 			const elementKey = element.getKey();
 			const elementDOM = editor.getElementByKey(elementKey);
-			if(elementDOM !== null) {
+			if (elementDOM !== null) {
 				// @ts-ignore
 				setSelectedElementKey(elementKey);
-				if($isListNode(element)) {
-					const parentList = $getNearestNodeOfType<ListNode>(
-						anchorNode,
-						ListNode,
-					);
-					const type = parentList
-						? parentList.getListType()
-						: element.getListType();
+				if ($isListNode(element)) {
+					const parentList = $getNearestNodeOfType<ListNode>(anchorNode, ListNode);
+					const type = parentList ? parentList.getListType() : element.getListType();
 					setBlockType(type);
 				} else {
-					const type = $isHeadingNode(element)
-						? element.getTag()
-						: element.getType();
+					const type = $isHeadingNode(element) ? element.getTag() : element.getType();
 					setBlockType(type);
-					if($isCodeNode(element)) {
+					if ($isCodeNode(element)) {
 						setCodeLanguage(element.getLanguage() || getDefaultCodeLanguage());
 					}
 				}
@@ -190,7 +165,7 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 			// Update links
 			const node = getSelectedNode(selection);
 			const parent = node.getParent();
-			if($isLinkNode(parent) || $isLinkNode(node)) {
+			if ($isLinkNode(parent) || $isLinkNode(node)) {
 				setIsLink(true);
 			} else {
 				setIsLink(false);
@@ -200,6 +175,16 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 
 	useEffect(() => {
 		return mergeRegister(
+			// NOTE(clearfeld): flawed doesn't pick up block convert ie heading 1 changed to heading 6
+			// look into something for that later not a massive deal though
+			editor.registerTextContentListener((textContent) => {
+				// The latest text content of the editor!
+				// console.log(textContent);
+				if(props.SetModRefTrue !== null) {
+					console.log("update");
+					props.SetModRefTrue();
+				}
+			}),
 			editor.registerUpdateListener(({ editorState }) => {
 				editorState.read(() => {
 					updateToolbar();
@@ -236,9 +221,9 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 	const onCodeLanguageSelect = useCallback(
 		(e: any) => {
 			editor.update(() => {
-				if(selectedElementKey !== null) {
+				if (selectedElementKey !== null) {
 					const node = $getNodeByKey(selectedElementKey);
-					if($isCodeNode(node)) {
+					if ($isCodeNode(node)) {
 						node.setLanguage(e.target.value);
 					}
 				}
@@ -248,7 +233,7 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 	);
 
 	const insertLink = useCallback(() => {
-		if(!isLink) {
+		if (!isLink) {
 			editor.dispatchCommand(TOGGLE_LINK_COMMAND, "https://");
 		} else {
 			editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
@@ -256,10 +241,7 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 	}, [editor, isLink]);
 
 	return (
-		<div
-			className={`${CLASSNAME_PREFIX}__toolbar`}
-			ref={toolbarRef}
-		>
+		<div className={`${CLASSNAME_PREFIX}__toolbar`} ref={toolbarRef}>
 			<div className={`${CLASSNAME_PREFIX}__toolbar__left-side`}>
 				<button
 					disabled={!canUndo}
@@ -298,11 +280,7 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 
 				{(supportedBlockTypes.has(blockType) || blockType === "root") && (
 					<>
-						<BlockOptionsButton
-							editor={editor}
-							blockType={blockType}
-							toolbarRef={toolbarRef}
-						/>
+						<BlockOptionsButton editor={editor} blockType={blockType} toolbarRef={toolbarRef} />
 
 						<Divider />
 					</>
@@ -373,9 +351,7 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 							onClick={() => {
 								editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
 							}}
-							className={
-								"toolbar-item spaced " + (isStrikethrough ? "active" : "")
-							}
+							className={"toolbar-item spaced " + (isStrikethrough ? "active" : "")}
 							aria-label="Format Strikethrough"
 						>
 							<StrikeThroughSVG
@@ -415,11 +391,7 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 							/>
 						</button>
 
-						{isLink &&
-							createPortal(
-								<FloatingLinkEditor editor={editor} />,
-								document.body,
-							)}
+						{isLink && createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
 						<Divider />
 
 						<button
@@ -493,10 +465,7 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 					<button
 						onClick={() => {
 							// editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
-							if(
-								props.ExpandToggle !== undefined &&
-								props.expanded !== undefined
-							) {
+							if (props.ExpandToggle !== undefined && props.expanded !== undefined) {
 								props.ExpandToggle(!props.expanded);
 							}
 						}}
@@ -504,17 +473,9 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 						aria-label="Shrink or expand article"
 					>
 						{props.expanded ? (
-							<ShrinkSVG
-								className="svg-filter"
-								height="1rem"
-								width="1rem"
-							/>
+							<ShrinkSVG className="svg-filter" height="1rem" width="1rem" />
 						) : (
-							<ExpandSVG
-								className="svg-filter"
-								height="1rem"
-								width="1rem"
-							/>
+							<ExpandSVG className="svg-filter" height="1rem" width="1rem" />
 						)}
 					</button>
 				</div>
