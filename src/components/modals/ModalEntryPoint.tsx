@@ -1,8 +1,8 @@
 import React from "react";
 
 import {
-    useRecoilValue,
-    // useSetRecoilState
+	useRecoilValue,
+	// useSetRecoilState
 } from "recoil";
 
 import {
@@ -13,6 +13,7 @@ import {
 } from "../../store/ModalStateAtom";
 
 import Settings from "./settings/Settings";
+import MoveNote from "./MoveNote/MoveNote";
 
 function ModalEntryPoint() {
 	const getModalState: T_ModalStateData = useRecoilValue(ModalStateData);
@@ -52,10 +53,9 @@ function ModalEntryPoint() {
 						}}
 					/>
 
-                    {getModalState.modalString === E_MODALS_NAME.SETTINGS && (
-						<Settings />
-					)}
+					{getModalState.modalString === E_MODALS_NAME.MOVE_NOTE && <MoveNote />}
 
+					{getModalState.modalString === E_MODALS_NAME.SETTINGS && <Settings />}
 				</div>
 			)}
 		</div>

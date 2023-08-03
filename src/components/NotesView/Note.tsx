@@ -4,8 +4,25 @@ import "./NotesView.scss";
 
 import { Link } from "react-router-dom";
 
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { T_CountStateData, T_SetCountStateData, CountStateData } from "@store/CountAtom";
+import {
+	useRecoilValue,
+	// useRecoilValue,
+	useSetRecoilState,
+} from "recoil";
+
+import {
+	// T_ModalStateData,
+	T_SetModalStateData,
+	ModalStateData,
+	E_MODALS_NAME,
+} from "../../store/ModalStateAtom";
+
+import {
+	// T_ModalStateData,
+	T_SetObjectSelectionStateData,
+	ObjectSelectionStateData,
+	E_OBJECT_TYPE,
+} from "../../store/ObjectSelection";
 
 import { I_Note, lbn_idb__delete_note } from "@src/indexdb-helpers";
 
@@ -31,11 +48,33 @@ interface I_LastUpdatedDateProps {
 }
 
 function NoteMenu(props: I_NoteMenuProps) {
+	const setModalState: T_SetModalStateData = useSetRecoilState(ModalStateData);
+	const setObjectSelectionState: T_SetObjectSelectionStateData =
+		useSetRecoilState(ObjectSelectionStateData);
+
 	function DuplicateNote(e: any): void {
 		e.preventDefault();
 		e.stopPropagation();
 
 		props.DuplicateNote(props.note);
+
+		props.CloseMenu();
+	}
+
+	function MoveNote(e: any): void {
+		e.preventDefault();
+		e.stopPropagation();
+
+		setObjectSelectionState({
+			object_type: E_OBJECT_TYPE.NOTE,
+			objects: [props.note],
+		});
+
+		// props.MoveNote(parseInt(props.note.id));
+		setModalState({
+			showModal: true,
+			modalString: E_MODALS_NAME.MOVE_NOTE,
+		});
 
 		props.CloseMenu();
 	}
@@ -62,6 +101,15 @@ function NoteMenu(props: I_NoteMenuProps) {
 				tabIndex={0}
 			>
 				Duplicate Note
+			</div>
+
+			<div
+				className="notes-view__note-block__menu__btn"
+				onClick={MoveNote}
+				role="button"
+				tabIndex={0}
+			>
+				Move Note
 			</div>
 
 			<hr className="notes-view__note-block__menu__divider" />

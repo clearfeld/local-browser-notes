@@ -5,7 +5,11 @@ import "./NotesView.scss";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { T_CountStateData, T_SetCountStateData, CountStateData } from "@store/CountAtom";
+
+import {
+	T_SetNotesStateData,
+	NotesStateData
+} from "@store/NotesAtom";
 
 import { ReactComponent as NewNoteSVG } from "@src/components/editor/assets/file-add-line.svg";
 import { ReactComponent as FolderSVG } from "@src/components/editor/assets/folder.svg";
@@ -21,13 +25,13 @@ import {
 import Note from "@src/components/NotesView/Note";
 
 function NotesView() {
-	// const getCountState: T_CountStateData = useRecoilValue(CountStateData);
-	// const setCountState: T_SetCountStateData = useSetRecoilState(CountStateData);
+	const getNotesState = useRecoilValue(NotesStateData);
+	const setNotesState: T_SetNotesStateData = useSetRecoilState(NotesStateData);
 
 	const params = useParams();
 	const navigate = useNavigate();
 
-	const [notes, setNotes] = useState<I_Note[]>([]);
+	// const [notes, setNotes] = useState<I_Note[]>([]);
 
 	const [noteFetchAttemptCompleted, setBoteFetchAttemptCompleted] = useState<boolean>(false);
 
@@ -48,7 +52,7 @@ function NotesView() {
 		lbn_idb__get_notes(folder_id)
 			.then((res) => {
 				// console.log(res);
-				setNotes(res as I_Note[]);
+				setNotesState(res as I_Note[]);
 				setBoteFetchAttemptCompleted(true);
 			})
 			.catch((err) => {
@@ -74,14 +78,14 @@ function NotesView() {
 			.then((res: any) => {
 				console.log("Dupe note - ", res);
 
-				const new_notes_state = [...notes];
+				const new_notes_state = [...getNotesState];
 				nobj.id = res.id;
 				console.log(nobj);
 
 				// @ts-ignore
 				new_notes_state.push(nobj as I_Note);
 
-				setNotes(new_notes_state);
+				setNotesState(new_notes_state);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -93,10 +97,10 @@ function NotesView() {
 			.then((res) => {
 				console.log("Delete note - ", note_id);
 
-				const new_notes_state = [...notes];
+				const new_notes_state = [...getNotesState];
 				// console.log(new_notes_state);
 
-				for (let i = 0; i < notes.length; ++i) {
+				for (let i = 0; i < getNotesState.length; ++i) {
 					// @ts-ignore
 					if (new_notes_state[i].id === note_id) {
 						new_notes_state.splice(i, 1);
@@ -105,7 +109,7 @@ function NotesView() {
 
 				// console.log(new_notes_state);
 
-				setNotes(new_notes_state);
+				setNotesState(new_notes_state);
 			})
 			.catch((err) => {
 				console.error("TODO: error logging", err);
@@ -138,9 +142,9 @@ function NotesView() {
 
 			{noteFetchAttemptCompleted && (
 				<>
-					{notes.length > 0 ? (
+					{getNotesState.length > 0 ? (
 						<div className="notes-view__note-grid">
-							{notes.map((note: I_Note, _nidx: number) => {
+							{getNotesState.map((note: I_Note, _nidx: number) => {
 								return (
 									<Note
 										key={note.id}

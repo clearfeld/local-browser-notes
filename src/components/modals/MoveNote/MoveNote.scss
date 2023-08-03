@@ -1,0 +1,89 @@
+.lbn__modals__move-note__ {
+  &wrapper {
+    background: var(--color-bg);
+    border-radius: 0.25rem;
+
+    position: absolute;
+    // min-width: 24rem;
+    // min-height: 24rem;
+    max-width: 26rem;
+
+    z-index: 1000;
+
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-top: 2rem;
+
+    display: grid;
+    grid-template-rows: 1fr 4rem;
+
+    // height: 15rem;
+  }
+
+  &folder-selector-wrapper {
+    overflow-y: scroll;
+    width: 100%;
+    border: 0.0625rem solid var(--color-border);
+    padding: 0.5rem;
+    height: 10rem;
+  }
+
+  &folder-option-active {
+    background-color: var(--color-bg-compliment);
+  }
+
+  &folder-option {
+    cursor: pointer;
+
+    padding: 0.25rem 0;
+
+    transition: background-color var(--cc-transition-speed) ease;
+
+    &:hover {
+      background-color: var(--color-bg-hover);
+    }
+  }
+
+  &confirm-btn {
+    background-color: var(--color-global-blue);
+
+    transition: background-color var(--cc-transition-speed) ease;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-global-blue-hover);
+    }
+  }
+
+  &disabled-btn {
+    background-color: var(--color-global-gray-med-hover);
+    opacity: 0.5;
+    cursor: not-allowed;
+    &:hover {
+      background-color: var(--color-global-gray-med-hover);
+    }
+  }
+
+  &cancel-btn {
+    background-color: var(--color-global-gray-med);
+
+    transition: background-color var(--cc-transition-speed) ease;
+
+    &:hover {
+      background-color: var(--color-global-gray-med-hover);
+    }
+  }
+
+  &bottom-row__ {
+    &wrapper {
+      padding: 1rem 1.5rem 4rem 1.5rem;
+      background-color: var(--color-bg-compliment);
+
+      border-radius: 0 0 0.25rem 0.25rem;
+
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

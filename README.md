@@ -39,7 +39,9 @@ NOTE: Under development not fully usable.
   - [ ] Menu Options
     - [X] duplicate note
     - [X] delete note
-    - [ ] move note to different folder
+    - [X] move note to different folder
+    - [ ] lock note
+    - [ ] pin note
 - [X] pure indexeddb storage
 - [ ] tags
   - [ ] search / filter

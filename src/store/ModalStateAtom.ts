@@ -3,7 +3,8 @@ import { atom } from "recoil";
 export enum E_MODALS_NAME {
   NONE,
   SETTINGS,
-  ABOUT
+  ABOUT,
+  MOVE_NOTE
 }
 
 export type T_ModalStateData = {
