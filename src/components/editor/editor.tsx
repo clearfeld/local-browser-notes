@@ -63,7 +63,7 @@ function Editor() {
 			} else {
 				// console.log("No mod changes");
 			}
-		}, 1000 * 15); // run every 30 seconds
+		}, 1000 * 15); // run every 15 seconds
 		return () => clearInterval(interval);
 	}, []);
 
