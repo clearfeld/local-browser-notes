@@ -56,6 +56,7 @@ export interface I_Tag {
   value: {
     title: string;
     color: string;
+    // usage_count: number; ???
   };
 }
 
@@ -93,7 +94,7 @@ interface I_IDB_V1 extends DBSchema {
     value: {
       id_order: string[];
     };
-  },
+  };
 
   folders: {
     key: string;
@@ -126,6 +127,10 @@ interface I_IDB_V1 extends DBSchema {
       content: string;
       created_date: string;
       last_updated_date: string;
+    };
+    indexes: {
+      "last_updated_date": string;
+      "folder_parent_id": string;
     };
   };
 }
@@ -216,7 +221,9 @@ export async function lbn_idb__get_folders(): Promise<I_Folder[]> {
   return [];
 }
 
-export async function lbn_idb__update_folder(folder_arg: I_Folder): Promise<I_Folder | undefined> {
+export async function lbn_idb__update_folder(
+  folder_arg: I_Folder
+): Promise<I_Folder | undefined> {
   if (window.LBN.idb_ref !== null) {
     const tx = window.LBN.idb_ref.transaction("folders", "readwrite");
 
@@ -278,7 +285,9 @@ export async function lbn_idb__delete_folder(folder_id: number) {
 
 // Notes start
 
-export async function lbn_idb__get_notes(filter_id: number | null): Promise<I_Note[] | undefined> {
+export async function lbn_idb__get_notes(
+  filter_id: number | null
+): Promise<I_Note[] | undefined> {
   if (window.LBN.idb_ref !== null) {
     if (filter_id === null) {
       const notes: I_Note[] = await window.LBN.idb_ref.getAll("notes");
@@ -311,9 +320,14 @@ export async function lbn_idb__get_notes(filter_id: number | null): Promise<I_No
   }
 }
 
-export async function lbn_idb__get_note(note_id: number | null): Promise<I_Note | undefined> {
+export async function lbn_idb__get_note(
+  note_id: number | null
+): Promise<I_Note | undefined> {
   if (window.LBN.idb_ref !== null) {
-    const note: I_Note | undefined = await window.LBN.idb_ref.get("notes", note_id);
+    const note: I_Note | undefined = await window.LBN.idb_ref.get(
+      "notes",
+      note_id
+    );
     return note;
   } else {
     // TODO: logging / error reporting

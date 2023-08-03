@@ -73,6 +73,12 @@ function Editor() {
 	}
 
 	function SaveHijack(e: KeyboardEvent) {
+		// if(e.ctrlKey) {
+		// 	if (ccDraftRef.current) {
+		// 		// @ts-ignore
+		// 		ccDraftRef.current.GetSummaryContentOfState();
+		// 	}
+		// }
 		if (e.ctrlKey && e.key === "s") {
 			// Prevent the Save dialog to open
 			e.preventDefault();
@@ -85,6 +91,8 @@ function Editor() {
 				// console.log(ccDraftRef.current.GetEditorContent());
 
 				const note_content = ccDraftRef.current.GetEditorContent();
+				// @ts-ignore
+				const note_summary = ccDraftRef.current.GetSummaryContentOfState();
 
 				console.log(noteName, params, noteIDRef.current);
 
@@ -108,7 +116,7 @@ function Editor() {
 						// id: noteID,
 						title: noteName,
 						folder_parent_id: parseInt(params.parent_id),
-						summary: "", // TODO:
+						summary: note_summary,
 						tags: [], // TODO:
 						content: note_content,
 						created_date: new Date().valueOf(),
@@ -128,7 +136,7 @@ function Editor() {
 						id: noteIDRef.current,
 						title: noteName,
 						folder_parent_id: note.folder_parent_id, // TODO: FIXME: should save note details abvove and re-use the needed bits --- params.parent_id,
-						summary: "", // TODO:
+						summary: note_summary,
 						tags: [], // TODO:
 						content: note_content,
 						created_date: note.created_date,

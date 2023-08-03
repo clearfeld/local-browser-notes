@@ -14,7 +14,7 @@ NOTE: Under development not fully usable.
 - [ ] notes
   - [X] track last updated timestamp and creation date
   - [ ] note lock? (maybe)
-  - [ ] note summary preview
+  - [X] note summary preview
   - [ ] pin notes? (maybe)
   - [ ] wysiwyg note editor
     - [X] bold, italic, underline, strikethrough

@@ -41,7 +41,7 @@
 
   &note-block__ {
     &wrapper {
-      height: 8rem;
+      height: 12.25rem;
       width: 14rem;
       background-color: var(--color-bg-compliment);
       border: 0.0625rem solid var(--color-border);
@@ -64,7 +64,9 @@
       display: grid;
       grid-template-columns: 1fr 2rem;
       color: var(--color-text);
-      padding: 0.5rem 0.75rem;
+      padding: 0.25rem 0.75rem;
+      font-weight: bold;
+      align-items: center;
     }
 
     &menu-btn {
@@ -120,4 +122,13 @@
       }
     }
   }
+}
+
+.lbn__core__l-editor__editor-container,
+.lbn__core__l-editor__editor-inner {
+  background: initial !important;
+}
+
+.lbn__core__l-editor__editor-input {
+  min-height: initial !important;
 }

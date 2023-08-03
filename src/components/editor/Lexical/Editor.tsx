@@ -66,6 +66,7 @@ import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 import { CustomHeadingNode } from "./nodes/H1HeaderNode";
+import { $getRoot } from "lexical";
 
 // import { CustomParagraphNode } from "./nodes/CustomParagraphNode";
 
@@ -273,6 +274,31 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 		//   ClearContent() {
 		//       ClearContent();
 		//   },
+
+		GetSummaryContentOfState(): any {
+			const es = editorStateRef.current.clone(null);
+
+			const nm = new Map(es._nodeMap);
+			const sm = new Map();
+
+			let i = 0;
+			for (const [key, value] of nm) {
+				if(i < 20) {
+					i += 1;
+					// console.log(key, value);
+					sm.set(key, value);
+					continue;
+				}
+				// console.log("end");
+				break;
+			}
+
+			// console.log(nm);
+			// console.log(sm);
+
+			es._nodeMap = sm;
+			return JSON.stringify(es);
+		},
 
 		ClearEditorState(): void {
 			if(editorRef.current) {

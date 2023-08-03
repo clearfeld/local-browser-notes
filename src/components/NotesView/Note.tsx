@@ -10,6 +10,7 @@ import { T_CountStateData, T_SetCountStateData, CountStateData } from "@store/Co
 import { I_Note, lbn_idb__delete_note } from "@src/indexdb-helpers";
 
 import { ReactComponent as VertMoreSVG } from "@src/components/editor/assets/more-fill.svg";
+import CCLEditor from "../editor/Lexical/Editor";
 
 interface I_NoteProps {
 	note: I_Note;
@@ -169,6 +170,34 @@ function Note(props: I_NoteProps) {
 								/>
 							</div>
 						</div>
+
+						<div
+							style={{
+								scale: "0.8",
+								marginTop: "-1.75rem",
+								marginLeft: "-0.625rem",
+							}}
+						>
+							<CCLEditor
+								value={props.note.summary}
+								PatchContent={null}
+								editable={false} // : boolean;
+								setEditable={null} // : Function | null;
+								showToolbar={false} // : boolean;
+								placeholder={""} // : string;
+								// tells us whether the view is default expanded or not
+
+								expanded={true}
+								ExpandToggle={() => {
+									null;
+								}}
+								ref={null}
+								toolbarRef={null}
+								affirmateAction={() => {
+									null;
+								}}
+							/>
+						</div>
 					</div>
 
 					{/* <div>{props.note.created_date}</div> */}
@@ -180,7 +209,6 @@ function Note(props: I_NoteProps) {
 						note={props.note}
 						DuplicateNote={props.DuplicateNote}
 						DeleteNote={props.DeleteNote}
-
 						CloseMenu={CloseMenu}
 					/>
 				)}
