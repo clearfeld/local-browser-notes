@@ -27,7 +27,7 @@ interface I_NoteMenuProps {
 }
 
 interface I_LastUpdatedDateProps {
-	date: string;
+	date: number;
 }
 
 function NoteMenu(props: I_NoteMenuProps) {
@@ -177,6 +177,7 @@ function Note(props: I_NoteProps) {
 								marginTop: "-1.75rem",
 								marginLeft: "-0.625rem",
 							}}
+							className={"lbn_editor_preview_target"}
 						>
 							<CCLEditor
 								value={props.note.summary}

@@ -36,8 +36,8 @@ export interface I_Folder {
   title: string;
   parent_id: string | null;
   note_ids: I_NoteRef[];
-  created_date: string;
-  last_updated_date: string;
+  created_date: number;
+  last_updated_date: number;
 }
 
 export interface I_Folder_DB {
@@ -46,8 +46,8 @@ export interface I_Folder_DB {
     title: string;
     parent_id: string | null;
     note_ids: I_NoteRef[];
-    created_date: string;
-    last_updated_date: string;
+    created_date: number;
+    last_updated_date: number;
   };
 }
 
@@ -67,8 +67,8 @@ export interface I_Note {
   summary: string;
   tags: string[];
   content: string;
-  created_date: string;
-  last_updated_date: string;
+  created_date: number;
+  last_updated_date: number;
 }
 
 export interface I_Note_DB {
@@ -79,8 +79,8 @@ export interface I_Note_DB {
     summary: string;
     tags: string[];
     content: string;
-    created_date: string;
-    last_updated_date: string;
+    created_date: number;
+    last_updated_date: number;
   };
 }
 
@@ -103,7 +103,7 @@ interface I_IDB_V1 extends DBSchema {
       parent_id: string | null;
       note_ids: I_NoteRef[];
       created_date: string;
-      last_updated_date: string;
+      last_updated_date: number;
     };
   };
 
@@ -112,8 +112,8 @@ interface I_IDB_V1 extends DBSchema {
     value: {
       title: string;
       color: string;
-      created_date: string;
-      last_updated_date: string;
+      created_date: number;
+      last_updated_date: number;
     };
   };
 
@@ -125,11 +125,11 @@ interface I_IDB_V1 extends DBSchema {
       summary: string;
       tags: string[];
       content: string;
-      created_date: string;
-      last_updated_date: string;
+      created_date: number;
+      last_updated_date: number;
     };
     indexes: {
-      "last_updated_date": string;
+      "last_updated_date": number;
       "folder_parent_id": string;
     };
   };

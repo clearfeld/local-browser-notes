@@ -5,7 +5,7 @@ import "./editor.scss";
 import { useParams } from "react-router-dom";
 
 import CCLEditor from "./Lexical/Editor";
-import { lbn_idb__get_note, lbn_idb__save_note } from "@src/indexdb-helpers";
+import { I_Note, lbn_idb__get_note, lbn_idb__save_note } from "@src/indexdb-helpers";
 
 function Editor() {
 	const params = useParams();
@@ -28,6 +28,8 @@ function Editor() {
 	// TODO(clearfeld): important if new note route no id on start but after first save update
 	// if old note pull in useEffect the id and ensure its set before doing anything
 	const noteIDRef = useRef<number | null>(null);
+
+	const noteRef = useRef<I_Note | null>(null);
 
 	useEffect(() => {
 		document.addEventListener("keydown", SaveHijack);
@@ -62,6 +64,7 @@ function Editor() {
 				setNoteContent(note.content);
 
 				setNote(note);
+				noteRef.current = note;
 			}
 
 			// return note;
@@ -127,30 +130,45 @@ function Editor() {
 						.then((res: any) => {
 							// console.log(res);
 							noteIDRef.current = res.id;
+
+							if (params.parent_id) {
+								noteRef.current = {
+									id: res.id,
+									title: noteName,
+									folder_parent_id: params.parent_id.toString(),
+									summary: note_summary,
+									tags: [], // TODO:
+									content: note_content,
+									created_date: new Date().valueOf(),
+									last_updated_date: new Date().valueOf(),
+								};
+							}
 						})
 						.catch((err) => {
 							console.error(err);
 						});
 				} else {
-					const nobj: any = {
-						id: noteIDRef.current,
-						title: noteName,
-						folder_parent_id: note.folder_parent_id, // TODO: FIXME: should save note details abvove and re-use the needed bits --- params.parent_id,
-						summary: note_summary,
-						tags: [], // TODO:
-						content: note_content,
-						created_date: note.created_date,
-						last_updated_date: new Date().valueOf(),
-					};
+					if (noteRef.current) {
+						const nobj: any = {
+							id: noteIDRef.current,
+							title: noteName,
+							folder_parent_id: noteRef.current.folder_parent_id,
+							summary: note_summary,
+							tags: [], // TODO:
+							content: note_content,
+							created_date: note.created_date,
+							last_updated_date: new Date().valueOf(),
+						};
 
-					lbn_idb__save_note(nobj)
-						.then((res: any) => {
-							// console.log(res);
-							// setNoteID(res.id);
-						})
-						.catch((err) => {
-							console.error(err);
-						});
+						lbn_idb__save_note(nobj)
+							.then((res: any) => {
+								// console.log(res);
+								// setNoteID(res.id);
+							})
+							.catch((err) => {
+								console.error(err);
+							});
+					}
 				}
 			}
 		}
@@ -194,7 +212,8 @@ function Editor() {
 					/>
 
 					{domReady && (
-						<div>
+						<div
+						>
 							<CCLEditor
 								value={noteContent}
 								PatchContent={null}

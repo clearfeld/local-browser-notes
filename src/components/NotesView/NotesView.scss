@@ -124,11 +124,13 @@
   }
 }
 
-.lbn__core__l-editor__editor-container,
-.lbn__core__l-editor__editor-inner {
+.lbn_editor_preview_target .lbn__core__l-editor__editor-container,
+.lbn_editor_preview_target .lbn__core__l-editor__editor-inner {
   background: initial !important;
 }
 
-.lbn__core__l-editor__editor-input {
+.lbn_editor_preview_target .lbn__core__l-editor__editor-input {
   min-height: initial !important;
+  height: 10.5rem;
+  overflow: hidden;
 }
