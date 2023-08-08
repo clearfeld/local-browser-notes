@@ -535,14 +535,15 @@
 		text-decoration: line-through;
 	}
 
-	&editor-listItemUnchecked:before,
-	&editor-listItemChecked:before {
+	&editor-listItemUnchecked:not(.lbn__core__l-editor__editor-nested-listitem):before,
+	&editor-listItemChecked:not(.lbn__core__l-editor__editor-nested-listitem):before {
 		content: "";
+		cursor: pointer;
+
 		width: 1rem;
 		height: 1rem;
 		top: 0;
 		left: -0.125rem;
-		cursor: pointer;
 		display: block;
 		background-size: cover;
 		position: absolute;
@@ -566,9 +567,10 @@
 		border-radius: 0.25rem;
 	}
 
-	&editor-listItemUnchecked:before {
+	&editor-listItemUnchecked:not(.lbn__core__l-editor__editor-nested-listitem):before {
 		border: 0.125rem solid var(--color-border);
 		border-radius: 0.25rem;
+
 		// transition: opacity var(--cc-transition-speed) ease;
 	}
 

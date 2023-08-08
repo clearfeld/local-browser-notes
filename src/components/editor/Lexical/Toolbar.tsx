@@ -51,6 +51,8 @@ import { ReactComponent as DivideLingSVG } from "../assets/divide-line.svg";
 import { ReactComponent as ShrinkSVG } from "../assets/Shrink.svg";
 import { ReactComponent as ExpandSVG } from "../assets/Expand.svg";
 
+import { ReactComponent as EditLineSVG } from "../assets/edit-line.svg";
+
 import BlockOptionsButton from "./Toolbar/HeadingsDropdown";
 import AlignmentDropdown from "./Toolbar/AlignmentDropdown";
 import FloatingLinkEditor from "./Toolbar/FloatingLinkEditor";
@@ -371,9 +373,9 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 							className={"toolbar-item spaced " + (isCode ? "active" : "")}
 							aria-label="Insert Code"
 						>
-							<CodeSVG
+							<EditLineSVG
 								className="svg-filter format code"
-								viewBox="0 0 511.997 511.997"
+								viewBox="0 0 24 24"
 								height="1rem"
 								width="1rem"
 							/>

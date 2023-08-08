@@ -55,6 +55,7 @@ import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
+import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
 
 import { HashtagNode } from "@lexical/hashtag";
 import { HashtagPlugin } from "@lexical/react/LexicalHashtagPlugin";
@@ -447,12 +448,16 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 
 						{/* <AutoFocusPlugin /> */}
 						<CodeHighlightPlugin />
+
 						<ListPlugin />
 						<CheckListPlugin />
+						<ListMaxIndentLevelPlugin maxDepth={5} />
+						<TabIndentationPlugin />
+
 						<LinkPlugin />
 						{/* <MyCustomAutoFocusPlugin /> */}
 						<AutoLinkPlugin />
-						<ListMaxIndentLevelPlugin maxDepth={5} />
+
 						<HashtagPlugin />
 						<HorizontalRulePlugin />
 						{/* <MarkdownShortcutPlugin transformers={TRANSFORMERS} /> */}
