@@ -29,6 +29,8 @@ Local Browser (LB) Notes - is a fully client side notes app, where all data (ex.
     - [X] lists - bullet, numbered, checklist
     - [X] undo, redo
     - [X] expand and contract views
+    - [X] insert horizontal line
+    - [X] highlight hashtags
     - [ ] export as txt
     - [ ] export as html
     - [ ] table of contents

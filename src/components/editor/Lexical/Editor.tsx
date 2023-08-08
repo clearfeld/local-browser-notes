@@ -50,7 +50,7 @@ import ExternalUsagePlugin from "./ExternalUsagePlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { ListItemNode, ListNode } from "@lexical/list";
-import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
+import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
@@ -63,6 +63,9 @@ import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPl
 import { TRANSFORMERS } from "@lexical/markdown";
 
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+
+import { HorizontalRulePlugin } from "@lexical/react/LexicalHorizontalRulePlugin";
+import { HorizontalRuleNode } from "@lexical/react/LexicalHorizontalRuleNode";
 
 import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
@@ -152,11 +155,7 @@ interface I_PlaceholderProps {
 }
 
 function Placeholder(props: I_PlaceholderProps) {
-	return (
-		<div className={`${CLASSNAME_PREFIX}__editor-placeholder`}>
-			{props.placeholderText}
-		</div>
-	);
+	return <div className={`${CLASSNAME_PREFIX}__editor-placeholder`}>{props.placeholderText}</div>;
 }
 
 const editorConfig = {
@@ -189,6 +188,7 @@ const editorConfig = {
 		AutoLinkNode,
 		LinkNode,
 		HashtagNode,
+		HorizontalRuleNode,
 		// EmojiNode,
 		// CustomParagraphNode,
 		// {
@@ -230,7 +230,7 @@ const editorConfigReadingMode = {
 		AutoLinkNode,
 		LinkNode,
 		HashtagNode,
-		// HashtagNode,
+		HorizontalRuleNode,
 		// EmojiNode,
 		// CustomParagraphNode,
 		// {
@@ -292,7 +292,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 
 			let i = 0;
 			for (const [key, value] of nm) {
-				if(i < 20) {
+				if (i < 20) {
 					i += 1;
 					// console.log(key, value);
 					sm.set(key, value);
@@ -310,7 +310,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 		},
 
 		ClearEditorState(): void {
-			if(editorRef.current) {
+			if (editorRef.current) {
 				// console.log(toolbarRef.current);
 				editorRef.current.ClearEditorState();
 			} else {
@@ -324,7 +324,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 		},
 
 		SetEditable(editable: boolean): void {
-			if(editorRef.current) {
+			if (editorRef.current) {
 				// console.log(toolbarRef.current);
 				editorRef.current.SetEditable(editable);
 			} else {
@@ -348,10 +348,10 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 	}));
 
 	function PatchContent() {
-		if(props.PatchContent !== null) {
+		if (props.PatchContent !== null) {
 			props.PatchContent();
 		}
-		if(props.setEditable !== null) {
+		if (props.setEditable !== null) {
 			props.setEditable(false);
 		}
 	}
@@ -359,7 +359,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 	function CancelEditing(e: any): void {
 		e.stopPropagation();
 
-		if(editorRef.current) {
+		if (editorRef.current) {
 			// console.log(toolbarRef.current);
 			editorRef.current.SetEditable(false);
 		} else {
@@ -367,7 +367,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 		}
 
 		// setEditorState(initalEditorStateCopy);
-		if(props.setEditable !== null) {
+		if (props.setEditable !== null) {
 			props.setEditable(false);
 		}
 	}
@@ -382,7 +382,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 	// }
 
 	function ParseEditorStateIfExists() {
-		if(props.value !== null) {
+		if (props.value !== null) {
 			return props.value as string;
 			//   try {
 			//      //JSON.parse(props.value);
@@ -427,24 +427,16 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 								// toolbarRef.current,
 								// Temp make this a function that checks if the elemenet exists
 								// @ts-ignore
-								document.getElementById(
-									"lbn__Core__KnowledgeBase__Editor__Toolbar__Portal",
-								),
+								document.getElementById("lbn__Core__KnowledgeBase__Editor__Toolbar__Portal"),
 							)}
 						</>
 					)}
 
-					<OnChangePlugin
-						onChange={(editorState) => (editorStateRef.current = editorState)}
-					/>
+					<OnChangePlugin onChange={(editorState) => (editorStateRef.current = editorState)} />
 
 					<div className={`${CLASSNAME_PREFIX}__editor-inner`}>
 						<RichTextPlugin
-							contentEditable={
-								<ContentEditable
-									className={`${CLASSNAME_PREFIX}__editor-input`}
-								/>
-							}
+							contentEditable={<ContentEditable className={`${CLASSNAME_PREFIX}__editor-input`} />}
 							placeholder={<Placeholder placeholderText={props.placeholder} />}
 							ErrorBoundary={LexicalErrorBoundary}
 						/>
@@ -462,6 +454,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 						<AutoLinkPlugin />
 						<ListMaxIndentLevelPlugin maxDepth={5} />
 						<HashtagPlugin />
+						<HorizontalRulePlugin />
 						{/* <MarkdownShortcutPlugin transformers={TRANSFORMERS} /> */}
 					</div>
 				</div>

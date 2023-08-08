@@ -33,6 +33,7 @@ import {
 	getDefaultCodeLanguage,
 	getCodeLanguages,
 } from "@lexical/code";
+import {INSERT_HORIZONTAL_RULE_COMMAND} from '@lexical/react/LexicalHorizontalRuleNode';
 
 import { ReactComponent as ArrowClockwiseSVG } from "../assets/ArrowClockwise.svg";
 import { ReactComponent as ArrowCounterClockwiseSVG } from "../assets/ArrowCounterClockwise.svg";
@@ -45,6 +46,7 @@ import { ReactComponent as LinkSVG } from "../assets/Link.svg";
 import { ReactComponent as LeftAlignSVG } from "../assets/TextLeft.svg";
 import { ReactComponent as CenterAlignSVG } from "../assets/TextCenter.svg";
 import { ReactComponent as RightAlignSVG } from "../assets/TextRight.svg";
+import { ReactComponent as DivideLingSVG } from "../assets/divide-line.svg";
 
 import { ReactComponent as ShrinkSVG } from "../assets/Shrink.svg";
 import { ReactComponent as ExpandSVG } from "../assets/Expand.svg";
@@ -458,6 +460,27 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 					blockType={blockType}
 					toolbarRef={toolbarRef}
 				/> */}
+
+				<Divider />
+
+				<button
+							onClick={() => {
+								editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
+							}}
+							className="toolbar-item spaced"
+							aria-label="Right Align"
+						>
+							<DivideLingSVG
+								className="svg-filter format right-align"
+								viewBox="0 0 24 24"
+								height="1.25rem"
+								width="1.25rem"
+								style={{
+									height: "1rem",
+									scale: "1.25"
+								}}
+							/>
+						</button>
 
 				<Divider />
 
