@@ -55,6 +55,10 @@ import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
+
+import { HashtagNode } from "@lexical/hashtag";
+import { HashtagPlugin } from "@lexical/react/LexicalHashtagPlugin";
+
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { TRANSFORMERS } from "@lexical/markdown";
 
@@ -85,6 +89,7 @@ const ExampleTheme = {
 		h5: `${CLASSNAME_PREFIX}__editor-heading-h5`,
 		h6: `${CLASSNAME_PREFIX}__editor-heading-h6`,
 	},
+	hashtag: `${CLASSNAME_PREFIX}__hashtag`,
 	list: {
 		nested: {
 			listitem: `${CLASSNAME_PREFIX}__editor-nested-listitem`,
@@ -183,6 +188,7 @@ const editorConfig = {
 		TableRowNode,
 		AutoLinkNode,
 		LinkNode,
+		HashtagNode,
 		// EmojiNode,
 		// CustomParagraphNode,
 		// {
@@ -223,6 +229,8 @@ const editorConfigReadingMode = {
 		TableRowNode,
 		AutoLinkNode,
 		LinkNode,
+		HashtagNode,
+		// HashtagNode,
 		// EmojiNode,
 		// CustomParagraphNode,
 		// {
@@ -453,6 +461,7 @@ const CCLEditor = React.forwardRef((props: CCLEditorProps, ref: any) => {
 						{/* <MyCustomAutoFocusPlugin /> */}
 						<AutoLinkPlugin />
 						<ListMaxIndentLevelPlugin maxDepth={5} />
+						<HashtagPlugin />
 						{/* <MarkdownShortcutPlugin transformers={TRANSFORMERS} /> */}
 					</div>
 				</div>

@@ -389,6 +389,13 @@
 		padding: 0;
 	}
 
+	&hashtag {
+		background-color: var(--color-global-blue);
+    	color: var(--color-global-white);
+    	border-radius: 0.125rem;
+    	padding: 0.125rem;
+	}
+
 	&editor-quote {
 		margin: 0.25rem 0;
 		// margin-left: 1.25rem;
