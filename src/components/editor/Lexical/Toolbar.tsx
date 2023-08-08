@@ -33,7 +33,7 @@ import {
 	getDefaultCodeLanguage,
 	getCodeLanguages,
 } from "@lexical/code";
-import {INSERT_HORIZONTAL_RULE_COMMAND} from '@lexical/react/LexicalHorizontalRuleNode';
+import { INSERT_HORIZONTAL_RULE_COMMAND } from "@lexical/react/LexicalHorizontalRuleNode";
 
 import { ReactComponent as ArrowClockwiseSVG } from "../assets/ArrowClockwise.svg";
 import { ReactComponent as ArrowCounterClockwiseSVG } from "../assets/ArrowCounterClockwise.svg";
@@ -43,9 +43,12 @@ import { ReactComponent as UnderlineSVG } from "../assets/TypeUnderline.svg";
 import { ReactComponent as StrikeThroughSVG } from "../assets/TypeStrikethrough.svg";
 import { ReactComponent as CodeSVG } from "../assets/Code.svg";
 import { ReactComponent as LinkSVG } from "../assets/Link.svg";
+
 import { ReactComponent as LeftAlignSVG } from "../assets/TextLeft.svg";
 import { ReactComponent as CenterAlignSVG } from "../assets/TextCenter.svg";
 import { ReactComponent as RightAlignSVG } from "../assets/TextRight.svg";
+import { ReactComponent as JustifyAlignSVG } from "../assets/justify-text.svg"; // "../assets/align-justify.svg";
+
 import { ReactComponent as DivideLingSVG } from "../assets/divide-line.svg";
 
 import { ReactComponent as ShrinkSVG } from "../assets/Shrink.svg";
@@ -184,7 +187,7 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 			editor.registerTextContentListener((textContent) => {
 				// The latest text content of the editor!
 				// console.log(textContent);
-				if(props.SetModRefTrue !== null) {
+				if (props.SetModRefTrue !== null) {
 					console.log("update");
 					props.SetModRefTrue();
 				}
@@ -443,15 +446,20 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 							/>
 						</button>
 
-						{/* <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
-            }}
-            className="toolbar-item"
-            aria-label="Justify Align"
-          >
-            <i className="format justify-align" />
-          </button>{" "} */}
+						<button
+							onClick={() => {
+								editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
+							}}
+							className="toolbar-item"
+							aria-label="Justify Align"
+						>
+							<JustifyAlignSVG
+								className="svg-filter format"
+								viewBox="0 0 512.000000 512.000000"
+								height="1rem"
+								width="1rem"
+							/>
+						</button>{" "}
 					</>
 				)}
 
@@ -466,23 +474,23 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 				<Divider />
 
 				<button
-							onClick={() => {
-								editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
-							}}
-							className="toolbar-item spaced"
-							aria-label="Right Align"
-						>
-							<DivideLingSVG
-								className="svg-filter format right-align"
-								viewBox="0 0 24 24"
-								height="1.25rem"
-								width="1.25rem"
-								style={{
-									height: "1rem",
-									scale: "1.25"
-								}}
-							/>
-						</button>
+					onClick={() => {
+						editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
+					}}
+					className="toolbar-item spaced"
+					aria-label="Right Align"
+				>
+					<DivideLingSVG
+						className="svg-filter format right-align"
+						viewBox="0 0 24 24"
+						height="1.25rem"
+						width="1.25rem"
+						style={{
+							height: "1rem",
+							scale: "1.25",
+						}}
+					/>
+				</button>
 
 				<Divider />
 
