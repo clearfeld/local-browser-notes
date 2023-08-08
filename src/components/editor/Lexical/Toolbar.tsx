@@ -459,7 +459,28 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 								height="1rem"
 								width="1rem"
 							/>
-						</button>{" "}
+						</button>
+
+						<Divider />
+
+						<button
+							onClick={() => {
+								editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
+							}}
+							className="toolbar-item spaced"
+							aria-label="Right Align"
+						>
+							<DivideLingSVG
+								className="svg-filter format right-align"
+								viewBox="0 0 24 24"
+								height="1.25rem"
+								width="1.25rem"
+								style={{
+									height: "1rem",
+									scale: "1.25",
+								}}
+							/>
+						</button>
 					</>
 				)}
 
@@ -470,27 +491,6 @@ function ToolbarPlugin(props: I_ToolbarPluginProps) {
 					blockType={blockType}
 					toolbarRef={toolbarRef}
 				/> */}
-
-				<Divider />
-
-				<button
-					onClick={() => {
-						editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
-					}}
-					className="toolbar-item spaced"
-					aria-label="Right Align"
-				>
-					<DivideLingSVG
-						className="svg-filter format right-align"
-						viewBox="0 0 24 24"
-						height="1.25rem"
-						width="1.25rem"
-						style={{
-							height: "1rem",
-							scale: "1.25",
-						}}
-					/>
-				</button>
 
 				<Divider />
 
