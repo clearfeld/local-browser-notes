@@ -179,6 +179,21 @@ function Sidebar() {
 	function ToggleThemes() {
 		const htmlroot = document.getElementsByTagName("html")[0];
 
+		const css = document.createElement("style");
+		css.type = "text/css";
+		css.appendChild(
+			document.createTextNode(
+				`* {
+       				-webkit-transition: none !important;
+       				-moz-transition: none !important;
+       				-o-transition: none !important;
+       				-ms-transition: none !important;
+       				transition: none !important;
+    			}`,
+			),
+		);
+		document.head.appendChild(css);
+
 		const dt = htmlroot.getAttribute("data-theme");
 		let theme = "";
 		if (dt === "Dark") {
@@ -190,6 +205,9 @@ function Sidebar() {
 			htmlroot.setAttribute("data-theme", "Dark");
 			theme = "Dark";
 		}
+
+		const _ = window.getComputedStyle(css).opacity;
+		document.head.removeChild(css);
 
 		const up = Cookies.get(user_preferences_cookie);
 		if (up) {
