@@ -169,6 +169,8 @@ function Note(props: I_NoteProps) {
 	useEffect(() => {
 		document.addEventListener("click", handleClickOutside, false);
 
+		// console.log(props.note.summary);
+
 		return () => {
 			document.removeEventListener("click", handleClickOutside, false);
 		};
@@ -229,14 +231,16 @@ function Note(props: I_NoteProps) {
 						>
 							<CCLEditor
 								value={props.note.summary}
+								// value={null}
+
 								SetModRefTrue={null}
 								PatchContent={null}
 								editable={false} // : boolean;
 								setEditable={null} // : Function | null;
 								showToolbar={false} // : boolean;
 								placeholder={""} // : string;
-								// tells us whether the view is default expanded or not
 
+								// TODO: have this as a setting - tells us whether the view is default expanded or not
 								expanded={true}
 								ExpandToggle={() => {
 									null;

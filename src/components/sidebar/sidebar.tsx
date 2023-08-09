@@ -1,5 +1,5 @@
-import React, { useEffect, useState, KeyboardEvent, useRef, Component } from "react";
-import ReactDOM from "react-dom";
+import React, { useEffect, useState, KeyboardEvent, useRef } from "react";
+// import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import "./sidebar.scss";
@@ -39,7 +39,6 @@ import Folder from "./folder";
 import {
 	I_Folder,
 	I_FolderOrder,
-	lbn_idb__delete_folder,
 	lbn_idb__get_folder_order,
 	lbn_idb__get_folders,
 	lbn_idb__save_folder,
@@ -51,7 +50,7 @@ interface I_Cookie_UserPreferences {
 	theme: "Dark" | "Light" | string;
 }
 
-const reorder = (list: any, startIndex: number, endIndex: number) => {
+const reorder = (list: I_Folder[], startIndex: number, endIndex: number) => {
 	const result = Array.from(list);
 	const [removed] = result.splice(startIndex, 1);
 	result.splice(endIndex, 0, removed);

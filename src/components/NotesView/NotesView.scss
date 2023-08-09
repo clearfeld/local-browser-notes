@@ -41,6 +41,7 @@
 
   &note-block__ {
     &wrapper {
+      display: grid;
       height: 12.75rem;
       width: 14rem;
       background-color: var(--color-bg-compliment);
@@ -122,6 +123,10 @@
       }
     }
   }
+}
+
+.lbn_editor_preview_target {
+  overflow: hidden;
 }
 
 .lbn_editor_preview_target .lbn__core__l-editor__editor-container,

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./NotesView.scss";
 
@@ -19,7 +19,6 @@ import {
 	lbn_idb__delete_note,
 	lbn_idb__get_notes,
 	lbn_idb__save_note,
-	lbn_idb_open,
 } from "@src/indexdb-helpers";
 
 import Note from "@src/components/NotesView/Note";
