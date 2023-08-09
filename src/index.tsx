@@ -10,11 +10,15 @@ import { RecoilRoot } from "recoil";
 const root = createRoot(document.getElementById("app") as HTMLElement);
 
 root.render(
-	<React.StrictMode>
+	// https://github.com/atlassian/react-beautiful-dnd/issues/2396#issuecomment-1248018320
+	// TODO: enable strict mode again - try using the above to disable strict mode for dnd to avoid issues with the droppable drag
+
+	// <React.StrictMode>
 		<RecoilRoot>
 			<App />
 		</RecoilRoot>
-	</React.StrictMode>,
+	// </React.StrictMode>
+	,
 );
 
 // If you want to start measuring performance in your app, pass a function

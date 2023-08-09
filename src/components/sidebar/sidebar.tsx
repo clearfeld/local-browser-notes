@@ -1,4 +1,6 @@
-import React, { useEffect, useState, KeyboardEvent, useRef } from "react";
+import React, { useEffect, useState, KeyboardEvent, useRef, Component } from "react";
+import ReactDOM from "react-dom";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import "./sidebar.scss";
 
@@ -36,15 +38,41 @@ import Folder from "./folder";
 
 import {
 	I_Folder,
+	I_FolderOrder,
 	lbn_idb__delete_folder,
+	lbn_idb__get_folder_order,
 	lbn_idb__get_folders,
 	lbn_idb__save_folder,
 	lbn_idb__update_folder,
+	lbn_idb__update_folder_order,
 } from "@src/indexdb-helpers";
 
 interface I_Cookie_UserPreferences {
 	theme: "Dark" | "Light" | string;
 }
+
+const reorder = (list: any, startIndex: number, endIndex: number) => {
+	const result = Array.from(list);
+	const [removed] = result.splice(startIndex, 1);
+	result.splice(endIndex, 0, removed);
+
+	return result;
+};
+
+const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
+	// some basic styles to make the items look a bit nicer
+	userSelect: "none",
+
+	// change background colour if dragging
+	// background: isDragging ? "lightgreen" : "grey",
+
+	// styles we need to apply on draggables
+	...draggableStyle,
+});
+
+const getListStyle = (isDraggingOver: boolean) => ({
+	// background: isDraggingOver ? "lightblue" : "lightgrey",
+});
 
 function Sidebar() {
 	const setModalState: T_SetModalStateData = useSetRecoilState(ModalStateData);
@@ -61,16 +89,28 @@ function Sidebar() {
 
 	const [theme, setTheme] = useState<"DARK" | "LIGHT">("LIGHT");
 
+	const [folder_order, setFolderOrder] = useState<I_FolderOrder | null>(null);
+
 	const [showCreateNewFolder, setShowCreateNewFolder] = useState<boolean>(false);
 	const [folderName, setFolderName] = useState<string>("");
 
 	useEffect(() => {
 		EnablePreferredTheme();
 
-		GetFolders()
+		GetFolderOrder()
 			.then((res) => {
 				// console.log(res);
-				setFoldersState(res);
+				setFolderOrder(res);
+				// setFoldersState(res);
+
+				GetFolders(res)
+					.then((res) => {
+						// console.log(res);
+						setFoldersState(res);
+					})
+					.catch((err) => {
+						console.error("TODO: logging - ", err);
+					});
 			})
 			.catch((err) => {
 				console.error("TODO: logging - ", err);
@@ -91,8 +131,30 @@ function Sidebar() {
 		}
 	}
 
-	async function GetFolders(): Promise<I_Folder[]> {
+	async function GetFolderOrder(): Promise<I_FolderOrder | null> {
+		const folder_order: I_FolderOrder | null = await lbn_idb__get_folder_order();
+		// console.log(folder_order);
+		return folder_order;
+	}
+
+	async function GetFolders(folder_order: I_FolderOrder | null): Promise<I_Folder[]> {
 		const folders: I_Folder[] = await lbn_idb__get_folders();
+		// console.log(folders);
+
+		const reorder: any[] = [];
+
+		if (folder_order !== null) {
+			folder_order.id_order.forEach(function (a: any, i: any) {
+				reorder[a] = i;
+			});
+
+			folders.sort(function (a: any, b: any) {
+				return reorder[a.id] - reorder[b.id];
+			});
+
+			// console.log("REORDER - ", folders);
+		}
+
 		return folders;
 	}
 
@@ -198,6 +260,47 @@ function Sidebar() {
 		// // @ts-ignore
 		// new_state.push(folder);
 		// setFoldersState(new_state);
+	}
+
+	function onDragEnd(result: any): void {
+		// dropped outside the list
+		if (!result.destination) {
+			return;
+		}
+
+		// @ts-ignore
+		const items: I_Folder[] = reorder(
+			getFoldersState,
+			result.source.index,
+			result.destination.index,
+		);
+
+		const folder_order: I_FolderOrder = {
+			id: "0",
+			id_order: [],
+		};
+
+		// TODO: CLEAN: only do this if folder_order was null
+		// otherwise move the elements from the drag idx - wasteful rebuilding the entire folder_order array like this
+		// TODO: also remember to have delete folder update the folder order array afterwards
+		for (let i = 0; i < items.length; ++i) {
+			folder_order.id_order.push(items[i].id);
+		}
+
+		// console.log("REORDER - ", folder_order);
+		SaveFolderOrder(folder_order).catch((err) => {
+			console.log("TODO: better error logging - ", err);
+		});
+
+		// @ts-ignore
+		setFoldersState(items);
+	}
+
+	async function SaveFolderOrder(folder_order_arg: I_FolderOrder): Promise<null> {
+		const folder_order: I_FolderOrder | null = await lbn_idb__update_folder_order(folder_order_arg);
+		console.log(folder_order);
+		// return folder_order;
+		return null;
 	}
 
 	return (
@@ -320,9 +423,34 @@ function Sidebar() {
 					</div>
 				</Link>
 
-				{getFoldersState.map((folder: I_Folder, fidx: number) => {
-					return <Folder key={fidx} folder={folder} UpdateFolderTitle={UpdateFolderTitle} />;
-				})}
+				<DragDropContext onDragEnd={onDragEnd}>
+					<Droppable droppableId="droppable">
+						{(provided, snapshot) => (
+							<div
+								{...provided.droppableProps}
+								ref={provided.innerRef}
+								style={getListStyle(snapshot.isDraggingOver)}
+							>
+								{getFoldersState.map((folder: I_Folder, fidx: number) => (
+									<Draggable key={`${folder.id}`} draggableId={`${folder.id}`} index={fidx}>
+										{(provided, snapshot) => (
+											<div
+												key={fidx}
+												ref={provided.innerRef}
+												{...provided.draggableProps}
+												{...provided.dragHandleProps}
+												style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+											>
+												<Folder folder={folder} UpdateFolderTitle={UpdateFolderTitle} />
+											</div>
+										)}
+									</Draggable>
+								))}
+								{provided.placeholder}
+							</div>
+						)}
+					</Droppable>
+				</DragDropContext>
 
 				<div ref={newFolderDivRef}>
 					{showCreateNewFolder && (

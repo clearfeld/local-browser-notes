@@ -89,38 +89,49 @@ function Folder(props: I_FolderProps) {
 			>
 				<FolderSVG className="svg-filter" viewBox="0 0 24 24" height="1.25rem" width="1.25rem" />
 
-				<input
-					ref={inputRef}
-					className={
-						"sidebar__folder-space__folder-title text-no-overflow " +
-						(folderRenameable ? " sidebar__folder-space__folder-input" : "")
-					}
-					value={folderName}
-					onClick={(e) => {
-						e.preventDefault();
-						e.stopPropagation();
-
-						inputRef.current?.focus();
-					}}
-					onChange={(e) => setFolderName(e.target.value)}
-					disabled={!folderRenameable}
-					onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
-						if (e.key === "Escape") {
-							setFolderName(props.folder.title);
-							setFolderRenameable(false);
-						} else if (e.key === "Enter") {
-							props
-								.UpdateFolderTitle(props.folder, folderName)
-								.then((res) => {
-									console.log(res);
-								})
-								.catch((err) => {
-									console.log("TODO: error logging - ", err);
-								});
-							setFolderRenameable(false);
+				{folderRenameable ? (
+					<input
+						ref={inputRef}
+						className={
+							"sidebar__folder-space__folder-title text-no-overflow " +
+							(folderRenameable ? " sidebar__folder-space__folder-input" : "")
 						}
-					}}
-				/>
+						value={folderName}
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+
+							inputRef.current?.focus();
+						}}
+						onChange={(e) => setFolderName(e.target.value)}
+						disabled={!folderRenameable}
+						onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+							if (e.key === "Escape") {
+								setFolderName(props.folder.title);
+								setFolderRenameable(false);
+							} else if (e.key === "Enter") {
+								props
+									.UpdateFolderTitle(props.folder, folderName)
+									.then((res) => {
+										console.log(res);
+									})
+									.catch((err) => {
+										console.log("TODO: error logging - ", err);
+									});
+								setFolderRenameable(false);
+							}
+						}}
+					/>
+				) : (
+					<p
+						className={
+							"sidebar__folder-space__folder-title text-no-overflow " +
+							(folderRenameable ? " sidebar__folder-space__folder-input" : "")
+						}
+					>
+						{folderName}
+					</p>
+				)}
 
 				{/* {showOptions && (
 					<>

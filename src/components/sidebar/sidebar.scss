@@ -125,7 +125,9 @@
       background: none;
       outline: none;
       border: none;
-      user-select: none;
+
+      user-select: none !important;
+
       cursor: pointer;
     }
 

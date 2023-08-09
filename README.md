@@ -5,14 +5,12 @@ Local Browser (LB) Notes - is a fully client side notes app, where all data (ex.
 [Use it here - https://clearfeld.github.io/local-browser-notes/#/folder/0](https://clearfeld.github.io/local-browser-notes/#/folder/0)
 
 ## Features
-- [ ] folders
+- [X] folders
   - [X] view all master folder
   - [X] parent folders
-  - [ ] child folders
   - [X] delete folder + underlying notes
   - [X] rename folder
-  - [ ] re-order folders
-  - [ ] virtulaization
+  - [X] re-order folders
 - [ ] notes
   - [X] track last updated timestamp and creation date
   - [ ] note lock? (maybe)
@@ -26,7 +24,7 @@ Local Browser (LB) Notes - is a fully client side notes app, where all data (ex.
     - [X] links
     - [X] quotes
     - [ ] tables
-    - [X] lists - bullet, numbered, checklist
+    - [X] lists - bullet, numbered, checklist - all support nesting (with tab key)
     - [X] undo, redo
     - [X] expand and contract views
     - [X] insert horizontal line
@@ -36,7 +34,6 @@ Local Browser (LB) Notes - is a fully client side notes app, where all data (ex.
     - [ ] table of contents
     - [ ] command palette
     - [ ] drag and drop blocks
-    - [ ] dragon accessibility support? (maybe)
     - [ ] copy section as raw text
     - [ ] image and gif support
     - [ ] embed / iframe support (test commons ie youtube etc...)
@@ -52,11 +49,10 @@ Local Browser (LB) Notes - is a fully client side notes app, where all data (ex.
   - [ ] pull from note context
 - [ ] settings
   - [ ] font selection
-  - [ ] theme preference - persist
   - [X] delete indexeddb instance (all data - notes folders tags etc...)
-  - [ ] remember last opened folder and/or note
 - [ ] extras
   - [X] light and dark themes
+  - [X] theme preference - persist
   - [X] auto save
   - [-] ctrl + s save with some kind of notifcation popup
   - [ ] keyboard shortcuts modal
@@ -64,7 +60,12 @@ Local Browser (LB) Notes - is a fully client side notes app, where all data (ex.
   - [ ] global command palette (search support)
   - [ ] notifcations
   - [ ] filesystem api suport - import / export
+- [ ] extras (maybe)
+  - [ ] child folders
+  - [ ] virtulaization (notes view - summaries)
+  - [ ] dragon accessibility support? (maybe)
   - [ ] fully offline capable (service workers)
+  - [ ] remember last opened folder and/or note
 
 ## Getting Started
 

@@ -129,8 +129,8 @@ interface I_IDB_V1 extends DBSchema {
       last_updated_date: number;
     };
     indexes: {
-      "last_updated_date": number;
-      "folder_parent_id": string;
+      last_updated_date: number;
+      folder_parent_id: string;
     };
   };
 }
@@ -205,6 +205,48 @@ export async function lbn_idb_delete() {
 
   return x;
 }
+
+// Folder order start
+
+export async function lbn_idb__get_folder_order(): Promise<I_FolderOrder | null> {
+  if (window.LBN.idb_ref !== null) {
+    const folder_order: I_FolderOrder[] = await window.LBN.idb_ref.getAll(
+      "folder_order"
+    );
+    // console.log("Folders:- ", folders);
+    if(folder_order !== null && folder_order.length > 0) {
+      return folder_order[0];
+    } else {
+      return null;
+    }
+  } else {
+    console.error();
+    // TODO: logging / error reporting
+  }
+
+  return null;
+}
+
+export async function lbn_idb__update_folder_order(
+  folder_arg: I_FolderOrder
+): Promise<I_FolderOrder | null> {
+  if (window.LBN.idb_ref !== null) {
+    const tx = window.LBN.idb_ref.transaction("folder_order", "readwrite");
+
+    // TODO: logging / error reporting
+    const res = await tx.store.put(folder_arg);
+
+    return folder_arg;
+  } else {
+    // TODO: logging / error reporting
+
+    return null;
+  }
+
+  return null;
+}
+
+// Folder order end
 
 // Folders start
 
