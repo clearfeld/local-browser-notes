@@ -1,11 +1,15 @@
 .notes-view__ {
   &toolbar__ {
     &wrapper {
+      position: fixed;
+      width: 100%;
+      background-color: var(--color-bg);
       border-bottom: 1px solid var(--color-border);
       height: 2rem;
       padding: 0.375rem 1.5rem;
       display: flex;
       align-items: center;
+      z-index: 1;
     }
 
     &btn {
@@ -43,6 +47,7 @@
     &wrapper {
       display: grid;
       height: 12.75rem;
+      margin-top: 2rem;
       width: 14rem;
       background-color: var(--color-bg-compliment);
       border: 0.0625rem solid var(--color-border);
